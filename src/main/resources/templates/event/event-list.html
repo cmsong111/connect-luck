@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<th:block layout:fragment="content">
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 250px; /* 원하는 높이로 조절 */
+        }
+    </style>
+    <div class="container mt-5">
+        <h1 class="text-center">이벤트 목록</h1>
+        <div class="row mt-4">
+            <!-- 이벤트 카드 반복 -->
+            <div th:each="event : ${events}" class="col-md-4 mb-4">
+                <div class="card">
+                    <img th:src="${event.imageUrl}" class="card-img-top" alt="Event Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${event.title}"></h5>
+                        <p class="card-text" th:text="'시작일: ' + ${#temporals.format(event.startAt, 'yyyy년 MM월 dd일')}"></p>
+                        <p class="card-text" th:text="'장소: ' + ${event.streetAddress + ' ' + event.detailAddress}"></p>
+                        <p class="card-text" th:text="'담당자: '+${event.manager.name}"></p>
+                        <!-- 신청하기 버튼 -->
+                        <a th:href="@{'/apply/' + ${event.id}}" class="btn btn-primary btn-sm">신청하기</a>
+                        <!-- 연락하기 버튼 -->
+                        <a th:href="@{'/contact/' + ${event.manager.id}}" class="btn btn-success btn-sm">문의하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
