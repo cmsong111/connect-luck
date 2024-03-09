@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<th:block layout:fragment="content">
+    <div class="container mt-5">
+        <h1 class="text-center">마이프로필</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <p th:text="'이름: ' + ${user.name}"></p>
+                <p th:text="'이메일: ' + ${user.email}"></p>
+                <p th:text="'역할: ' + ${user.role}"></p>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
