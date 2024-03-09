@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<head>
+    <script>
+        function checkAgreement() {
+            const agreeCheckbox1 = document.getElementById("agreeCheckbox1");
+            const agreeCheckbox2 = document.getElementById("agreeCheckbox2");
+            const agreeCheckbox3 = document.getElementById("agreeCheckbox3");
+            const agreeButton = document.getElementById("agreeButton");
+
+            // 모든 동의 체크박스가 체크되어 있을 때 버튼 활성화
+            if (agreeCheckbox1.checked && agreeCheckbox2.checked) {
+                agreeButton.classList.remove("disabled");
+            } else {
+                // 하나라도 체크되어 있지 않으면 버튼 비활성화
+                agreeButton.classList.add("disabled");
+            }
+        }
+    </script>
+</head>
+<th:block layout:fragment="content">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">이용약관 동의</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>1. 서비스 이용 약관</h4>
+                        <p>이 서비스를 이용함에 있어 필요한 규정과 조건 등을 설명합니다.</p>
+
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="agreeCheckbox1" required onchange="checkAgreement()">
+                            <label class="form-check-label" for="agreeCheckbox1">동의합니다.</label>
+                        </div>
+
+                        <br>
+                        <h4>2. 개인정보 수집 및 이용동의</h4>
+                        <p>이 서비스에서 수집하는 개인정보와 그 이용에 대해 동의하는 내용입니다.</p>
+
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="agreeCheckbox2" required onchange="checkAgreement()">
+                            <label class="form-check-label" for="agreeCheckbox2">동의합니다.</label>
+                        </div>
+
+                        <br>
+                        <h4>(선택) 마케팅 활용 동의</h4>
+                        <p>마케팅 활용에 대한 동의 여부를 선택합니다.</p>
+
+                        <!-- 동의 체크박스 및 버튼 추가 -->
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="agreeCheckbox3" required onchange="checkAgreement()">
+                            <label class="form-check-label" for="agreeCheckbox3">동의합니다.</label>
+                        </div>
+
+                        <!-- 동의 체크 시 /signup으로 이동하는 버튼 -->
+                        <a th:href="@{/signup}" class="btn btn-primary btn-block mt-3 disabled" id="agreeButton"
+                           onclick="return confirm('동의하시겠습니까?')">동의 완료</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
