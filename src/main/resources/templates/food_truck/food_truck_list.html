@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<th:block layout:fragment="content">
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 250px; /* 원하는 높이로 조절 */
+        }
+    </style>
+    <div class="container mt-5">
+        <h1 class="text-center">푸드트럭 등록 업체</h1>
+        <div class="row">
+            <!-- Food Truck 카드를 표시하는 반복문 -->
+            <div th:each="foodTruck : ${foodTrucks}" class="col-md-4 mb-4">
+                <div class="card">
+                    <!-- Food Truck 이미지 -->
+                    <img th:src="${foodTruck.imageUrl}" class="card-img-top" alt="Food Truck Image">
+                    <div class="card-body">
+                        <!-- Food Truck 이름 -->
+                        <h5 class="card-title" th:text="${foodTruck.name}"></h5>
+                        <!-- Food Truck 설명 -->
+                        <p class="card-text" th:text="${foodTruck.description}"></p>
+                        <!-- Food Truck 카테고리 -->
+                        <p class="card-text" th:text="${foodTruck.foodType.name()}"></p>
+                        <!-- Food Truck 소유자 -->
+                        <p class="card-text" th:text="${foodTruck.owner.name}"></p>
+                        <!-- '신청하기' 버튼 -->
+                        <a href="#" class="btn btn-primary">후기보기</a>
+                        <!-- '연락하기' 버튼 -->
+                        <a href="#" class="btn btn-primary">메뉴보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
