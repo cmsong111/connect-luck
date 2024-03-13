@@ -35,7 +35,7 @@ class AuthServiceTest {
     @DisplayName("로그인 - 성공")
     void loginSuccess() {
         // given
-        LoginRequest loginRequest = new LoginRequest("test1@test.com", "test1234");
+        LoginRequest loginRequest = new LoginRequest("test1@test.com", "test1");
         // when
         User user = authService.login(loginRequest);
         // then
@@ -45,7 +45,7 @@ class AuthServiceTest {
     @Test
     void loginFail() {
         // given
-        LoginRequest loginRequest = new LoginRequest("test100@test.com", "test1234");
+        LoginRequest loginRequest = new LoginRequest("test100@test.com", "test100");
         // when
         // then
         Assertions.assertThrows(IllegalArgumentException.class, () -> authService.login(loginRequest));
