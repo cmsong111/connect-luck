@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script>
         function checkAgreement() {
@@ -31,7 +31,7 @@
                         <p>이 서비스를 이용함에 있어 필요한 규정과 조건 등을 설명합니다.</p>
 
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="agreeCheckbox1" required onchange="checkAgreement()">
+                            <input class="form-check-input" id="agreeCheckbox1" onchange="checkAgreement()" required type="checkbox">
                             <label class="form-check-label" for="agreeCheckbox1">동의합니다.</label>
                         </div>
 
@@ -40,7 +40,7 @@
                         <p>이 서비스에서 수집하는 개인정보와 그 이용에 대해 동의하는 내용입니다.</p>
 
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="agreeCheckbox2" required onchange="checkAgreement()">
+                            <input class="form-check-input" id="agreeCheckbox2" onchange="checkAgreement()" required type="checkbox">
                             <label class="form-check-label" for="agreeCheckbox2">동의합니다.</label>
                         </div>
 
@@ -50,12 +50,12 @@
 
                         <!-- 동의 체크박스 및 버튼 추가 -->
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="agreeCheckbox3" required onchange="checkAgreement()">
+                            <input class="form-check-input" id="agreeCheckbox3" onchange="checkAgreement()" required type="checkbox">
                             <label class="form-check-label" for="agreeCheckbox3">동의합니다.</label>
                         </div>
 
                         <!-- 동의 체크 시 /signup으로 이동하는 버튼 -->
-                        <a th:href="@{/signup}" class="btn btn-primary btn-block mt-3 disabled" id="agreeButton">동의하고 계속하기</a>
+                        <a class="btn btn-primary btn-block mt-3 disabled" id="agreeButton" th:href="@{/signup}">동의하고 계속하기</a>
                     </div>
                 </div>
             </div>

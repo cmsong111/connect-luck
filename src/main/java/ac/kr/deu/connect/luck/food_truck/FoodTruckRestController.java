@@ -2,7 +2,6 @@ package ac.kr.deu.connect.luck.food_truck;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class FoodTruckRestController {
     @PostMapping
     @Operation(summary = "Create a food truck")
     public ResponseEntity<FoodTruck> createFoodTruck(
-           @RequestBody FoodTruckRequest foodTruckRequest) {
+            @RequestBody FoodTruckRequest foodTruckRequest) {
         return ResponseEntity.ok(foodTruckService.saveFoodTruck(foodTruckRequest));
     }
 

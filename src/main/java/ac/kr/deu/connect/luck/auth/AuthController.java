@@ -27,7 +27,7 @@ public class AuthController {
         HttpSession session = httpServletRequest.getSession(true);
 
         // 로그인
-        User user = authService.login(email, password);
+        User user = authService.login(new LoginRequest(email, password));
         session.setAttribute("user", user);
         session.setMaxInactiveInterval(60 * 30); // 30분
         return "redirect:/";

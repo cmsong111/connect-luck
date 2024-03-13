@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="navBarFragment">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">
-            <img th:src="@{/logo-no-background.png}" height="30" class="d-inline-block align-top" alt="">
+            <img alt="" class="d-inline-block align-top" height="30" th:src="@{/logo-no-background.png}">
         </a>
         <!--모바일 화면 대응-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
-                aria-expanded="false" aria-label="Toggle navigation">
+        <button aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarTogglerDemo02"
+                data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -26,13 +26,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/food-truck">Food Truck</a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+                <!--                </li>-->
             </ul>
             <!--우측 메뉴-->
             <!--비 로그인 상태일 때-->
-            <ul th:if="${session.user == null}" class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" th:if="${session.user == null}">
                 <li class="nav-item">
                     <a class="nav-link" href="/login">로그인</a>
                 </li>
@@ -41,14 +41,14 @@
                 </li>
             </ul>
             <!--로그인 상태일 때-->
-            <ul th:if="${session.user != null}" class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" th:if="${session.user != null}">
                 <!--이벤트 관리자일 때-->
-                <li th:if="${session.user.getRole().name() == T(ac.kr.deu.connect.luck.user.UserRole).EVENT_MANAGER.name()}" class="nav-item">
+                <li class="nav-item" th:if="${session.user.getRole().name() == T(ac.kr.deu.connect.luck.user.UserRole).EVENT_MANAGER.name()}">
                     <a class="nav-link" href="/my-event">내 이벤트</a>
                 </li>
 
                 <!--푸드트럭 관리자 때-->
-                <li th:if="${session.user.getRole().name() == T(ac.kr.deu.connect.luck.user.UserRole).FOOD_TRUCK_MANAGER.name()}" class="nav-item">
+                <li class="nav-item" th:if="${session.user.getRole().name() == T(ac.kr.deu.connect.luck.user.UserRole).FOOD_TRUCK_MANAGER.name()}">
                     <a class="nav-link" href="/my-truck">내 푸드트럭</a>
                 </li>
 

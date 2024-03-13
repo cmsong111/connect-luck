@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
-    <link th:href="@{/style/css/index.css}" rel="stylesheet"/>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <link rel="stylesheet" th:href="@{/style/css/index.css}"/>
+    <div class="carousel slide" data-ride="carousel" id="myCarousel">
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li class="active" data-slide-to="0" data-target="#myCarousel"></li>
+            <li data-slide-to="1" data-target="#myCarousel"></li>
+            <li data-slide-to="2" data-target="#myCarousel"></li>
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
-                     focusable="false" role="img" alt="First slide"
-                     src="https://i.namu.wiki/i/hvpODJQ46uu5dwhjEl0dMg0We6JpjLVQXGx0_44ez-D6YEqEm330Mgt6tp-jOAHQiFYqASM7hg2i1qTi1EOmyw.webp"/>
+                <img alt="First slide" class="bd-placeholder-img" focusable="false" height="100%" preserveAspectRatio="xMidYMid slice"
+                     role="img" src="https://i.namu.wiki/i/hvpODJQ46uu5dwhjEl0dMg0We6JpjLVQXGx0_44ez-D6YEqEm330Mgt6tp-jOAHQiFYqASM7hg2i1qTi1EOmyw.webp" width="100%"
+                     xmlns="http://www.w3.org/2000/svg"/>
                 <div class="container">
                     <div class="carousel-caption text-left">
                         <h1>행사에 필요한 푸드트럭을 찾고있나요</h1>
@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
-                     focusable="false" role="img" alt="First slide"
-                     src="https://www.sisain.co.kr/news/photo/202306/50578_92831_1687430214.jpg"/>
+                <img alt="First slide" class="bd-placeholder-img" focusable="false" height="100%" preserveAspectRatio="xMidYMid slice"
+                     role="img" src="https://www.sisain.co.kr/news/photo/202306/50578_92831_1687430214.jpg" width="100%"
+                     xmlns="http://www.w3.org/2000/svg"/>
                 <div class="container">
                     <div class="carousel-caption">
                         <h1>행사를 찾고있나요</h1>
@@ -36,9 +36,9 @@
             </div>
 
             <div class="carousel-item">
-                <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
-                     focusable="false" role="img" alt="First slide"
-                     src="https://velog.velcdn.com/images/jeon/post/4a6b3845-fbda-424e-be3f-898f39acb1a6/image.png"/>
+                <img alt="First slide" class="bd-placeholder-img" focusable="false" height="100%" preserveAspectRatio="xMidYMid slice"
+                     role="img" src="https://velog.velcdn.com/images/jeon/post/4a6b3845-fbda-424e-be3f-898f39acb1a6/image.png" width="100%"
+                     xmlns="http://www.w3.org/2000/svg"/>
                 <div class="container">
                     <div class="carousel-caption text-right">
                         <h1>푸드트럭이 어디있는지 알고싶나요</h1>
@@ -49,12 +49,12 @@
                 </div>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <a class="carousel-control-prev" data-slide="prev" href="#myCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <a class="carousel-control-next" data-slide="next" href="#myCarousel" role="button">
+            <span aria-hidden="true" class="carousel-control-next-icon"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
@@ -70,11 +70,11 @@
                     cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
             </div>
             <div class="col-md-5">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500"
-                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-                     aria-label="Placeholder: 500x500"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#eee"/>
-                    <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
+                <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" focusable="false"
+                     height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500"
+                     xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title>
+                    <rect fill="#eee" height="100%" width="100%"/>
+                    <text dy=".3em" fill="#aaa" x="50%" y="50%">500x500</text>
                 </svg>
             </div>
         </div>
@@ -88,11 +88,11 @@
                     cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
             </div>
             <div class="col-md-5 order-md-1">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500"
-                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-                     aria-label="Placeholder: 500x500"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#eee"/>
-                    <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
+                <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" focusable="false"
+                     height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500"
+                     xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title>
+                    <rect fill="#eee" height="100%" width="100%"/>
+                    <text dy=".3em" fill="#aaa" x="50%" y="50%">500x500</text>
                 </svg>
             </div>
         </div>
@@ -106,11 +106,11 @@
                     cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
             </div>
             <div class="col-md-5">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500"
-                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-                     aria-label="Placeholder: 500x500"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#eee"/>
-                    <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
+                <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" focusable="false"
+                     height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500"
+                     xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title>
+                    <rect fill="#eee" height="100%" width="100%"/>
+                    <text dy=".3em" fill="#aaa" x="50%" y="50%">500x500</text>
                 </svg>
             </div>
         </div>

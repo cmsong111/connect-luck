@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -10,16 +10,16 @@
                     </div>
                     <div class="card-body">
                         <!-- 로그인 폼 추가 -->
-                        <form th:action="@{/login}" method="post">
+                        <form method="post" th:action="@{/login}">
                             <div class="form-group">
                                 <label for="email">이메일:</label>
-                                <input type="text" class="form-control" id="email" name="email" required>
+                                <input class="form-control" id="email" name="email" required type="text">
                             </div>
                             <div class="form-group">
                                 <label for="password">비밀번호:</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input class="form-control" id="password" name="password" required type="password">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">로그인</button>
+                            <button class="btn btn-primary btn-block" type="submit">로그인</button>
                         </form>
                     </div>
                 </div>

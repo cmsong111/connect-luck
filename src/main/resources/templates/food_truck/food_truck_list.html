@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout" lang="ko">
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
     <style>
         .card-img-top {
@@ -11,10 +11,10 @@
         <h1 class="text-center">푸드트럭 등록 업체</h1>
         <div class="row">
             <!-- Food Truck 카드를 표시하는 반복문 -->
-            <div th:each="foodTruck : ${foodTrucks}" class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4" th:each="foodTruck : ${foodTrucks}">
                 <div class="card">
                     <!-- Food Truck 이미지 -->
-                    <img th:src="${foodTruck.imageUrl}" class="card-img-top" alt="Food Truck Image">
+                    <img alt="Food Truck Image" class="card-img-top" th:src="${foodTruck.imageUrl}">
                     <div class="card-body">
                         <!-- Food Truck 이름 -->
                         <h5 class="card-title" th:text="${foodTruck.name}"></h5>
@@ -25,9 +25,9 @@
                         <!-- Food Truck 소유자 -->
                         <p class="card-text" th:text="${foodTruck.owner.name}"></p>
                         <!-- '신청하기' 버튼 -->
-                        <a href="#" class="btn btn-primary">후기보기</a>
+                        <a class="btn btn-primary" href="#">후기보기</a>
                         <!-- '연락하기' 버튼 -->
-                        <a href="#" class="btn btn-primary">메뉴보기</a>
+                        <a class="btn btn-primary" href="#">메뉴보기</a>
                     </div>
                 </div>
             </div>
