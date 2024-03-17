@@ -10,10 +10,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Auth", description = "인증 관련 API")
 @RestController
@@ -42,6 +40,13 @@ public class AuthRestController {
     public User signUp(
             @Parameter(description = "회원가입 요청 정보") @RequestBody SignUpRequest signUpRequest) {
         return authService.signUp(signUpRequest);
+    }
+
+    @PostMapping("/findEmailByPhone")
+    @Operation(summary = "휴대폰 번호로 이메일 찾기")
+    public ResponseEntity<String> findEmailByPhone(
+            @Parameter(description = "전화번호") @RequestParam("phone") String phone) {
+        return ResponseEntity.ok(authService.findEmailByPhone(phone));
     }
 
 }

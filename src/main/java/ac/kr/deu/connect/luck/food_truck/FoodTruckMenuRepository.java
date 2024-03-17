@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FoodTruckMenuRepository extends JpaRepository<FoodTruckMenu, Long> {
 
+    void deleteByFoodTruck(FoodTruck foodTruck);
 }

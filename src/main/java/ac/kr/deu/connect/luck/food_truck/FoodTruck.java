@@ -19,7 +19,7 @@ public class FoodTruck extends BaseEntity {
     private String description;
     private String imageUrl;
     @ManyToOne
-    private User owner;
+    private User manager;
     @Enumerated(EnumType.STRING)
     private FoodType foodType;
 }
