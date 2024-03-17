@@ -77,7 +77,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Tag Docker image
-        run: docker tag connect.luck ${{ secrets.DOCKER_USERNAME }}/connect.luck
+        run: docker tag docker.io/library/connect.luck:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/connect.luck:latest
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/connect.luck
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/connect.luck:latest
+
