@@ -1,5 +1,6 @@
 package ac.kr.deu.connect.luck.user;
 
+import ac.kr.deu.connect.luck.auth.SignUpRequest;
 import ac.kr.deu.connect.luck.event.EventRepository;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
@@ -44,5 +45,12 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.ID_NOT_MATCH));
     }
 
-
+    public User updateUser(Long id, SignUpRequest user) {
+        User findUser = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.ID_NOT_MATCH));
+        if (user.email() != null) findUser.setEmail(user.email());
+        if (user.password() != null) findUser.setPassword(user.password());
+        if (user.name() != null) findUser.setName(user.name());
+        if (user.phoneNumber() != null) findUser.setPhone(user.phoneNumber());
+        return userRepository.save(findUser);
+    }
 }

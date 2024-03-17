@@ -10,7 +10,6 @@ public record SignUpRequest(
         String password,
         @Schema(description = "이름", example = "홍길동")
         String name,
-
         @Schema(description = "휴대폰 번호", example = "010-1234-5678")
         String phoneNumber
 ) {

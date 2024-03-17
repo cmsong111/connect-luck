@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -208,4 +207,87 @@ class AuthRestControllerTest {
 
         Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
     }
+
+    @Test
+    @DisplayName("유저 정보 수정 - 성공")
+    @Transactional
+    void updateUserSuccess() throws Exception {
+        User firstUser = User.builder()
+                .email("test99@test.com")
+                .password("test99")
+                .name("User99")
+                .phone("010-0099-0099")
+                .role(UserRole.USER)
+                .build();
+
+        User savedUser = objectMapper.readValue(mockMvc.perform(post("/api/signup")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(firstUser)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString(), User.class);
+
+        Assertions.assertNotNull(savedUser.getId());
+
+        String updatedName = "User99-1";
+        String updatedPhone = "010-0099-0098";
+        String updatedPassword = "test99-1";
+        String updatedEmail = "test99-1@test.com";
+
+        SignUpRequest signUpRequest = new SignUpRequest(updatedEmail, updatedPassword, updatedName, updatedPhone);
+
+        MvcResult mvcResult = mockMvc.perform(patch("/api/user/{id}", savedUser.getId())
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(signUpRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        User updatedUser = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+
+        Assertions.assertEquals(savedUser.getId(), updatedUser.getId());
+        Assertions.assertEquals(updatedEmail, updatedUser.getEmail());
+        Assertions.assertEquals(updatedName, updatedUser.getName());
+        Assertions.assertEquals(updatedPassword, updatedUser.getPassword());
+        Assertions.assertEquals(updatedPhone, updatedUser.getPhone());
+    }
+
+    @Test
+    @DisplayName("유저 정보 수정 - 이름,전화번호만 수정")
+    @Transactional
+    void updateUserNameAndPhoneSuccess() throws Exception {
+        User firstUser = User.builder()
+                .email("test99@test.com")
+                .password("test99")
+                .name("User99")
+                .phone("010-0099-0099")
+                .role(UserRole.USER)
+                .build();
+
+        User savedUser = objectMapper.readValue(mockMvc.perform(post("/api/signup")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(firstUser)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString(), User.class);
+
+        Assertions.assertNotNull(savedUser.getId());
+
+        String updatedName = "User99-1";
+        String updatedPhone = "010-0099-0098";
+
+        SignUpRequest signUpRequest = new SignUpRequest(null, null, updatedName, updatedPhone);
+
+        MvcResult mvcResult = mockMvc.perform(patch("/api/user/{id}", savedUser.getId())
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(signUpRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        User updatedUser = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+
+        Assertions.assertEquals(savedUser.getId(), updatedUser.getId());
+        Assertions.assertEquals(savedUser.getEmail(), updatedUser.getEmail());
+        Assertions.assertEquals(updatedName, updatedUser.getName());
+        Assertions.assertEquals(savedUser.getPassword(), updatedUser.getPassword());
+        Assertions.assertEquals(updatedPhone, updatedUser.getPhone());
+    }
+
 }
