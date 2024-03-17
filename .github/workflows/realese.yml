@@ -65,7 +65,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build native image
-        run: ./gradlew buildbootimage
+        run: ./gradlew bootBuildImage
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
