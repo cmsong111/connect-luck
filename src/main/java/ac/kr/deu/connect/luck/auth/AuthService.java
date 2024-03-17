@@ -41,7 +41,7 @@ public class AuthService {
     public User login(LoginRequest loginRequest) {
         Optional<User> user = userRepository.findByEmail(loginRequest.email());
 
-        if (user.isEmpty()) throw new CustomException(CustomErrorCode.ID_NOT_FOUND);
+        if (user.isEmpty()) throw new CustomException(CustomErrorCode.EMAIL_NOT_FOUND);
         if (!user.get().getPassword().equals(loginRequest.password())) throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
 
         return user.get();

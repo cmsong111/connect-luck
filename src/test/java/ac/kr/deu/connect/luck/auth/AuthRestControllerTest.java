@@ -53,7 +53,7 @@ class AuthRestControllerTest {
                 .andReturn();
 
         CustomErrorResponse customErrorResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), CustomErrorResponse.class);
-        CustomErrorCode customErrorCode = CustomErrorCode.ID_NOT_FOUND;
+        CustomErrorCode customErrorCode = CustomErrorCode.EMAIL_NOT_FOUND;
 
         Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
     }

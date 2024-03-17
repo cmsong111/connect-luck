@@ -26,7 +26,7 @@ VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-10 10:00:00', '2024-03-10
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-25 16:00:00', '2024-03-25 22:00:00', 4, 'Event 4', 'Event Content 4', '101 Elm St',
         'Room 404', '54321', 'https://chrisandpartners.co/wp-content/uploads/2021/11/%EA%B7%B8%EB%A6%BC1.jpg');
 
-INSERT INTO food_truck (created_at, owner_id, updated_at, description, food_type, image_url, name)
+INSERT INTO food_truck (created_at, manager_id, updated_at, description, food_type, image_url, name)
 VALUES (CURRENT_TIMESTAMP, 6, CURRENT_TIMESTAMP, '청년버거', 'BURGER',
         'https://on.com2us.com/wp-content/uploads/2023/01/shutterstock_1938676873-scaled.jpg', 'Burger Express'),
        (CURRENT_TIMESTAMP, 7, CURRENT_TIMESTAMP, '바삭바삭 치킨트럭', 'CHICKEN',
