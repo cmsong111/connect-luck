@@ -3,6 +3,7 @@ package ac.kr.deu.connect.luck.auth;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
 import ac.kr.deu.connect.luck.user.User;
+import ac.kr.deu.connect.luck.user.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -155,6 +157,54 @@ class AuthRestControllerTest {
         // then
         CustomErrorResponse customErrorResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), CustomErrorResponse.class);
         CustomErrorCode customErrorCode = CustomErrorCode.PHONE_NOT_FOUND;
+
+        Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
+    }
+
+    @Test
+    @DisplayName("유저 정보 조회 - 성공")
+    void getUserInfoSuccess() throws Exception {
+        // given
+        User user = User.builder()
+                .id(1L)
+                .email("test1@test.com")
+                .password("test1")
+                .name("User1")
+                .phone("010-1111-1111")
+                .role(UserRole.USER)
+                .build();
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(get("/api/user/{id}", user.getId())
+                        .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        User responseUser = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+
+        Assertions.assertEquals(user.getId(), responseUser.getId());
+        Assertions.assertEquals(user.getEmail(), responseUser.getEmail());
+        Assertions.assertEquals(user.getName(), responseUser.getName());
+        Assertions.assertEquals(user.getPhone(), responseUser.getPhone());
+        Assertions.assertEquals(user.getRole(), responseUser.getRole());
+    }
+
+    @Test
+    @DisplayName("유저 정보 조회 - 실패")
+    void getUserInfoFailure() throws Exception {
+        // given
+        Long id = 100L;
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(get("/api/user/{id}", id)
+                        .contentType("application/json"))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        // then
+        CustomErrorResponse customErrorResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), CustomErrorResponse.class);
+        CustomErrorCode customErrorCode = CustomErrorCode.ID_NOT_MATCH;
 
         Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
     }

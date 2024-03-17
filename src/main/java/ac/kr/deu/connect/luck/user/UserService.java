@@ -40,5 +40,9 @@ public class UserService {
         return "delete success";
     }
 
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.ID_NOT_MATCH));
+    }
+
 
 }

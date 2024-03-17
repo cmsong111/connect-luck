@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -25,5 +22,13 @@ public class UserRestController {
             @Parameter(name = "id") @PathVariable("id") Long id
     ) {
         return ResponseEntity.ok(userService.deleteUser(id));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "사용자 조회", description = "사용자정보를 조회합니다.")
+    public ResponseEntity<User> getUser(
+            @Parameter(name = "id") @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(userService.findUserById(id));
     }
 }
