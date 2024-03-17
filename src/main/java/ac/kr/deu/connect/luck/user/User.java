@@ -18,6 +18,8 @@ public class User extends BaseEntity {
     private String email;
     private String password;
     private String name;
+    @Column(unique = true)
+    private String phone;
     @Enumerated(EnumType.STRING)
     private UserRole role;
 }

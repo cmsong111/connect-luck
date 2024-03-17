@@ -6,4 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "User", description = "사용자 관련 API")
 public class UserRestController {
+
+
 }

@@ -46,4 +46,10 @@ public class AuthService {
 
         return user.get();
     }
+
+    public String findEmailByPhone(String phone) {
+        Optional<User> user = userRepository.findByPhone(phone);
+        if (user.isEmpty()) throw new CustomException(CustomErrorCode.PHONE_NOT_FOUND);
+        return user.get().getEmail();
+    }
 }

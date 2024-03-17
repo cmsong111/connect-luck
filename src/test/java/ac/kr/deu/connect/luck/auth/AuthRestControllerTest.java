@@ -4,6 +4,7 @@ import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
 import ac.kr.deu.connect.luck.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -79,9 +79,10 @@ class AuthRestControllerTest {
 
     @Test
     @DisplayName("회원가입 - 성공")
+    @Transactional
     void signUp() throws Exception {
         // given
-        SignUpRequest signUpRequest = new SignUpRequest("tttt@tttt.com", "tttt1234", "tttt");
+        SignUpRequest signUpRequest = new SignUpRequest("tttt@tttt.com", "tttt1234", "tttt", "010-1234-5678");
         String content = objectMapper.writeValueAsString(signUpRequest);
 
         // when
@@ -103,7 +104,7 @@ class AuthRestControllerTest {
     @DisplayName("회원가입 - 중복된 이메일")
     void signUpFailure() throws Exception {
         // given
-        SignUpRequest signUpRequest = new SignUpRequest("test1@test.com", "test1", "test1");
+        SignUpRequest signUpRequest = new SignUpRequest("test1@test.com", "test1", "test1", "010-1234-5679");
         String content = objectMapper.writeValueAsString(signUpRequest);
 
         // when
@@ -119,5 +120,42 @@ class AuthRestControllerTest {
 
         Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
 
+    }
+
+    @Test
+    @DisplayName("휴대폰 번호로 이메일 찾기 - 성공")
+    void findEmailByPhoneSuccess() throws Exception {
+        // given
+        String phone = "010-1111-1111";
+        String email = "test1@test.com";
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(post("/api/findEmailByPhone")
+                        .param("phone", phone))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        String responseEmail = mvcResult.getResponse().getContentAsString();
+        Assertions.assertEquals(email, responseEmail);
+    }
+
+    @Test
+    @DisplayName("휴대폰 번호로 이메일 찾기 - 실패")
+    void findEmailByPhoneFailure() throws Exception {
+        // given
+        String phone = "010-1234-5678";
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(post("/api/findEmailByPhone")
+                        .param("phone", phone))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        // then
+        CustomErrorResponse customErrorResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), CustomErrorResponse.class);
+        CustomErrorCode customErrorCode = CustomErrorCode.PHONE_NOT_FOUND;
+
+        Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
     }
 }

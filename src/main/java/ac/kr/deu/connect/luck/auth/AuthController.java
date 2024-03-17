@@ -53,8 +53,8 @@ public class AuthController {
      * @return 홈 화면
      */
     @PostMapping("/signup")
-    public String signupPost(String email, String password, String name, HttpServletRequest httpServletRequest) {
-        User user = authService.signUp(new SignUpRequest(email, password, name));
+    public String signupPost(String email, String password, String name, String phone, HttpServletRequest httpServletRequest) {
+        User user = authService.signUp(new SignUpRequest(email, password, name, phone));
 
         HttpSession session = httpServletRequest.getSession(true);
         session.setAttribute("user", user);

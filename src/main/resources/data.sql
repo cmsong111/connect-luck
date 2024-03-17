@@ -1,15 +1,15 @@
 -- User table
-INSERT INTO users (created_at, updated_at, email, name, password, role)
-VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test1@test.com', 'User1', 'test1', 'USER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test2@test.com', 'User2', 'test2', 'USER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test3@test.com', 'User3', 'test3', 'ADMIN'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test4@test.com', 'User4', 'test4', 'EVENT_MANAGER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test5@test.com', '동의대학교 총학생회', 'test6', 'EVENT_MANAGER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test6@test.com', 'User6', 'test6', 'FOOD_TRUCK_MANAGER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test7@test.com', 'User7', 'test7', 'FOOD_TRUCK_MANAGER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test8@test.com', 'User8', 'test8', 'FOOD_TRUCK_MANAGER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test9@test.com', 'User9', 'test9', 'FOOD_TRUCK_MANAGER'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test10@test.com', 'User10', 'test10', 'FOOD_TRUCK_MANAGER');
+INSERT INTO users (created_at, updated_at, email, name, password, role, phone)
+VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test1@test.com', 'User1', 'test1', 'USER', '010-1111-1111'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test2@test.com', 'User2', 'test2', 'USER', '010-2222-2222'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test3@test.com', 'User3', 'test3', 'ADMIN', '010-3333-3333'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test4@test.com', 'User4', 'test4', 'EVENT_MANAGER', '010-4444-4444'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test5@test.com', '동의대학교 총학생회', 'test6', 'EVENT_MANAGER', '010-5555-5555'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test6@test.com', 'User6', 'test6', 'FOOD_TRUCK_MANAGER', '010-6666-6666'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test7@test.com', 'User7', 'test7', 'FOOD_TRUCK_MANAGER', '010-7777-7777'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test8@test.com', 'User8', 'test8', 'FOOD_TRUCK_MANAGER', '010-8888-8888'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test9@test.com', 'User9', 'test9', 'FOOD_TRUCK_MANAGER', '010-9999-9999'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test10@test.com', 'User10', 'test10', 'FOOD_TRUCK_MANAGER', '010-1010-1010');
 
 
 -- Event table
@@ -18,7 +18,7 @@ VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-10 10:00:00', '2024-03-10
         '지천관 앞',
         '12345', 'https://cdn.news.unn.net/news/photo/202207/530605_335239_856.jpg'),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-15 12:00:00', '2024-03-15 18:00:00', 4, '부산시민공원 빛축제',
-        '부산의 대표 도심공원인 부산시민공원에서 부산진구청, 부산시민공원, 부산국립국악원 3개 기관이 협력하여 제3회 부산 희망 드림 빛축제를 개최하였다. ''부산의 꿈과 희망의 빛을 모아 세계로''라는 주제로 2030부산세계박람회 유치 기원 등 테마를 구성하여 다양한 빛 시설물과 함께 특색있는 볼거리를 제공한다.',
+        '부산의 대표 도심공원인 부산시민공원에서 부산진구청, 부산시민공원, 부산국립국악원 3개 기관이 협력하여 제3회 부산 희망 드림 빛축제를 개최하였다. 부산의 꿈과 희망의 빛을 모아 세계로 라는 주제로 2030부산세계박람회 유치 기원 등 테마를 구성하여 다양한 빛 시설물과 함께 특색있는 볼거리를 제공한다.',
         '부산 부산진구 시민공원로 73',
         '남2문', '67890', 'https://www.visitbusan.net/uploadImgs/files/cntnts/20191227194943122_oen'),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-20 14:00:00', '2024-03-20 20:00:00', 4, 'Event 3', 'Event Content 3', '789 Pine St',
