@@ -71,4 +71,15 @@ public class AuthController {
         httpServletRequest.getSession().invalidate();
         return "redirect:/";
     }
+
+    @GetMapping("/find-id")
+    public String requestIdSearchPage() {
+        return "auth/find-id";
+    }
+
+    @PostMapping("/find-id")
+    public String idSearch(@RequestParam("phone") String phone, Model model) {
+        model.addAttribute("email", authService.findEmailByPhone(phone));
+        return "auth/found-id";
+    }
 }
