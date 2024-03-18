@@ -5,9 +5,43 @@
         <h1 class="text-center">마이프로필</h1>
         <div class="card mt-4">
             <div class="card-body">
-                <p th:text="'이름: ' + ${user.name}"></p>
-                <p th:text="'이메일: ' + ${user.email}"></p>
-                <p th:text="'역할: ' + ${user.role}"></p>
+                <h2>내 정보</h2>
+                <p th:text="'이름: ' + ${userInfo.user.name}"></p>
+                <p th:text="'이메일: ' + ${userInfo.user.email}"></p>
+                <p th:text="'역할: ' + ${userInfo.user.role}"></p>
+                <p th:text="'연락처: ' + ${userInfo.user.phone}"></p>
+                <p th:text="'가입일: ' + ${userInfo.user.createdAt}"></p>
+                <p th:text="'수정일: ' + ${userInfo.user.updatedAt}"></p>
+                <div th:if="${not #lists.isEmpty(userInfo.reviews)}">
+                    <h2>내가 작성한 리뷰</h2>
+                    <div class="review-card" th:each="review : ${userInfo.reviews}">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img alt="Review Image" class="img-fluid" th:src="${review.imageUrl}">
+                                </div>
+                                <div class="col-md-9">
+                                    <p th:text="'내용: ' + ${review.content}"></p>
+                                    <div th:if="${review.reply} != null">
+                                        <p th:text="'답글: ' + ${review.reply}"></p>
+                                    </div>
+                                    <p th:text="'평점: ' + ${review.score}"></p>
+                                    <!-- 필요한 리뷰 정보들을 추가로 표시 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:unless="${not #lists.isEmpty(userInfo.reviews)}">
+                    <p>작성한 리뷰가 없습니다.</p>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <!--회원 정보 수정 링크-->
+                <a class="btn btn-primary" href="/user/update">회원 정보 수정</a>
+                <!--회원 탈퇴 링크-->
+                <a class="btn btn-danger" href="/user/delete">회원 탈퇴</a>
             </div>
         </div>
     </div>
