@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,7 +22,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String loginPost(String email, String password, HttpServletRequest httpServletRequest, Model model) {
+    public String loginPost(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            HttpServletRequest httpServletRequest) {
         // 세션 초기화
         httpServletRequest.getSession().invalidate();
         HttpSession session = httpServletRequest.getSession(true);
@@ -66,5 +70,16 @@ public class AuthController {
     public String logout(HttpServletRequest httpServletRequest) {
         httpServletRequest.getSession().invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/find-id")
+    public String requestIdSearchPage() {
+        return "auth/find-id";
+    }
+
+    @PostMapping("/find-id")
+    public String idSearch(@RequestParam("phone") String phone, Model model) {
+        model.addAttribute("email", authService.findEmailByPhone(phone));
+        return "auth/found-id";
     }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <form method="post" th:action="@{/find-id}">
+        <div class="form-group">
+            <label for="phone">전화번호:</label>
+            <input id="phone" name="phone">
+        </div>
+        <button type="submit">아이디 검색</button>
+    </form>
+</th:block>
+</html>

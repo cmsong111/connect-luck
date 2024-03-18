@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <div class="container mt-5">
+        <h1 class="text-center">회원 탈퇴</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <p>정말로 탈퇴하시겠습니까?</p>
+                <p>탈퇴 시 리뷰정보등 모든 정보가 삭제됩니다.</p>
+                <p>탈퇴하시려면 아래 버튼을 눌러주세요.</p>
+                <form th:action="@{/user/delete}" th:method="delete">
+                    <button class="btn btn-danger" type="submit">탈퇴하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

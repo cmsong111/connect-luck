@@ -7,10 +7,13 @@ import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckRepository;
+import ac.kr.deu.connect.luck.review.Review;
 import ac.kr.deu.connect.luck.review.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +55,12 @@ public class UserService {
         if (user.name() != null) findUser.setName(user.name());
         if (user.phoneNumber() != null) findUser.setPhone(user.phoneNumber());
         return userRepository.save(findUser);
+    }
+
+    public UserInfo findUserInfo(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.ID_NOT_MATCH));
+        List<Review> reviews = reviewRepository.findByWriter_Id(id);
+
+        return new UserInfo(user, reviews);
     }
 }
