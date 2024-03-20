@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
-
-    <p>검색된 아이디</p>
-    <span th:text="${email}"/>
-
+    <div class="container" th:style="${'margin-top: 50px;'}">
+        <div class="card">
+            <div class="card-header">
+                검색된 아이디
+            </div>
+            <div class="card-body">
+                <span th:text="${email}"></span>
+            </div>
+        </div>
+    </div>
 </th:block>
 </html>
