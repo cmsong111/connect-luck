@@ -57,7 +57,12 @@ public class AuthController {
      * @return 홈 화면
      */
     @PostMapping("/signup")
-    public String signupPost(String email, String password, String name, String phone, HttpServletRequest httpServletRequest) {
+    public String signupPost(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("name") String name,
+            @RequestParam("phone") String phone,
+            HttpServletRequest httpServletRequest) {
         User user = authService.signUp(new SignUpRequest(email, password, name, phone));
 
         HttpSession session = httpServletRequest.getSession(true);
