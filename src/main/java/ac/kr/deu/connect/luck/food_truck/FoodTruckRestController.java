@@ -1,6 +1,8 @@
 package ac.kr.deu.connect.luck.food_truck;
 
+import ac.kr.deu.connect.luck.user.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +54,11 @@ public class FoodTruckRestController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/be-manager")
+    @Operation(summary = "become a manager of a food truck")
+    public ResponseEntity<User> becomeManager(
+            @Parameter(name = "id", description = "유저 ID") @RequestParam("id") Long id) {
+        return ResponseEntity.ok(foodTruckService.becomeFoodTruckManager(id));
+    }
 
 }

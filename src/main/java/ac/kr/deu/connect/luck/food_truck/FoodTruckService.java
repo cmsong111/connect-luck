@@ -56,13 +56,14 @@ public class FoodTruckService {
      *
      * @param id 삭제할 푸드트럭의 ID
      */
-    public void deleteFoodTruck(Long id) {
+    public String deleteFoodTruck(Long id) {
         FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
         foodTruckReviewRepository.deleteAllByFoodTruck(foodTruck);
         foodTruckMenuRepository.deleteAllByFoodTruck(foodTruck);
         foodTruckRepository.delete(foodTruck);
+        return "삭제되었습니다.";
     }
 
     /**
@@ -96,7 +97,15 @@ public class FoodTruckService {
      * @return 저장된 사용자 정보
      */
     public User becomeFoodTruckManager(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH)
+        );
+        if (user.getRole() == UserRole.FOOD_TRUCK_MANAGER) {
+            throw new CustomException(CustomErrorCode.ALREADY_EXIST_USER_ID);
+        }
+        if (user.getRole() == UserRole.EVENT_MANAGER) {
+            throw new CustomException(CustomErrorCode.EVENT_MANAGER_CANNOT_BE_FOOD_TRUCK_MANAGER);
+        }
         user.setRole(UserRole.FOOD_TRUCK_MANAGER);
         return userRepository.save(user);
     }
