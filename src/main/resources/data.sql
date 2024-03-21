@@ -40,7 +40,7 @@ VALUES (CURRENT_TIMESTAMP, 6, CURRENT_TIMESTAMP, '청년버거', 'BURGER',
         'https://static.wtable.co.kr/image/production/service/recipe/1793/78e41de9-7045-41e0-8a44-6cbbcd65ddd5.jpg?size=800x800', 'Hotdog Haven');
 
 -- Review table
-INSERT INTO review (created_at, updated_at, content, food_truck_id, image_url, reply, score, writer_id)
+INSERT INTO food_truck_review (created_at, updated_at, content, food_truck_id, image_url, reply, score, author_id)
 VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '청년버거 너무 맛있어요!', 1, 'https://picsum.photos/1600/900', NULL, 5, 1),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '치킨이 아주 바삭바삭해요!', 2, 'https://picsum.photos/1600/900', '감사합니다!', 4, 1),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '디저트도 다채로워서 좋아요', 3, 'https://picsum.photos/1600/900', '감사합니다!', 4, 2),
