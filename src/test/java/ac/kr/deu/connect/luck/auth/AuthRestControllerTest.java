@@ -203,7 +203,7 @@ class AuthRestControllerTest {
 
         // then
         CustomErrorResponse customErrorResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), CustomErrorResponse.class);
-        CustomErrorCode customErrorCode = CustomErrorCode.ID_NOT_MATCH;
+        CustomErrorCode customErrorCode = CustomErrorCode.USER_ID_NOT_MATCH;
 
         Assertions.assertEquals(customErrorResponse.errorType(), customErrorCode);
     }

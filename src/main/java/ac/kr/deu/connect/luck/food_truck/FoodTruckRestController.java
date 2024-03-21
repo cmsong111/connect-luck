@@ -33,7 +33,7 @@ public class FoodTruckRestController {
     @GetMapping("/{id}")
     @Operation(summary = "Get a food truck by id")
     public ResponseEntity<FoodTruck> getFoodTruck(
-            @PathVariable Long id) {
+            @Parameter(name = "id", description = "트럭 ID를 조회") @PathVariable Long id) {
         return ResponseEntity.ok(foodTruckService.getFoodTruck(id));
     }
 
@@ -48,10 +48,10 @@ public class FoodTruckRestController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a food truck by id")
-    public ResponseEntity<Void> deleteFoodTruck(
+    public ResponseEntity<String> deleteFoodTruck(
             @PathVariable Long id) {
-        foodTruckService.deleteFoodTruck(id);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(foodTruckService.deleteFoodTruck(id));
     }
 
     @PostMapping("/be-manager")
