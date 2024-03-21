@@ -19,8 +19,9 @@ public class FoodTruckReview extends BaseEntity {
     private String content;
     private int score;
     private String imageUrl;
+    private String reply;
     @ManyToOne
     private FoodTruck foodTruck;
     @ManyToOne
-    private User user;
+    private User author;
 }

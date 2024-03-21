@@ -4,11 +4,7 @@ import ac.kr.deu.connect.luck.auth.SignUpRequest;
 import ac.kr.deu.connect.luck.event.EventRepository;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
-import ac.kr.deu.connect.luck.food_truck.FoodTruck;
-import ac.kr.deu.connect.luck.food_truck.FoodTruckMenuRepository;
-import ac.kr.deu.connect.luck.food_truck.FoodTruckRepository;
-import ac.kr.deu.connect.luck.review.Review;
-import ac.kr.deu.connect.luck.review.ReviewRepository;
+import ac.kr.deu.connect.luck.food_truck.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final ReviewRepository reviewRepository;
+    private final FoodTruckReviewRepository foodTruckReviewRepository;
     private final EventRepository eventRepository;
     private final FoodTruckRepository foodTruckRepository;
     private final FoodTruckMenuRepository foodTruckMenuRepository;
@@ -34,10 +30,10 @@ public class UserService {
     @Transactional
     public String deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.ID_NOT_MATCH));
-        reviewRepository.deleteByWriter(user);
+        foodTruckReviewRepository.deleteAllByAuthor(user);
         eventRepository.deleteByManager(user);
         for (FoodTruck foodTruck : foodTruckRepository.findByManager(user)) {
-            foodTruckMenuRepository.deleteByFoodTruck(foodTruck);
+            foodTruckMenuRepository.deleteAllByFoodTruck(foodTruck);
         }
         foodTruckRepository.deleteByManager(user);
         userRepository.delete(user);
@@ -59,7 +55,7 @@ public class UserService {
 
     public UserInfo findUserInfo(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.ID_NOT_MATCH));
-        List<Review> reviews = reviewRepository.findByWriter_Id(id);
+        List<FoodTruckReview> reviews = foodTruckReviewRepository.findByAuthor(user);
 
         return new UserInfo(user, reviews);
     }
