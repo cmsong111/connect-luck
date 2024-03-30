@@ -35,8 +35,8 @@ public class FoodTruckRestController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a food truck by id")
-    public ResponseEntity<FoodTruck> getFoodTruck(
-            @Parameter(name = "id", description = "트럭 ID를 조회") @PathVariable Long id) {
+    public ResponseEntity<FoodTruckDetailResponse> getFoodTruck(
+            @Parameter(name = "id", description = "트럭 ID를 조회") @PathVariable("id") Long id) {
         return ResponseEntity.ok(foodTruckService.getFoodTruck(id));
     }
 
