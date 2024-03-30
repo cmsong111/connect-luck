@@ -10,8 +10,6 @@ public record FoodTruckMenuRequest(
         @Schema(description = "메뉴 사진 URL", example = "https://picsum.photos/1600/900")
         String imageUrl,
         @Schema(description = "가격", example = "10000")
-        int price,
-        @Schema(description = "트럭 ID", example = "1")
-        Long foodTruckId
+        int price
 ) {
 }

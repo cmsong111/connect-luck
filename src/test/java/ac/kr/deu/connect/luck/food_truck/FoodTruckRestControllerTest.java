@@ -260,7 +260,7 @@ class FoodTruckRestControllerTest {
     @DisplayName("[GET] 푸드트럭 조회 - 상호명 지정")
     void getFoodTruckByName() throws Exception {
         // Given
-        String name = "Burger";
+        String name = "청년";
 
         // When
         MvcResult mvcResult = mockMvc.perform(get("/api/food-truck")
@@ -281,7 +281,7 @@ class FoodTruckRestControllerTest {
     @DisplayName("[GET] 푸드트럭 조회 - 상호명, 음식 종류 지정")
     void getFoodTruckByNameAndFoodType() throws Exception {
         // Given
-        String name = "Burger";
+        String name = "청년";
         FoodType foodType = FoodType.BURGER;
 
         // When

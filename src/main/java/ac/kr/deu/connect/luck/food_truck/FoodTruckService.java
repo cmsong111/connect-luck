@@ -43,8 +43,14 @@ public class FoodTruckService {
      * @param id 조회할 푸드트럭의 ID
      * @return 특정 푸드트럭 정보
      */
-    public FoodTruck getFoodTruck(Long id) {
-        return foodTruckRepository.findById(id).orElseThrow();
+    public FoodTruckDetailResponse getFoodTruck(Long id) {
+        FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
+        );
+        List<FoodTruckMenu> foodTruckMenus = foodTruckMenuRepository.findByFoodTruckId(id);
+        List<FoodTruckReview> foodTruckReviews = foodTruckReviewRepository.findByFoodTruckId(id);
+        return mapStructMapper.toFoodTruckDetailResponse(foodTruck, foodTruckReviews, foodTruckMenus);
+
     }
 
     /**
