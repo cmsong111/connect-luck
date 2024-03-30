@@ -1,6 +1,5 @@
 package ac.kr.deu.connect.luck.food_truck;
 
-import ac.kr.deu.connect.luck.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,8 +19,9 @@ public class FoodTruckRestController {
     @PostMapping
     @Operation(summary = "Create a food truck")
     public ResponseEntity<FoodTruck> createFoodTruck(
+            @RequestParam("userId") Long userId,
             @RequestBody FoodTruckRequest foodTruckRequest) {
-        return ResponseEntity.ok(foodTruckService.saveFoodTruck(foodTruckRequest));
+        return ResponseEntity.ok(foodTruckService.saveFoodTruck(userId, foodTruckRequest));
     }
 
     @GetMapping

@@ -9,8 +9,6 @@ public record FoodTruckRequest(
         String description,
         @Schema(description = "푸드트럭 이미지 URL", example = "https://picsum.photos/1600/900")
         String imageUrl,
-        @Schema(description = "매니저 ID", example = "4")
-        Long userId,
         @Schema(description = "음식 종류", example = "KOREAN")
         FoodType foodType
 ) {

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-03-30T23:52:16+0900",
+    date = "2024-03-31T00:22:44+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -78,11 +78,11 @@ public class MapStructMapperImpl implements MapStructMapper {
 
         FoodTruck.FoodTruckBuilder foodTruck = FoodTruck.builder();
 
-        foodTruck.manager( foodTruckRequestToUser( foodTruckRequest ) );
         foodTruck.name( foodTruckRequest.name() );
         foodTruck.description( foodTruckRequest.description() );
         foodTruck.imageUrl( foodTruckRequest.imageUrl() );
         foodTruck.foodType( foodTruckRequest.foodType() );
+        foodTruck.manager( foodTruckRequestToUser( foodTruckRequest ) );
 
         return foodTruck.build();
     }
@@ -122,8 +122,6 @@ public class MapStructMapperImpl implements MapStructMapper {
         }
 
         User.UserBuilder user = User.builder();
-
-        user.id( foodTruckRequest.userId() );
 
         return user.build();
     }
