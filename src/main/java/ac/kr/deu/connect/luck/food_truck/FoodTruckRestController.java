@@ -19,7 +19,7 @@ public class FoodTruckRestController {
     @PostMapping
     @Operation(summary = "Create a food truck")
     public ResponseEntity<FoodTruck> createFoodTruck(
-            @RequestParam("userId") Long userId,
+            @RequestHeader("USER_ID") Long userId,
             @RequestBody FoodTruckRequest foodTruckRequest) {
         return ResponseEntity.ok(foodTruckService.saveFoodTruck(userId, foodTruckRequest));
     }
@@ -37,20 +37,21 @@ public class FoodTruckRestController {
         return ResponseEntity.ok(foodTruckService.getFoodTruck(id));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{foodTruck-id}")
     @Operation(summary = "Update a food truck by id")
     public ResponseEntity<FoodTruck> updateFoodTruck(
-            @PathVariable Long id,
+            @PathVariable("foodTruck-id") Long truckId,
+            @Parameter(name = "유저 ID") @RequestHeader("USER_ID") Long userId,
             @RequestBody FoodTruckRequest foodTruckRequest) {
-        return ResponseEntity.ok(foodTruckService.updateFoodTruck(id, foodTruckRequest));
+        return ResponseEntity.ok(foodTruckService.updateFoodTruck(truckId, userId, foodTruckRequest));
     }
 
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a food truck by id")
     public ResponseEntity<String> deleteFoodTruck(
+            @RequestHeader("USER_ID") Long userId,
             @PathVariable Long id) {
-
         return ResponseEntity.ok(foodTruckService.deleteFoodTruck(id));
     }
 }

@@ -22,8 +22,9 @@ public interface MapStructMapper {
     @Mapping(source = "managerId", target = "manager.id")
     Event toEvent(EventRequest eventRequest);
 
-    @Mapping(target = "manager.id", ignore = true)
     FoodTruck toFoodTruck(FoodTruckRequest foodTruckRequest);
+
+    FoodTruckRequest toFoodTruckRequest(FoodTruck foodTruck);
 
     @Mapping(source = "foodTruckId", target = "foodTruck.id")
     @Mapping(source = "authorId", target = "author.id")

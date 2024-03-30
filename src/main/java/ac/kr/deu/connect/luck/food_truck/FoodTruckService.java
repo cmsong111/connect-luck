@@ -6,7 +6,6 @@ import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.user.User;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -72,12 +71,19 @@ public class FoodTruckService {
     /**
      * 푸드트럭 정보를 수정합니다. 수정할 정보가 없는 경우 기존 정보를 유지합니다.
      *
-     * @param id               푸드트럭 ID
+     * @param foodTruckId      푸드트럭 ID
      * @param foodTruckRequest 수정할 푸드트럭 정보
      * @return 수정된 푸드트럭 정보
      */
-    public FoodTruck updateFoodTruck(Long id, FoodTruckRequest foodTruckRequest) {
-        FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow();
+    public FoodTruck updateFoodTruck(Long foodTruckId, Long userId, FoodTruckRequest foodTruckRequest) {
+        // Search food truck
+        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
+                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
+        );
+        // Check if the user is the manager of the food truck
+        isManager(userId, foodTruck);
+
+        // 수정할 정보가 있는 경우 수정
         if (foodTruckRequest.name() != null) {
             foodTruck.setName(foodTruckRequest.name());
         }
@@ -90,6 +96,8 @@ public class FoodTruckService {
         if (foodTruckRequest.foodType() != null) {
             foodTruck.setFoodType(foodTruckRequest.foodType());
         }
+
+        // 수정된 푸드트럭 정보 저장
         return foodTruckRepository.save(foodTruck);
     }
 
@@ -100,27 +108,21 @@ public class FoodTruckService {
      *
      * @param userId    사용자 ID
      * @param foodTruck 푸드트럭
-     * @return boolean 푸드트럭 매니저 여부
      */
-    protected boolean isManager(Long userId, FoodTruck foodTruck) {
-
+    protected void isManager(Long userId, FoodTruck foodTruck) {
         isManager(userId);
-
         if (!foodTruck.getManager().getId().equals(userId)) {
             throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
         }
-        return true;
     }
 
-    protected boolean isManager(Long userId) {
+    protected void isManager(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH)
         );
-
         if (!user.getRole().equals(UserRole.FOOD_TRUCK_MANAGER)) {
             throw new CustomException(CustomErrorCode.ROLE_NOT_MATCH);
         }
-        return true;
     }
 
 

@@ -8,13 +8,14 @@ import ac.kr.deu.connect.luck.food_truck.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckRequest;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckReview;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckReviewRequestDto;
+import ac.kr.deu.connect.luck.food_truck.FoodType;
 import ac.kr.deu.connect.luck.user.User;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-03-31T00:22:44+0900",
+    date = "2024-03-31T00:57:08+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -82,9 +83,29 @@ public class MapStructMapperImpl implements MapStructMapper {
         foodTruck.description( foodTruckRequest.description() );
         foodTruck.imageUrl( foodTruckRequest.imageUrl() );
         foodTruck.foodType( foodTruckRequest.foodType() );
-        foodTruck.manager( foodTruckRequestToUser( foodTruckRequest ) );
 
         return foodTruck.build();
+    }
+
+    @Override
+    public FoodTruckRequest toFoodTruckRequest(FoodTruck foodTruck) {
+        if ( foodTruck == null ) {
+            return null;
+        }
+
+        String name = null;
+        String description = null;
+        String imageUrl = null;
+        FoodType foodType = null;
+
+        name = foodTruck.getName();
+        description = foodTruck.getDescription();
+        imageUrl = foodTruck.getImageUrl();
+        foodType = foodTruck.getFoodType();
+
+        FoodTruckRequest foodTruckRequest = new FoodTruckRequest( name, description, imageUrl, foodType );
+
+        return foodTruckRequest;
     }
 
     @Override
@@ -112,16 +133,6 @@ public class MapStructMapperImpl implements MapStructMapper {
         User.UserBuilder user = User.builder();
 
         user.id( eventRequest.managerId() );
-
-        return user.build();
-    }
-
-    protected User foodTruckRequestToUser(FoodTruckRequest foodTruckRequest) {
-        if ( foodTruckRequest == null ) {
-            return null;
-        }
-
-        User.UserBuilder user = User.builder();
 
         return user.build();
     }
