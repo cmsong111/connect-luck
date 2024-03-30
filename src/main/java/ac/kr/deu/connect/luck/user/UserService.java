@@ -59,4 +59,21 @@ public class UserService {
 
         return new UserInfo(user, reviews);
     }
+
+    public User setUserRole(Long id, UserRole role) {
+        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        if (user.getRole() == role) {
+            throw new CustomException(CustomErrorCode.ALREADY_SET_ROLE);
+        }
+        // 푸드트럭 매니저는 이벤트 매니저로 변경 불가
+        if (user.getRole() == UserRole.FOOD_TRUCK_MANAGER && role == UserRole.EVENT_MANAGER) {
+            throw new CustomException(CustomErrorCode.ROLE_NOT_BE_CHANGE);
+        }
+        // 이벤트 매니저는 푸드트럭 매니저로 변경 불가
+        if (user.getRole() == UserRole.EVENT_MANAGER && role == UserRole.FOOD_TRUCK_MANAGER) {
+            throw new CustomException(CustomErrorCode.ROLE_NOT_BE_CHANGE);
+        }
+        user.setRole(role);
+        return userRepository.save(user);
+    }
 }

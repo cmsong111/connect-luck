@@ -6,15 +6,15 @@ import ac.kr.deu.connect.luck.event.Event;
 import ac.kr.deu.connect.luck.event.EventRequest;
 import ac.kr.deu.connect.luck.food_truck.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckRequest;
-import ac.kr.deu.connect.luck.review.Review;
-import ac.kr.deu.connect.luck.review.ReviewRequestDto;
+import ac.kr.deu.connect.luck.food_truck.FoodTruckReview;
+import ac.kr.deu.connect.luck.food_truck.FoodTruckReviewRequestDto;
 import ac.kr.deu.connect.luck.user.User;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-03-18T02:31:03+0900",
+    date = "2024-03-30T23:52:16+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -88,20 +88,20 @@ public class MapStructMapperImpl implements MapStructMapper {
     }
 
     @Override
-    public Review toReview(ReviewRequestDto reviewRequestDto) {
-        if ( reviewRequestDto == null ) {
+    public FoodTruckReview toReview(FoodTruckReviewRequestDto foodTruckReviewRequest) {
+        if ( foodTruckReviewRequest == null ) {
             return null;
         }
 
-        Review.ReviewBuilder review = Review.builder();
+        FoodTruckReview.FoodTruckReviewBuilder foodTruckReview = FoodTruckReview.builder();
 
-        review.foodTruck( reviewRequestDtoToFoodTruck( reviewRequestDto ) );
-        review.writer( reviewRequestDtoToUser( reviewRequestDto ) );
-        review.content( reviewRequestDto.content() );
-        review.imageUrl( reviewRequestDto.imageUrl() );
-        review.score( reviewRequestDto.score() );
+        foodTruckReview.foodTruck( foodTruckReviewRequestDtoToFoodTruck( foodTruckReviewRequest ) );
+        foodTruckReview.author( foodTruckReviewRequestDtoToUser( foodTruckReviewRequest ) );
+        foodTruckReview.content( foodTruckReviewRequest.content() );
+        foodTruckReview.score( foodTruckReviewRequest.score() );
+        foodTruckReview.imageUrl( foodTruckReviewRequest.imageUrl() );
 
-        return review.build();
+        return foodTruckReview.build();
     }
 
     protected User eventRequestToUser(EventRequest eventRequest) {
@@ -128,26 +128,26 @@ public class MapStructMapperImpl implements MapStructMapper {
         return user.build();
     }
 
-    protected FoodTruck reviewRequestDtoToFoodTruck(ReviewRequestDto reviewRequestDto) {
-        if ( reviewRequestDto == null ) {
+    protected FoodTruck foodTruckReviewRequestDtoToFoodTruck(FoodTruckReviewRequestDto foodTruckReviewRequestDto) {
+        if ( foodTruckReviewRequestDto == null ) {
             return null;
         }
 
         FoodTruck.FoodTruckBuilder foodTruck = FoodTruck.builder();
 
-        foodTruck.id( reviewRequestDto.foodTruckId() );
+        foodTruck.id( foodTruckReviewRequestDto.foodTruckId() );
 
         return foodTruck.build();
     }
 
-    protected User reviewRequestDtoToUser(ReviewRequestDto reviewRequestDto) {
-        if ( reviewRequestDto == null ) {
+    protected User foodTruckReviewRequestDtoToUser(FoodTruckReviewRequestDto foodTruckReviewRequestDto) {
+        if ( foodTruckReviewRequestDto == null ) {
             return null;
         }
 
         User.UserBuilder user = User.builder();
 
-        user.id( reviewRequestDto.writerId() );
+        user.id( foodTruckReviewRequestDto.authorId() );
 
         return user.build();
     }

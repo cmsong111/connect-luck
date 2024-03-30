@@ -53,12 +53,4 @@ public class FoodTruckRestController {
 
         return ResponseEntity.ok(foodTruckService.deleteFoodTruck(id));
     }
-
-    @PostMapping("/be-manager")
-    @Operation(summary = "become a manager of a food truck")
-    public ResponseEntity<User> becomeManager(
-            @Parameter(name = "id", description = "유저 ID") @RequestParam("id") Long id) {
-        return ResponseEntity.ok(foodTruckService.becomeFoodTruckManager(id));
-    }
-
 }

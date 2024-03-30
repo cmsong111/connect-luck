@@ -17,7 +17,6 @@ public class FoodTruckService {
     private final FoodTruckRepository foodTruckRepository;
     private final FoodTruckMenuRepository foodTruckMenuRepository;
     private final FoodTruckReviewRepository foodTruckReviewRepository;
-    private final UserRepository userRepository;
     private final MapStructMapper mapStructMapper;
 
     /**
@@ -88,25 +87,5 @@ public class FoodTruckService {
             foodTruck.setFoodType(foodTruckRequest.foodType());
         }
         return foodTruckRepository.save(foodTruck);
-    }
-
-    /**
-     * 푸드트럭 매니저가 되려는 사용자의 역할을 변경합니다.
-     *
-     * @param userId 푸드트럭 매니저가 되려는 사용자의 ID
-     * @return 저장된 사용자 정보
-     */
-    public User becomeFoodTruckManager(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH)
-        );
-        if (user.getRole() == UserRole.FOOD_TRUCK_MANAGER) {
-            throw new CustomException(CustomErrorCode.ALREADY_EXIST_USER_ID);
-        }
-        if (user.getRole() == UserRole.EVENT_MANAGER) {
-            throw new CustomException(CustomErrorCode.EVENT_MANAGER_CANNOT_BE_FOOD_TRUCK_MANAGER);
-        }
-        user.setRole(UserRole.FOOD_TRUCK_MANAGER);
-        return userRepository.save(user);
     }
 }
