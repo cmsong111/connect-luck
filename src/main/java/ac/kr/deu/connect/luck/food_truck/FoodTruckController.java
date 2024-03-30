@@ -15,7 +15,7 @@ public class FoodTruckController {
 
     @GetMapping
     public String getFoodTruck(Model model) {
-        model.addAttribute("foodTrucks", foodTruckService.getFoodTrucks());
+        model.addAttribute("foodTrucks", foodTruckService.getFoodTrucks(null, null));
         return "food_truck/food_truck_list";
     }
 

@@ -25,9 +25,12 @@ public class FoodTruckRestController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all food trucks")
-    public ResponseEntity<List<FoodTruck>> getFoodTrucks() {
-        return ResponseEntity.ok(foodTruckService.getFoodTrucks());
+    @Operation(summary = "푸드 트럭 검색")
+    public ResponseEntity<List<FoodTruck>> getFoodTrucks(
+            @Parameter(name = "상호명") @RequestParam(name = "name", required = false) String name,
+            @Parameter(name = "음식 종류") @RequestParam(name = "foodType", required = false) FoodType foodType
+    ) {
+        return ResponseEntity.ok(foodTruckService.getFoodTrucks(name, foodType));
     }
 
     @GetMapping("/{id}")
@@ -55,3 +58,4 @@ public class FoodTruckRestController {
         return ResponseEntity.ok(foodTruckService.deleteFoodTruck(id));
     }
 }
+

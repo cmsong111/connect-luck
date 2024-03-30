@@ -25,8 +25,16 @@ public class FoodTruckService {
      *
      * @return 모든 푸드트럭 정보
      */
-    public List<FoodTruck> getFoodTrucks() {
-        return foodTruckRepository.findAll();
+    public List<FoodTruck> getFoodTrucks(String name, FoodType foodType) {
+        if (name == null && foodType == null) {
+            return foodTruckRepository.findAll();
+        } else if (name != null && foodType == null) {
+            return foodTruckRepository.findByNameContaining(name);
+        } else if (name == null) {
+            return foodTruckRepository.findByFoodType(foodType);
+        } else {
+            return foodTruckRepository.findByNameContainingAndFoodType(name, foodType);
+        }
     }
 
     /**

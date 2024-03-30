@@ -5,6 +5,7 @@ import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.user.User;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -217,6 +219,86 @@ class FoodTruckRestControllerTest {
         // Then
         CustomErrorResponse customErrorResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), CustomErrorResponse.class);
         assertEquals(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS, customErrorResponse.errorType());
+    }
+
+    @Test
+    @DisplayName("[GET] 푸드트럭 조회")
+    void getFoodTruck() throws Exception {
+        // When
+        MvcResult mvcResult = mockMvc.perform(get("/api/food-truck"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // Then
+        List<FoodTruck> foodTruck = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<FoodTruck>>() {
+        });
+        assertNotNull(foodTruck);
+    }
+
+    @Test
+    @DisplayName("[GET] 푸드트럭 조회 - 음식 종류 지정")
+    void getFoodTruckByFoodType() throws Exception {
+        // Given
+        FoodType foodType = FoodType.DESSERT;
+
+        // When
+        MvcResult mvcResult = mockMvc.perform(get("/api/food-truck")
+                        .param("foodType", foodType.name()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // Then
+        List<FoodTruck> foodTruck = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<FoodTruck>>() {
+        });
+
+        for (FoodTruck truck : foodTruck) {
+            assertEquals(foodType, truck.getFoodType());
+        }
+    }
+
+    @Test
+    @DisplayName("[GET] 푸드트럭 조회 - 상호명 지정")
+    void getFoodTruckByName() throws Exception {
+        // Given
+        String name = "Burger";
+
+        // When
+        MvcResult mvcResult = mockMvc.perform(get("/api/food-truck")
+                        .param("name", name))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // Then
+        List<FoodTruck> foodTruck = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<FoodTruck>>() {
+        });
+
+        for (FoodTruck truck : foodTruck) {
+            assertTrue(truck.getName().contains(name));
+        }
+    }
+
+    @Test
+    @DisplayName("[GET] 푸드트럭 조회 - 상호명, 음식 종류 지정")
+    void getFoodTruckByNameAndFoodType() throws Exception {
+        // Given
+        String name = "Burger";
+        FoodType foodType = FoodType.BURGER;
+
+        // When
+        MvcResult mvcResult = mockMvc.perform(get("/api/food-truck")
+                        .param("name", name)
+                        .param("foodType", foodType.name()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // Then
+        List<FoodTruck> foodTruck = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<FoodTruck>>() {
+        });
+
+        for (FoodTruck truck : foodTruck) {
+            assertTrue(truck.getName().contains(name));
+            assertEquals(foodType, truck.getFoodType());
+        }
     }
 
 
