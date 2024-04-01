@@ -20,7 +20,8 @@ public enum CustomErrorCode {
     FOOD_TRUCK_MENU_NOT_FOUND(HttpStatus.BAD_REQUEST, "푸드트럭 메뉴를 찾을 수 없습니다."),
     FOOD_TRUCK_IS_ALREADY_OPERATING(HttpStatus.BAD_REQUEST, "푸드트럭이 이미 운영중입니다."),
     FOOD_TRUCK_IS_NOT_OPERATING(HttpStatus.BAD_REQUEST, "푸드트럭이 운영중이 아닙니다."),
-    EVENT_NOT_FOUND(HttpStatus.BAD_REQUEST, "이벤트가 존재하지 않습니다.");
+    EVENT_NOT_FOUND(HttpStatus.BAD_REQUEST, "이벤트가 존재하지 않습니다."),
+    IMAGE_UPLOAD_FAILED(HttpStatus.BAD_REQUEST, "이미지 업로드에 실패했습니다.");
 
 
     private final HttpStatus status;

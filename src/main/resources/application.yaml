@@ -13,6 +13,11 @@ spring:
       mode: embedded
       encoding: utf-8
 
+  servlet:
+    multipart:
+      max-file-size: 32MB
+      max-request-size: 32MB
+
 
 logging:
   level:
@@ -27,3 +32,17 @@ server:
     encoding:
       charset: UTF-8
       force-response: true
+
+### Uncomment the following block to enable HTTPS and HTTP/2
+#  port: 8443
+#
+#  http2:
+#    enabled: true
+#
+#  ssl:
+#    enabled: true
+#    certificate-private-key: "classpath:privkey.pem"
+#    certificate: "classpath:fullchain.pem"
+
+imgbb:
+  api-key: ${IMGBB_API_KEY}
