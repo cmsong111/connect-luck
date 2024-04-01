@@ -21,3 +21,9 @@ logging:
         type:
           descriptor:
             sql: trace
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true

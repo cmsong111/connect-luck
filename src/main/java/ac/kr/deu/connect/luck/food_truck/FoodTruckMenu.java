@@ -18,7 +18,6 @@ public class FoodTruckMenu extends BaseEntity {
     private String description;
     private String imageUrl;
     private int price;
-    private int quantity;
     @ManyToOne
     private FoodTruck foodTruck;
 }

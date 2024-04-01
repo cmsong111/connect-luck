@@ -10,5 +10,11 @@ import java.util.List;
 public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
     List<FoodTruck> findByManager(User manager);
 
+    List<FoodTruck> findByFoodType(FoodType foodType);
+
+    List<FoodTruck> findByNameContaining(String name);
+
+    List<FoodTruck> findByNameContainingAndFoodType(String name, FoodType foodType);
+
     void deleteByManager(User manager);
 }

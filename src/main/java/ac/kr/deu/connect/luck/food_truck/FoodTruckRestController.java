@@ -1,6 +1,7 @@
 package ac.kr.deu.connect.luck.food_truck;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,39 +19,43 @@ public class FoodTruckRestController {
     @PostMapping
     @Operation(summary = "Create a food truck")
     public ResponseEntity<FoodTruck> createFoodTruck(
+            @RequestHeader("USER_ID") Long userId,
             @RequestBody FoodTruckRequest foodTruckRequest) {
-        return ResponseEntity.ok(foodTruckService.saveFoodTruck(foodTruckRequest));
+        return ResponseEntity.ok(foodTruckService.saveFoodTruck(userId, foodTruckRequest));
     }
 
     @GetMapping
-    @Operation(summary = "Get all food trucks")
-    public ResponseEntity<List<FoodTruck>> getFoodTrucks() {
-        return ResponseEntity.ok(foodTruckService.getFoodTrucks());
+    @Operation(summary = "푸드 트럭 검색")
+    public ResponseEntity<List<FoodTruck>> getFoodTrucks(
+            @Parameter(name = "상호명") @RequestParam(name = "name", required = false) String name,
+            @Parameter(name = "음식 종류") @RequestParam(name = "foodType", required = false) FoodType foodType
+    ) {
+        return ResponseEntity.ok(foodTruckService.getFoodTrucks(name, foodType));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a food truck by id")
-    public ResponseEntity<FoodTruck> getFoodTruck(
-            @PathVariable Long id) {
+    public ResponseEntity<FoodTruckDetailResponse> getFoodTruck(
+            @Parameter(name = "id", description = "트럭 ID를 조회") @PathVariable("id") Long id) {
         return ResponseEntity.ok(foodTruckService.getFoodTruck(id));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{foodTruck-id}")
     @Operation(summary = "Update a food truck by id")
     public ResponseEntity<FoodTruck> updateFoodTruck(
-            @PathVariable Long id,
+            @PathVariable("foodTruck-id") Long truckId,
+            @Parameter(name = "유저 ID") @RequestHeader("USER_ID") Long userId,
             @RequestBody FoodTruckRequest foodTruckRequest) {
-        return ResponseEntity.ok(foodTruckService.updateFoodTruck(id, foodTruckRequest));
+        return ResponseEntity.ok(foodTruckService.updateFoodTruck(truckId, userId, foodTruckRequest));
     }
 
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a food truck by id")
-    public ResponseEntity<Void> deleteFoodTruck(
+    public ResponseEntity<String> deleteFoodTruck(
+            @RequestHeader("USER_ID") Long userId,
             @PathVariable Long id) {
-        foodTruckService.deleteFoodTruck(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(foodTruckService.deleteFoodTruck(id));
     }
-
-
 }
+

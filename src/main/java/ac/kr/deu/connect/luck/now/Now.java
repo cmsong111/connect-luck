@@ -1,8 +1,7 @@
-package ac.kr.deu.connect.luck.review;
+package ac.kr.deu.connect.luck.now;
 
 import ac.kr.deu.connect.luck.common.BaseEntity;
 import ac.kr.deu.connect.luck.food_truck.FoodTruck;
-import ac.kr.deu.connect.luck.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,16 +11,15 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review extends BaseEntity {
+public class Now extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String content;
-    private String imageUrl;
-    private String reply;
-    private int score;
+
     @ManyToOne
     private FoodTruck foodTruck;
-    @ManyToOne
-    private User writer;
+    private Double latitude; // 위도
+    private Double longitude; // 경도
+    private Boolean isOperating; // 운영중인지 여부
+
 }

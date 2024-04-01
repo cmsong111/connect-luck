@@ -38,7 +38,7 @@ public class AuthRestController {
             @ApiResponse(responseCode = "400", description = "회원가입 실패", content = @Content(schema = @Schema(implementation = CustomErrorResponse.class)))
     })
     public User signUp(
-            @Parameter(description = "회원가입 요청 정보") @RequestBody SignUpRequest signUpRequest) {
+            @Parameter(name = "로그인 객체", description = "회원가입 요청 정보") @RequestBody SignUpRequest signUpRequest) {
         return authService.signUp(signUpRequest);
     }
 

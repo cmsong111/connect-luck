@@ -41,4 +41,13 @@ public class UserRestController {
     ) {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
+
+    @PostMapping("/set-role")
+    @Operation(summary = "사용자 권한 설정", description = "사용자의 권한을 설정합니다.")
+    public ResponseEntity<User> setUserRole(
+            @Parameter(name = "id") @RequestParam("id") Long id,
+            @Parameter(name = "role") @RequestParam("role") UserRole role
+    ) {
+        return ResponseEntity.ok(userService.setUserRole(id, role));
+    }
 }

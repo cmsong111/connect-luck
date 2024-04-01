@@ -4,13 +4,13 @@ import ac.kr.deu.connect.luck.auth.LoginRequest;
 import ac.kr.deu.connect.luck.auth.SignUpRequest;
 import ac.kr.deu.connect.luck.event.Event;
 import ac.kr.deu.connect.luck.event.EventRequest;
-import ac.kr.deu.connect.luck.food_truck.FoodTruck;
-import ac.kr.deu.connect.luck.food_truck.FoodTruckRequest;
-import ac.kr.deu.connect.luck.review.Review;
-import ac.kr.deu.connect.luck.review.ReviewRequestDto;
+import ac.kr.deu.connect.luck.food_truck.*;
+import ac.kr.deu.connect.luck.now.Now;
 import ac.kr.deu.connect.luck.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
@@ -22,10 +22,16 @@ public interface MapStructMapper {
     @Mapping(source = "managerId", target = "manager.id")
     Event toEvent(EventRequest eventRequest);
 
-    @Mapping(source = "userId", target = "manager.id")
     FoodTruck toFoodTruck(FoodTruckRequest foodTruckRequest);
 
+    FoodTruckDetailResponse toFoodTruckDetailResponse(FoodTruck foodTruck, List<FoodTruckReview> reviews, List<FoodTruckMenu> menus);
+
+    FoodTruckRequest toFoodTruckRequest(FoodTruck foodTruck);
+
+    FoodTruckMenu toFoodTruckMenu(FoodTruckMenuRequest foodTruckMenuRequest);
+
     @Mapping(source = "foodTruckId", target = "foodTruck.id")
-    @Mapping(source = "writerId", target = "writer.id")
-    Review toReview(ReviewRequestDto reviewRequestDto);
+    @Mapping(source = "authorId", target = "author.id")
+    FoodTruckReview toReview(FoodTruckReviewRequest foodTruckReviewRequest);
+
 }
