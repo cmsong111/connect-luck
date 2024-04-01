@@ -60,3 +60,11 @@ VALUES (15000, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, '신제품 맥크리스�
        (16000, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, '쿼터파운더 치즈', 'https://picsum.photos/1600/900', '쿼터파운더 치즈'),
        (17000, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, '빅맥', 'https://picsum.photos/1600/900', '빅맥'),
        (17000, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, '신제품 맥크리스피 디럭스 버거', 'https://picsum.photos/1600/900', '맥크리스피 디럭스 버거');
+
+-- Event Food Truck Now
+INSERT INTO now (created_at, updated_at, is_operating, latitude, longitude, food_truck_id)
+VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, 35.1441, 129.035, 1),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 35.1634, 129.9823, 2),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, 35.0479, 129.9669, 3),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 35.1615, 129.1608, 4),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, 35.1795, 129.2, 5);

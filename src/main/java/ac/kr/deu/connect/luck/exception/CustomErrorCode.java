@@ -17,7 +17,9 @@ public enum CustomErrorCode {
     ALREADY_SET_ROLE(HttpStatus.BAD_REQUEST, "이미 설정된 권한입니다."),
     ROLE_NOT_BE_CHANGE(HttpStatus.BAD_REQUEST, "권한을 변경할 수 없습니다."),
     ROLE_NOT_MATCH(HttpStatus.BAD_REQUEST, "권한이 일치하지 않습니다."),
-    FOOD_TRUCK_MENU_NOT_FOUND(HttpStatus.BAD_REQUEST, "푸드트럭 메뉴를 찾을 수 없습니다.");
+    FOOD_TRUCK_MENU_NOT_FOUND(HttpStatus.BAD_REQUEST, "푸드트럭 메뉴를 찾을 수 없습니다."),
+    FOOD_TRUCK_IS_ALREADY_OPERATING(HttpStatus.BAD_REQUEST, "푸드트럭이 이미 운영중입니다."),
+    FOOD_TRUCK_IS_NOT_OPERATING(HttpStatus.BAD_REQUEST, "푸드트럭이 운영중이 아닙니다.");
 
 
     private final HttpStatus status;

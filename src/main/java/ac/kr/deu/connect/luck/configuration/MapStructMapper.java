@@ -5,6 +5,7 @@ import ac.kr.deu.connect.luck.auth.SignUpRequest;
 import ac.kr.deu.connect.luck.event.Event;
 import ac.kr.deu.connect.luck.event.EventRequest;
 import ac.kr.deu.connect.luck.food_truck.*;
+import ac.kr.deu.connect.luck.now.Now;
 import ac.kr.deu.connect.luck.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,7 +23,7 @@ public interface MapStructMapper {
     Event toEvent(EventRequest eventRequest);
 
     FoodTruck toFoodTruck(FoodTruckRequest foodTruckRequest);
-    
+
     FoodTruckDetailResponse toFoodTruckDetailResponse(FoodTruck foodTruck, List<FoodTruckReview> reviews, List<FoodTruckMenu> menus);
 
     FoodTruckRequest toFoodTruckRequest(FoodTruck foodTruck);
@@ -32,4 +33,5 @@ public interface MapStructMapper {
     @Mapping(source = "foodTruckId", target = "foodTruck.id")
     @Mapping(source = "authorId", target = "author.id")
     FoodTruckReview toReview(FoodTruckReviewRequest foodTruckReviewRequest);
+
 }
