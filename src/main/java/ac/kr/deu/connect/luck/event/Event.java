@@ -28,4 +28,6 @@ public class Event extends BaseEntity {
     private String imageUrl;
     @ManyToOne
     private User manager;
+    @Enumerated(EnumType.STRING)
+    private EventStatus status;
 }

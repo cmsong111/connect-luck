@@ -19,6 +19,7 @@ public interface MapStructMapper {
 
     User toUser(LoginRequest loginRequest);
 
+    @Mapping(target = "status", defaultValue = "BEFORE_APPLICATION", ignore = true )
     @Mapping(source = "managerId", target = "manager.id")
     Event toEvent(EventRequest eventRequest);
 
