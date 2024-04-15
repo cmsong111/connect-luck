@@ -1,9 +1,9 @@
 package ac.kr.deu.connect.luck.auth;
 
-import ac.kr.deu.connect.luck.configuration.MapStructMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.user.User;
+import ac.kr.deu.connect.luck.user.UserMapper;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final MapStructMapper mapStructMapper;
+    private final UserMapper userMapper;
 
     /**
      * 회원가입
@@ -27,7 +27,7 @@ public class AuthService {
     public User signUp(SignUpRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.email())) throw new CustomException(CustomErrorCode.ALREADY_EXIST_USER_ID);
 
-        User user = mapStructMapper.toUser(signUpRequest);
+        User user = userMapper.toUser(signUpRequest);
         user.setRole(UserRole.USER);
         return userRepository.save(user);
     }

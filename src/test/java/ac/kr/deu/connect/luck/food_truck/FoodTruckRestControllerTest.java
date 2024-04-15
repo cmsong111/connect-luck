@@ -1,6 +1,5 @@
 package ac.kr.deu.connect.luck.food_truck;
 
-import ac.kr.deu.connect.luck.configuration.MapStructMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
 import ac.kr.deu.connect.luck.exception.CustomException;
@@ -41,7 +40,7 @@ class FoodTruckRestControllerTest {
     private FoodTruckRepository foodTruckRepository;
 
     @Autowired
-    private MapStructMapper mapStructMapper;
+    private FoodTruckMapper mapStructMapper;
 
 
     @Test

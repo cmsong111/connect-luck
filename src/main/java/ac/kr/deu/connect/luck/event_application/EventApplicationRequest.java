@@ -1,4 +1,4 @@
-package ac.kr.deu.connect.luck.eventApplication;
+package ac.kr.deu.connect.luck.event_application;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

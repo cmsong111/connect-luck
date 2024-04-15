@@ -1,6 +1,5 @@
-package ac.kr.deu.connect.luck.eventApplication;
+package ac.kr.deu.connect.luck.event_application;
 
-import ac.kr.deu.connect.luck.Application;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

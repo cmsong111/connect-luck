@@ -1,6 +1,5 @@
 package ac.kr.deu.connect.luck.event;
 
-import ac.kr.deu.connect.luck.configuration.MapStructMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository eventRepository;
-    private final MapStructMapper mapStructMapper;
+    private final EventMapper eventMapper;
 
     public List<Event> getEvents() {
         return eventRepository.findAll();
@@ -21,7 +20,7 @@ public class EventService {
     }
 
     public Event createEvent(EventRequest eventRequest) {
-        return eventRepository.save(mapStructMapper.toEvent(eventRequest));
+        return eventRepository.save(eventMapper.toEvent(eventRequest));
     }
 
     public Event updateEvent(Long id, EventRequest eventRequest) {

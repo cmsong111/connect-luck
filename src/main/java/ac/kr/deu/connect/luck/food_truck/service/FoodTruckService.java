@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
-import ac.kr.deu.connect.luck.configuration.MapStructMapper;
+import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
@@ -27,7 +27,7 @@ public class FoodTruckService {
     private final FoodTruckMenuRepository foodTruckMenuRepository;
     private final FoodTruckReviewRepository foodTruckReviewRepository;
     private final UserRepository userRepository;
-    private final MapStructMapper mapStructMapper;
+    private final FoodTruckMapper mapStructMapper;
 
     /**
      * 모든 푸드트럭을 조회합니다.

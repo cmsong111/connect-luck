@@ -1,4 +1,4 @@
-package ac.kr.deu.connect.luck.eventApplication;
+package ac.kr.deu.connect.luck.event_application;
 
 public enum ApplicationStatus {
     PENDING,     // 요청 중

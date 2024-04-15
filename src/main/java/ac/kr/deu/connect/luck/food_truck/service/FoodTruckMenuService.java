@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
-import ac.kr.deu.connect.luck.configuration.MapStructMapper;
+import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
@@ -23,7 +23,7 @@ public class FoodTruckMenuService {
     private final FoodTruckMenuRepository foodTruckMenuRepository;
     private final FoodTruckRepository foodTruckRepository;
     private final UserRepository userRepository;
-    private final MapStructMapper mapStructMapper;
+    private final FoodTruckMapper mapStructMapper;
 
     public List<FoodTruckMenu> getFoodTruckMenus(Long foodTruckId) {
         return foodTruckMenuRepository.findByFoodTruckId(foodTruckId);
