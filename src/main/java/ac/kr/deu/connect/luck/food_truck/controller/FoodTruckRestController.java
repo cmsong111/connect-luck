@@ -1,5 +1,10 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.controller;
 
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
+import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

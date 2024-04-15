@@ -2,8 +2,8 @@ package ac.kr.deu.connect.luck.now;
 
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
-import ac.kr.deu.connect.luck.food_truck.FoodTruck;
-import ac.kr.deu.connect.luck.food_truck.FoodTruckRepository;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
+import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.user.User;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;

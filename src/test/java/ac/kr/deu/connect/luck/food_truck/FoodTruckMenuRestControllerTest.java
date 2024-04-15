@@ -2,6 +2,8 @@ package ac.kr.deu.connect.luck.food_truck;
 
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;

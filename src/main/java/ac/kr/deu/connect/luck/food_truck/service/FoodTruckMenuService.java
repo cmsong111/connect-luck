@@ -1,8 +1,13 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.service;
 
 import ac.kr.deu.connect.luck.configuration.MapStructMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
+import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
+import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.user.User;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;
@@ -20,18 +25,18 @@ public class FoodTruckMenuService {
     private final UserRepository userRepository;
     private final MapStructMapper mapStructMapper;
 
-    List<FoodTruckMenu> getFoodTruckMenus(Long foodTruckId) {
+    public List<FoodTruckMenu> getFoodTruckMenus(Long foodTruckId) {
         return foodTruckMenuRepository.findByFoodTruckId(foodTruckId);
     }
 
-    FoodTruckMenu saveFoodTruckMenu(Long userId, Long foodTruckId, FoodTruckMenuRequest foodTruckMenuRequest) {
+    public FoodTruckMenu saveFoodTruckMenu(Long userId, Long foodTruckId, FoodTruckMenuRequest foodTruckMenuRequest) {
         isManager(userId, foodTruckId);
         FoodTruckMenu foodTruckMenu = mapStructMapper.toFoodTruckMenu(foodTruckMenuRequest);
         foodTruckMenu.setFoodTruck(foodTruckRepository.findById(foodTruckId).orElseThrow());
         return foodTruckMenuRepository.save(foodTruckMenu);
     }
 
-    FoodTruckMenu updateFoodTruckMenu(Long userId, Long foodTruckId, Long foodTruckMenuId, FoodTruckMenuRequest foodTruckMenuRequest) {
+    public FoodTruckMenu updateFoodTruckMenu(Long userId, Long foodTruckId, Long foodTruckMenuId, FoodTruckMenuRequest foodTruckMenuRequest) {
         isManager(userId, foodTruckId);
         FoodTruckMenu foodTruckMenu = foodTruckMenuRepository.findById(foodTruckMenuId).orElseThrow();
         foodTruckMenu.setName(foodTruckMenuRequest.name());
@@ -41,7 +46,7 @@ public class FoodTruckMenuService {
         return foodTruckMenuRepository.save(foodTruckMenu);
     }
 
-    void deleteFoodTruckMenu(Long userId, Long foodTruckId, Long foodTruckMenuId) {
+    public void deleteFoodTruckMenu(Long userId, Long foodTruckId, Long foodTruckMenuId) {
         isManager(userId, foodTruckId);
         if (!foodTruckMenuRepository.existsById(foodTruckMenuId)) {
             throw new CustomException(CustomErrorCode.FOOD_TRUCK_MENU_NOT_FOUND);

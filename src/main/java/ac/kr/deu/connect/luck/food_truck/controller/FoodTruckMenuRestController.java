@@ -1,5 +1,8 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.controller;
 
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
+import ac.kr.deu.connect.luck.food_truck.service.FoodTruckMenuService;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

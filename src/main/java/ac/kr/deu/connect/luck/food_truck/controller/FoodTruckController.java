@@ -1,5 +1,6 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.controller;
 
+import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

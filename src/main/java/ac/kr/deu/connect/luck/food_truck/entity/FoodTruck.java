@@ -1,4 +1,4 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.entity;
 
 import ac.kr.deu.connect.luck.common.BaseEntity;
 import ac.kr.deu.connect.luck.user.User;
@@ -11,17 +11,15 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FoodTruckReview extends BaseEntity {
+public class FoodTruck extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String content;
-    private int score;
+    private String name;
+    private String description;
     private String imageUrl;
-    private String reply;
     @ManyToOne
-    private FoodTruck foodTruck;
-    @ManyToOne
-    private User author;
+    private User manager;
+    @Enumerated(EnumType.STRING)
+    private FoodType foodType;
 }

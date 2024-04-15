@@ -1,8 +1,17 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.service;
 
 import ac.kr.deu.connect.luck.configuration.MapStructMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
+import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
+import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
+import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import ac.kr.deu.connect.luck.user.User;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;

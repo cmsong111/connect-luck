@@ -1,5 +1,6 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.dto;
 
+import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 

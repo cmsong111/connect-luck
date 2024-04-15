@@ -1,4 +1,4 @@
-package ac.kr.deu.connect.luck.food_truck;
+package ac.kr.deu.connect.luck.food_truck.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
