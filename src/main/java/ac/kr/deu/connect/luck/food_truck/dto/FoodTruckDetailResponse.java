@@ -15,10 +15,10 @@ public record FoodTruckDetailResponse(
         String description,
         @Schema(description = "푸드트럭 이미지 URL", example = "https://picsum.photos/1600/900")
         String imageUrl,
+        @Schema(description = "푸드트럭 관리자 이름", example = "홍길동")
+        String managerName,
         @Schema(description = "음식 종류", example = "KOREAN")
         FoodType foodType,
-        @Schema(description = "푸드트럭 관리자")
-        User manager,
         @Schema(description = "푸드트럭 리뷰 목록")
         List<FoodTruckReviewResponse> reviews,
         @Schema(description = "푸드트럭 메뉴 목록")

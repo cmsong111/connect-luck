@@ -1,22 +1,22 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
-import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
+import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
-import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
-import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
-import ac.kr.deu.connect.luck.user.User;
+import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.UserRepository;
-import ac.kr.deu.connect.luck.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,23 +27,26 @@ public class FoodTruckService {
     private final FoodTruckMenuRepository foodTruckMenuRepository;
     private final FoodTruckReviewRepository foodTruckReviewRepository;
     private final UserRepository userRepository;
-    private final FoodTruckMapper mapStructMapper;
+    private final FoodTruckMapper foodTruckMapper;
+    private final ImageUploader imageUploader;
 
     /**
      * 모든 푸드트럭을 조회합니다.
      *
      * @return 모든 푸드트럭 정보
      */
-    public List<FoodTruck> getFoodTrucks(String name, FoodType foodType) {
+    public List<FoodTruckHeader> getFoodTrucks(String name, FoodType foodType) {
+        List<FoodTruck> foodTrucks;
         if (name == null && foodType == null) {
-            return foodTruckRepository.findAll();
+            foodTrucks = foodTruckRepository.findAll();
         } else if (name != null && foodType == null) {
-            return foodTruckRepository.findByNameContaining(name);
+            foodTrucks = foodTruckRepository.findByNameContaining(name);
         } else if (name == null) {
-            return foodTruckRepository.findByFoodType(foodType);
+            foodTrucks = foodTruckRepository.findByFoodType(foodType);
         } else {
-            return foodTruckRepository.findByNameContainingAndFoodType(name, foodType);
+            foodTrucks = foodTruckRepository.findByNameContainingAndFoodType(name, foodType);
         }
+        return foodTrucks.stream().map(foodTruckMapper::toFoodTruckHeader).toList();
     }
 
     /**
@@ -56,22 +59,22 @@ public class FoodTruckService {
         FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
-        List<FoodTruckMenu> foodTruckMenus = foodTruckMenuRepository.findByFoodTruckId(id);
-        List<FoodTruckReview> foodTruckReviews = foodTruckReviewRepository.findByFoodTruckId(id);
-        return mapStructMapper.toFoodTruckDetailResponse(foodTruck, foodTruckReviews, foodTruckMenus);
+
+        return foodTruckMapper.toFoodTruckDetailResponse(foodTruck);
 
     }
 
     /**
      * 푸드트럭을 추가합니다.
      *
+     * @param userEmail        푸드트럭 매니저의 ID
      * @param foodTruckRequest 추가할 푸드트럭 정보
      * @return 저장된 푸드트럭 정보
      */
-    public FoodTruck saveFoodTruck(Long userId, FoodTruckRequest foodTruckRequest) {
-        isManager(userId);
-        FoodTruck foodTruck = mapStructMapper.toFoodTruck(foodTruckRequest);
-        foodTruck.setManager(userRepository.findById(userId).orElseThrow());
+    public FoodTruck createFoodTruck(String userEmail, FoodTruckRequest foodTruckRequest) {
+        FoodTruck foodTruck = foodTruckMapper.toFoodTruck(foodTruckRequest);
+        foodTruck.setManager(userRepository.findByEmail(userEmail).orElseThrow());
+        foodTruck.setImageUrl("https://picsum.photos/1600/900");
         return foodTruckRepository.save(foodTruck);
     }
 
@@ -81,12 +84,12 @@ public class FoodTruckService {
      *
      * @param id 삭제할 푸드트럭의 ID
      */
-    public String deleteFoodTruck(Long id) {
+    @Transactional
+    public String deleteFoodTruck(Long id, String userEmail) {
         FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
-        foodTruckReviewRepository.deleteAllByFoodTruck(foodTruck);
-        foodTruckMenuRepository.deleteAllByFoodTruck(foodTruck);
+        isManager(userEmail, foodTruck);
         foodTruckRepository.delete(foodTruck);
         return "삭제되었습니다.";
     }
@@ -98,13 +101,13 @@ public class FoodTruckService {
      * @param foodTruckRequest 수정할 푸드트럭 정보
      * @return 수정된 푸드트럭 정보
      */
-    public FoodTruck updateFoodTruck(Long foodTruckId, Long userId, FoodTruckRequest foodTruckRequest) {
+    public FoodTruckDetailResponse updateFoodTruck(Long foodTruckId, String userEmail, FoodTruckRequest foodTruckRequest) {
         // Search food truck
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
         // Check if the user is the manager of the food truck
-        isManager(userId, foodTruck);
+        isManager(userEmail, foodTruck);
 
         // 수정할 정보가 있는 경우 수정
         if (foodTruckRequest.name() != null) {
@@ -113,14 +116,35 @@ public class FoodTruckService {
         if (foodTruckRequest.description() != null) {
             foodTruck.setDescription(foodTruckRequest.description());
         }
-        if (foodTruckRequest.imageUrl() != null) {
-            foodTruck.setImageUrl(foodTruckRequest.imageUrl());
-        }
         if (foodTruckRequest.foodType() != null) {
             foodTruck.setFoodType(foodTruckRequest.foodType());
         }
-
         // 수정된 푸드트럭 정보 저장
+        FoodTruck saved = foodTruckRepository.save(foodTruck);
+        return foodTruckMapper.toFoodTruckDetailResponse(saved);
+    }
+
+    /**
+     * 푸드트럭의 대표 이미지를 변경합니다.
+     *
+     * @param foodTruckId   푸드트럭 ID
+     * @param userEmail     사용자 Email
+     * @param multipartFile 이미지 파일
+     * @return 변경된 푸드트럭 정보
+     */
+    public FoodTruck updateFoodTruckImage(Long foodTruckId, String userEmail, MultipartFile multipartFile) {
+        // Search food truck
+        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
+                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
+        );
+
+        // Check if the user is the manager of the food truck
+        isManager(userEmail, foodTruck);
+
+        // Upload image
+        String imageUrl = imageUploader.uploadImage(multipartFile).getData().getUrl();
+
+        foodTruck.setImageUrl(imageUrl);
         return foodTruckRepository.save(foodTruck);
     }
 
@@ -129,24 +153,12 @@ public class FoodTruckService {
      * 푸드트럭 매니저가 아닌 경우 예외를 발생시킵니다.
      * 푸드트럭 매니저이지만 해당 푸드트럭의 매니저가 아닌 경우 예외를 발생시킵니다.
      *
-     * @param userId    사용자 ID
+     * @param userEmail 사용자 Email
      * @param foodTruck 푸드트럭
      */
-    protected void isManager(Long userId, FoodTruck foodTruck) {
-        isManager(userId);
-        if (!foodTruck.getManager().getId().equals(userId)) {
+    protected void isManager(String userEmail, FoodTruck foodTruck) {
+        if (!foodTruck.getManager().getEmail().equals(userEmail)) {
             throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
         }
     }
-
-    protected void isManager(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH)
-        );
-        if (!user.getRoles().contains(UserRole.FOOD_TRUCK_MANAGER)) {
-            throw new CustomException(CustomErrorCode.ROLE_NOT_MATCH);
-        }
-    }
-
-
 }

@@ -15,8 +15,6 @@ public record FoodTruckMenuResponse(
         String imageUrl,
         @Schema(description = "가격", example = "10000")
         int price,
-        @Schema(description = "푸드트럭 이름", example = "맛있는 푸드트럭")
-        String foodTruckName,
         @Schema(description = "생성일", example = "2021-08-01T00:00:00")
         LocalDateTime createdAt,
         @Schema(description = "수정일", example = "2021-08-01T00:00:00")

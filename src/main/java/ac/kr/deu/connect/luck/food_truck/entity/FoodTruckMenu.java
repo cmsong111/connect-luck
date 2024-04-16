@@ -1,6 +1,7 @@
 package ac.kr.deu.connect.luck.food_truck.entity;
 
 import ac.kr.deu.connect.luck.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,8 @@ public class FoodTruckMenu extends BaseEntity {
     private String description;
     private String imageUrl;
     private int price;
+
+    @JsonBackReference
     @ManyToOne
     private FoodTruck foodTruck;
 }

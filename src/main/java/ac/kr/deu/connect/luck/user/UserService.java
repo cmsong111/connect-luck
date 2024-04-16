@@ -22,9 +22,6 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final FoodTruckReviewRepository foodTruckReviewRepository;
-    private final EventRepository eventRepository;
-    private final FoodTruckRepository foodTruckRepository;
-    private final FoodTruckMenuRepository foodTruckMenuRepository;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -37,18 +34,8 @@ public class UserService {
     @Transactional
     public String deleteUser(String userEmail) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
-        foodTruckReviewRepository.deleteAllByAuthor(user);
-        eventRepository.deleteByManager(user);
-        for (FoodTruck foodTruck : foodTruckRepository.findByManager(user)) {
-            foodTruckMenuRepository.deleteAllByFoodTruck(foodTruck);
-        }
-        foodTruckRepository.deleteByManager(user);
         userRepository.delete(user);
         return "delete success";
-    }
-
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
     }
 
     public User findUserByEmail(String email) {

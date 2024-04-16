@@ -14,8 +14,6 @@ public record FoodTruckReviewResponse(
         String imageUrl,
         @Schema(description = "평점", example = "5")
         int score,
-        @Schema(description = "푸드트럭 이름", example = "맛있는 푸드트럭")
-        String foodTruckName,
         @Schema(description = "작성자 이름", example = "홍길동")
         String authorName,
         @Schema(description = "생성일", example = "2021-08-01T00:00:00")
