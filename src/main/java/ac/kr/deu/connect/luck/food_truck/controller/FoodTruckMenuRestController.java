@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Food Truck Menu API", description = "푸드트럭 메뉴 API")
+@Tag(name = "04-Food Truck Menu API", description = "푸드트럭 메뉴 API")
 @RestController
 @RequestMapping("/api/food-truck/{foodTruckId}/menu")
 @RequiredArgsConstructor

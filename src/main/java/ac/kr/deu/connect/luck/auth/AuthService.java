@@ -8,6 +8,7 @@ import ac.kr.deu.connect.luck.user.UserMapper;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -40,7 +41,6 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
 
-        System.out.println(savedUser.getPassword());
         return jwtTokenProvider.createToken(savedUser.getEmail(), savedUser.getRoles());
     }
 
@@ -54,7 +54,8 @@ public class AuthService {
         Optional<User> user = userRepository.findByEmail(loginRequest.email());
 
         if (user.isEmpty()) throw new CustomException(CustomErrorCode.EMAIL_NOT_FOUND);
-        if (!passwordEncoder.matches(loginRequest.password(), user.get().getPassword())) throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
+        if (!passwordEncoder.matches(loginRequest.password(), user.get().getPassword()))
+            throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
 
         return jwtTokenProvider.createToken(user.get().getEmail(), user.get().getRoles());
 
@@ -64,5 +65,15 @@ public class AuthService {
         Optional<User> user = userRepository.findByPhone(phone);
         if (user.isEmpty()) throw new CustomException(CustomErrorCode.PHONE_NOT_FOUND);
         return user.get().getEmail();
+    }
+
+    /**
+     * 아이디 중복 체크
+     *
+     * @param email 사용하려는 이메일
+     * @return True: 사용 가능, False: 사용중인 이메일
+     */
+    public boolean idCheck(String email) {
+        return !userRepository.existsByEmail(email);
     }
 }

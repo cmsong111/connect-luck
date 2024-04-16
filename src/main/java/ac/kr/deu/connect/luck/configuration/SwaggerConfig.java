@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @io.swagger.v3.oas.annotations.info.Info(title = "Connect Luck API", version = "1.0", description = "커넥트 럭을 위한 API"))
+        info = @io.swagger.v3.oas.annotations.info.Info(title = "Connect Luck API", version = "1.0", description = "커넥트 럭을 위한 API 문서입니다. JWT 토큰을 사용합니다."))
 public class SwaggerConfig {
 
     @Bean

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Tag(name = "Food Truck", description = "Food Truck API")
+@Tag(name = "03-Food Truck", description = "Food Truck API")
 @RequestMapping("/api/food-truck")
 @RequiredArgsConstructor
 public class FoodTruckRestController {

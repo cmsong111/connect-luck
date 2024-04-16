@@ -17,6 +17,7 @@ public interface EventApplicationRepository extends JpaRepository<EventApplicati
      * @return 이벤트에 신청한 신청자 목록
      */
     List<EventApplication> findAllByEvent(Event event);
+    List<EventApplication> findAllByEventId(Long eventId);
 
     /**
      * 이벤트 신청자 목록 조회 (푸드트럭 매니저용 API)

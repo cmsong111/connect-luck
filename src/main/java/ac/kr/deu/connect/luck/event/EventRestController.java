@@ -1,17 +1,21 @@
 package ac.kr.deu.connect.luck.event;
 
+import ac.kr.deu.connect.luck.event_application.ApplicationStatus;
+import ac.kr.deu.connect.luck.event_application.EventApplication;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
-@Tag(name = "Event", description = "이벤트 관련 API")
+@Tag(name = "06-Event", description = "이벤트 관련 API")
 @RequiredArgsConstructor
 public class EventRestController {
 
@@ -19,7 +23,9 @@ public class EventRestController {
 
     @GetMapping
     @Operation(summary = "이벤트 목록 조회", description = "모든 이벤트 목록 조회")
-    public ResponseEntity<List<Event>> getEvent() {
+    public ResponseEntity<List<Event>> getEvent(
+            @Parameter(description = "이벤트 상태 조회(Not Implement)") @RequestParam(required = false) EventStatus eventStatus
+    ) {
         return ResponseEntity.ok(eventService.getEvents());
     }
 
@@ -50,4 +56,17 @@ public class EventRestController {
         eventService.deleteEvent(id);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/{id}/status")
+    @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
+    @Operation(summary = "이벤트 상태 변경", description = "이벤트 상태 변경")
+    public void changeEventStatus(
+            @Parameter(description = "이벤트 UID") @PathVariable Long id,
+            @Parameter(description = "이벤트 상태") @RequestParam EventStatus eventStatus) {
+        //TODO: Implement this method
+    }
+
+
+
+
 }

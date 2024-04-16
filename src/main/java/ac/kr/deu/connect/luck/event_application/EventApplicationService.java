@@ -53,10 +53,21 @@ public class EventApplicationService {
 
     //TODO: 지원서 status 상태 변경(승인,거절) (행사 관리자용)
 
-    //TODO: 지원서 조회(푸드트럭 매니저용)
-    //TODO: 지원서 조회(행사 관리자용)
+    /**
+     * 이벤트에 대한 모든 지원서 조회
+     *
+     * @param eventId 조회 하려는 이벤트 ID
+     * @return 이벤트에 대한 모든 지원서 목록
+     */
+    List<EventApplication> getEventApplications(Long eventId) {
+        return eventApplicationRepository.findAllByEventId(eventId);
+    }
 
-    //TODO: 모든 지원서 조회
+    /**
+     * 모든 지원서 조회 (관리자 용)
+     *
+     * @return 모든 지원서 목록
+     */
     List<EventApplication> getEventApplications() {
         return eventApplicationRepository.findAll();
     }

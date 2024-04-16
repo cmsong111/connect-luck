@@ -56,3 +56,7 @@ security:
       prefix: ${JWT_PREFIX:Bearer }
       issuer: ${JWT_ISSUER:connect-luck-server}
       audience: ${JWT_AUDIENCE:connect-luck-client}
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha

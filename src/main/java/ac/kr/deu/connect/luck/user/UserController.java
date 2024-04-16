@@ -30,11 +30,9 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteUser(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        userService.deleteUser(user.getId());
-        request.getSession().invalidate();
-        return "redirect:/";
+    public String deleteUser(Principal principal) {
+        userService.deleteUser(principal.getName());
+        return "redirect:/auth/logout";
     }
 
     @GetMapping("/update")
@@ -46,14 +44,13 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(
-            HttpServletRequest request,
+            Principal principal,
             @RequestParam("password") String password,
             @RequestParam("name") String name,
             @RequestParam("phoneNumber") String phoneNumber
     ) {
-        User user = (User) request.getSession().getAttribute("user");
-        SignUpRequest signUpRequest = new SignUpRequest(user.getEmail(), password, name, phoneNumber);
-        userService.updateUser(user.getId(), signUpRequest);
+        SignUpRequest signUpRequest = new SignUpRequest(principal.getName(), password, name, phoneNumber);
+        userService.updateUser(principal.getName(), signUpRequest);
         return "redirect:/user";
     }
 

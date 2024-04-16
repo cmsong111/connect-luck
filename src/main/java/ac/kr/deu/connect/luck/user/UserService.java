@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -32,8 +33,8 @@ public class UserService {
      * @return String "delete success"
      */
     @Transactional
-    public String deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+    public String deleteUser(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
         foodTruckReviewRepository.deleteAllByAuthor(user);
         eventRepository.deleteByManager(user);
         for (FoodTruck foodTruck : foodTruckRepository.findByManager(user)) {
@@ -52,12 +53,12 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
     }
 
-    public User updateUser(Long id, SignUpRequest user) {
-        User findUser = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
-        if (user.email() != null) findUser.setEmail(user.email());
-        if (user.password() != null) findUser.setPassword(user.password());
-        if (user.name() != null) findUser.setName(user.name());
-        if (user.phoneNumber() != null) findUser.setPhone(user.phoneNumber());
+    public User updateUser(String userEmail, SignUpRequest signUpRequest) {
+        User findUser = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        if (signUpRequest.email() != null) findUser.setEmail(signUpRequest.email());
+        if (signUpRequest.password() != null) findUser.setPassword(signUpRequest.password());
+        if (signUpRequest.name() != null) findUser.setName(signUpRequest.name());
+        if (signUpRequest.phoneNumber() != null) findUser.setPhone(signUpRequest.phoneNumber());
         return userRepository.save(findUser);
     }
 
@@ -68,8 +69,8 @@ public class UserService {
         return new UserInfo(user, reviews);
     }
 
-    public User setUserRole(Long id, UserRole role) {
-        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+    public User setUserRole(String userEmail, UserRole role) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
 
         List<UserRole> roles = user.getRoles();
 
