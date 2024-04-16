@@ -1,15 +1,40 @@
 -- User table
-INSERT INTO users (created_at, updated_at, email, name, password, role, phone)
-VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test1@test.com', 'User1', 'test1', 'USER', '010-1111-1111'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test2@test.com', 'User2', 'test2', 'USER', '010-2222-2222'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test3@test.com', 'User3', 'test3', 'ADMIN', '010-3333-3333'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test4@test.com', 'User4', 'test4', 'EVENT_MANAGER', '010-4444-4444'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test5@test.com', '동의대학교 총학생회', 'test6', 'EVENT_MANAGER', '010-5555-5555'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test6@test.com', 'User6', 'test6', 'FOOD_TRUCK_MANAGER', '010-6666-6666'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test7@test.com', 'User7', 'test7', 'FOOD_TRUCK_MANAGER', '010-7777-7777'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test8@test.com', 'User8', 'test8', 'FOOD_TRUCK_MANAGER', '010-8888-8888'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test9@test.com', 'User9', 'test9', 'FOOD_TRUCK_MANAGER', '010-9999-9999'),
-       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test10@test.com', 'User10', 'test10', 'FOOD_TRUCK_MANAGER', '010-1010-1010');
+
+INSERT INTO users (created_at, updated_at, email, name, password, phone)
+VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test1@test.com', 'User1', '$2a$10$WDkAAQdIbzFjdI1qGiueL.MGxSeI1khstMmVPuT/KEQkUz.RXTZ2u',
+        '010-1111-1111'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test2@test.com', 'User2', '$2a$10$Z8ehQ.YaREkqcguDP/dX..IL4KyN3il9st.DC5VRcZegobg7JUOo6',
+        '010-2222-2222'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test3@test.com', 'User3', '$2a$10$OdU9Fx6Q.eZ4ah9Qg4mFRuwAZFRpYuM.i7ebLDwzwd/MhSa1va462',
+        '010-3333-3333'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test4@test.com', 'User4', '$2a$10$Mms25SF1beM78RfGr1Uh2e9yrGZmNYbVI5TW6tjT4PeAa8SPZVjeG',
+        '010-4444-4444'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test5@test.com', '동의대학교 총학생회', '$2a$10$OMFRxD2wnt5wBzVZdIlQXegQKFvW53KGj0MgjUni8gaDbufEOg8Ru',
+        '010-5555-5555'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test6@test.com', 'User6', '$2a$10$IiHU7oYPY6QlJ0BgLbb3ZOQdLyYQrdVEM9zIrOkYV5nUYAEZ5XrdS',
+        '010-6666-6666'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test7@test.com', 'User7', '$2a$10$v09rUTPHS9.F8ucKTDQOQehllhOS2pAjghnFRCteoC0Hqnr3SsvwS',
+        '010-7777-7777'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test8@test.com', 'User8', '$2a$10$2FSbkUsqf0VcHLnb0f52P.4zKiI5MfHV90dfN2cYeO2EaATl8QGp',
+        '010-8888-8888'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test9@test.com', 'User9', '$2a$10$kS8sybs8szmK4AvKx2e1buurVutp6ZUmhMt9vytHLCKx6l9/0h.2G',
+        '010-9999-9999'),
+       (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'test10@test.com', 'User10', '$2a$10$Oi98TGDRd4zJhl6PWLGQtufD.D9p967eyFNd3LwSOjYQ89AgC6tFW',
+        '010-1010-1010');
+
+-- user Role
+INSERT INTO users_roles (users_id, roles)
+VALUES (1, 'USER'),
+       (2, 'USER'),
+       (3, 'ADMIN'),
+       (3, 'USER'),
+       (4, 'EVENT_MANAGER'),
+       (5, 'EVENT_MANAGER'),
+       (6, 'FOOD_TRUCK_MANAGER'),
+       (7, 'FOOD_TRUCK_MANAGER'),
+       (8, 'FOOD_TRUCK_MANAGER'),
+       (9, 'FOOD_TRUCK_MANAGER'),
+       (10, 'FOOD_TRUCK_MANAGER');
 
 
 -- Event table

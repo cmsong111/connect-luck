@@ -13,6 +13,11 @@ spring:
       mode: embedded
       encoding: utf-8
 
+  servlet:
+    multipart:
+      max-file-size: 32MB
+      max-request-size: 32MB
+
 
 logging:
   level:
@@ -27,3 +32,31 @@ server:
     encoding:
       charset: UTF-8
       force-response: true
+
+### Uncomment the following block to enable HTTPS and HTTP/2
+#  port: 8443
+#
+#  http2:
+#    enabled: true
+#
+#  ssl:
+#    enabled: true
+#    certificate-private-key: "classpath:privkey.pem"
+#    certificate: "classpath:fullchain.pem"
+
+imgbb:
+  api-key: ${IMGBB_API_KEY}
+
+security:
+  jwt:
+    token:
+      secret: ${JWT_SECRET:this-is-a-secret-key-and-it-should-be-kept-secure}
+      expiration: ${JWT_EXPIRATION:3600000}
+      header: ${JWT_HEADER:Authorization}
+      prefix: ${JWT_PREFIX:Bearer }
+      issuer: ${JWT_ISSUER:connect-luck-server}
+      audience: ${JWT_AUDIENCE:connect-luck-client}
+
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha

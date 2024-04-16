@@ -14,4 +14,7 @@ public interface NowRepository extends JpaRepository<Now, Long> {
     List<Now> findByLatitudeBetweenAndLongitudeBetweenAndIsOperating(Double latitudeStart, Double latitudeEnd, Double longitudeStart, Double longitudeEnd,Boolean isOperating);
 
     List<Now> findByIsOperating(Boolean isOperating);
+
+
+    void deleteAllByFoodTruckId(Long foodTruckId);
 }

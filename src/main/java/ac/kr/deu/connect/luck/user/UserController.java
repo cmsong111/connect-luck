@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -16,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public String gerUserInfo(Model model, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
+    public String gerUserInfo(Principal principal, Model model) {
+        User user = userService.findUserByEmail(principal.getName());
         model.addAttribute("userInfo", userService.findUserInfo(user.getId()));
         return "user/profile";
     }
@@ -28,11 +30,9 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteUser(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        userService.deleteUser(user.getId());
-        request.getSession().invalidate();
-        return "redirect:/";
+    public String deleteUser(Principal principal) {
+        userService.deleteUser(principal.getName());
+        return "redirect:/auth/logout";
     }
 
     @GetMapping("/update")
@@ -44,14 +44,13 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(
-            HttpServletRequest request,
+            Principal principal,
             @RequestParam("password") String password,
             @RequestParam("name") String name,
             @RequestParam("phoneNumber") String phoneNumber
     ) {
-        User user = (User) request.getSession().getAttribute("user");
-        SignUpRequest signUpRequest = new SignUpRequest(user.getEmail(), password, name, phoneNumber);
-        userService.updateUser(user.getId(), signUpRequest);
+        SignUpRequest signUpRequest = new SignUpRequest(principal.getName(), password, name, phoneNumber);
+        userService.updateUser(principal.getName(), signUpRequest);
         return "redirect:/user";
     }
 

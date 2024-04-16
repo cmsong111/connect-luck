@@ -8,7 +8,7 @@
                 <h2>내 정보</h2>
                 <p th:text="'이름: ' + ${userInfo.user.name}"></p>
                 <p th:text="'이메일: ' + ${userInfo.user.email}"></p>
-                <p th:text="'역할: ' + ${userInfo.user.role}"></p>
+                <p th:text="'역할: ' + ${userInfo.user.getRoles()}"></p>
                 <p th:text="'연락처: ' + ${userInfo.user.phone}"></p>
                 <p th:text="'가입일: ' + ${userInfo.user.createdAt}"></p>
                 <p th:text="'수정일: ' + ${userInfo.user.updatedAt}"></p>
