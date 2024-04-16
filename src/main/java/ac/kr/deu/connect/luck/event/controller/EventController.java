@@ -1,5 +1,6 @@
-package ac.kr.deu.connect.luck.event;
+package ac.kr.deu.connect.luck.event.controller;
 
+import ac.kr.deu.connect.luck.event.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ public class EventController {
 
     @GetMapping
     public String getEvent(Model model) {
-        model.addAttribute("events", eventService.getEvents());
+        model.addAttribute("events", eventService.getEvents(null));
         return "event/event-list";
     }
 

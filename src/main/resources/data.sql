@@ -38,18 +38,18 @@ VALUES (1, 'USER'),
 
 
 -- Event table
-INSERT INTO event (created_at, updated_at, start_at, end_at, manager_id, title, content, street_address, detail_address, zip_code, image_url)
+INSERT INTO event (created_at, updated_at, start_at, end_at, manager_id, title, content, street_address, detail_address, zip_code, image_url, status)
 VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-10 10:00:00', '2024-03-10 15:00:00', 5, '동의대학교 스탬프 투어', 'Event Content 1', '부산광역시 엄광로 176',
         '지천관 앞',
-        '12345', 'https://cdn.news.unn.net/news/photo/202207/530605_335239_856.jpg'),
+        '12345', 'https://cdn.news.unn.net/news/photo/202207/530605_335239_856.jpg', 'EVENT_END'),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-15 12:00:00', '2024-03-15 18:00:00', 4, '부산시민공원 빛축제',
         '부산의 대표 도심공원인 부산시민공원에서 부산진구청, 부산시민공원, 부산국립국악원 3개 기관이 협력하여 제3회 부산 희망 드림 빛축제를 개최하였다. 부산의 꿈과 희망의 빛을 모아 세계로 라는 주제로 2030부산세계박람회 유치 기원 등 테마를 구성하여 다양한 빛 시설물과 함께 특색있는 볼거리를 제공한다.',
         '부산 부산진구 시민공원로 73',
-        '남2문', '67890', 'https://www.visitbusan.net/uploadImgs/files/cntnts/20191227194943122_oen'),
+        '남2문', '67890', 'https://www.visitbusan.net/uploadImgs/files/cntnts/20191227194943122_oen', 'OPEN_FOR_APPLICATION'),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-20 14:00:00', '2024-03-20 20:00:00', 4, 'Event 3', 'Event Content 3', '789 Pine St',
-        'Unit 303', '98765', 'https://chrisandpartners.co/wp-content/uploads/2021/11/%EA%B7%B8%EB%A6%BC1.jpg'),
+        'Unit 303', '98765', 'https://chrisandpartners.co/wp-content/uploads/2021/11/%EA%B7%B8%EB%A6%BC1.jpg', 'BEFORE_APPLICATION'),
        (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2024-03-25 16:00:00', '2024-03-25 22:00:00', 4, 'Event 4', 'Event Content 4', '101 Elm St',
-        'Room 404', '54321', 'https://chrisandpartners.co/wp-content/uploads/2021/11/%EA%B7%B8%EB%A6%BC1.jpg');
+        'Room 404', '54321', 'https://chrisandpartners.co/wp-content/uploads/2021/11/%EA%B7%B8%EB%A6%BC1.jpg', 'BEFORE_APPLICATION');
 
 INSERT INTO food_truck (created_at, manager_id, updated_at, description, food_type, image_url, name)
 VALUES (CURRENT_TIMESTAMP, 6, CURRENT_TIMESTAMP, '신상 수제버거집의 청년버거', 'BURGER',
