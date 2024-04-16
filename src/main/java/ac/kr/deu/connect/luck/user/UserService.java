@@ -11,6 +11,7 @@ import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -24,6 +25,7 @@ public class UserService {
     private final EventRepository eventRepository;
     private final FoodTruckRepository foodTruckRepository;
     private final FoodTruckMenuRepository foodTruckMenuRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 유저 삭제
@@ -56,7 +58,7 @@ public class UserService {
     public User updateUser(String userEmail, SignUpRequest signUpRequest) {
         User findUser = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
         if (signUpRequest.email() != null) findUser.setEmail(signUpRequest.email());
-        if (signUpRequest.password() != null) findUser.setPassword(signUpRequest.password());
+        if (signUpRequest.password() != null) findUser.setPassword(passwordEncoder.encode(signUpRequest.password()));
         if (signUpRequest.name() != null) findUser.setName(signUpRequest.name());
         if (signUpRequest.phoneNumber() != null) findUser.setPhone(signUpRequest.phoneNumber());
         return userRepository.save(findUser);

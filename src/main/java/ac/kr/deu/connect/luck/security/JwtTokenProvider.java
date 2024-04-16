@@ -87,8 +87,7 @@ public class JwtTokenProvider {
      * @return 사용자 이름
      */
     public String getUsername(String token) {
-        log.info("getUsername : " + token);
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
     }
 
 
@@ -99,7 +98,6 @@ public class JwtTokenProvider {
      * @return 인증 정보
      */
     public Authentication getAuthentication(String token) {
-        log.info("Authentication request : " + token);
         UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -111,27 +109,23 @@ public class JwtTokenProvider {
      * @return 토큰
      */
     public String resolveToken(HttpServletRequest req) {
-        // 헤더에서 토큰 추출
+        // Get Token from Header
         String bearerToken = req.getHeader(header);
         if (bearerToken != null && bearerToken.startsWith(prefix)) {
-            log.info("resolve Token at header : {}", bearerToken);
             return bearerToken.substring(7);
         }
-        // 쿠키에서 토큰 추출
+        // Get Token from Cookie
         if (req.getCookies() == null) {
-            log.info("cookie is null");
             return null;
         }
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals(header)) {
                 String decodedToken = URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
                 if (decodedToken.startsWith(prefix)) {
-                    log.info("resolve Token at cookie : {}", decodedToken);
                     return decodedToken.substring(7);
                 }
             }
         }
-        log.info("resolve Token is null");
         return null;
     }
 
@@ -142,14 +136,11 @@ public class JwtTokenProvider {
      * @return 유효성 여부
      */
     public boolean validateToken(String token) {
-        log.info("validateToken : " + token);
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
-
-
 }

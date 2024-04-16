@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "01-Auth", description = "인증 관련 API - none required Authorization header")
+@Tag(name = "01-Auth", description = "인증 관련 API - <b>Auth API 호출 시 Authorization header 부분이 비어 있어야 합니다.</b>")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -23,14 +23,14 @@ public class AuthRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "아이디 중복 체크 성공", content = @Content(schema = @Schema(implementation = Boolean.class)))
     })
-    @Operation(summary = "아이디 중복 체크", description = "아이디 중복 체크를 수행합니다.<br>true: 사용가능<br>false: 불가능(이미 사용중인 이메일)")
+    @Operation(summary = "아이디 중복 체크", description = "<h1>아이디 중복 체크를 수행합니다.</h1><h2>반환 값</h2><li>true: 사용가능</li><li>false: 불가능</li>")
     public ResponseEntity<Boolean> idCheck(
             @Parameter(description = "이메일") @RequestParam("email") String email) {
         return ResponseEntity.ok(authService.idCheck(email));
     }
 
     @PostMapping("/login")
-    @Operation(summary = "로그인", description = "입력된 이메일과 비밀번호를 사용하여 로그인을 진행합니다.<br>로그인 성공 시 JWT 토큰을 반환합니다.<br>인증이 필요한 요청 시 헤더에 Authorization Bear {JWT}를 포함하여 요청을 보내야 합니다.")
+    @Operation(summary = "로그인", description = "입력된 이메일과 비밀번호를 사용하여 로그인을 진행합니다.<br>로그인 성공 시 JWT 토큰을 반환합니다.<br>인증이 필요한 요청 시 헤더에 Authorization Bear {JWT}를 포함하여 요청을 보내야 합니다.<br><b>주의: Auth 관련 API 호출 시 Header 부분이 비어 있어야 합니다.</b>")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "로그인 실패", content = @Content(schema = @Schema(implementation = CustomErrorResponse.class)))
