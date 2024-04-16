@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <!-- 로그인 폼 추가 -->
-                        <form method="post" th:action="@{/login}">
+                        <form method="post" th:action="@{/auth/login}">
                             <div class="form-group">
                                 <label for="email">이메일:</label>
                                 <input class="form-control" id="email" name="email" required type="text">
@@ -25,9 +25,9 @@
                     <!--아이디 검색 및 비밀번호 찾기-->
                     <div class="card-footer">
                         <div class="text-center">
-                            <a th:href="@{/find-id}">아이디 찾기</a>
+                            <a th:href="@{/auth/find-id}">아이디 찾기</a>
                             <span> | </span>
-                            <a th:href="@{/find-password}">비밀번호 찾기(개발중)</a>
+                            <a th:href="@{/auth/find-password}">비밀번호 찾기(개발중)</a>
                         </div>
                     </div>
                 </div>

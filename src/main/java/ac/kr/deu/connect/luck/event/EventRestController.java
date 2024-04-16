@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,18 +30,21 @@ public class EventRestController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
     @Operation(summary = "이벤트 수정", description = "이벤트 수정")
     public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody EventRequest eventRequest) {
         return ResponseEntity.ok(eventService.updateEvent(id, eventRequest));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
     @Operation(summary = "이벤트 생성", description = "이벤트 생성\n이벤트 주소입력 시 카카오 우편번호 서비스를 사용해서 주소를 입력받아야함.")
     public ResponseEntity<Event> createEvent(@RequestBody EventRequest eventRequest) {
         return ResponseEntity.ok(eventService.createEvent(eventRequest));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
     @Operation(summary = "이벤트 삭제", description = "이벤트 삭제")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);

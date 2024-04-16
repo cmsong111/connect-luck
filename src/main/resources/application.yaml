@@ -46,3 +46,13 @@ server:
 
 imgbb:
   api-key: ${IMGBB_API_KEY}
+
+security:
+  jwt:
+    token:
+      secret: ${JWT_SECRET:this-is-a-secret-key-and-it-should-be-kept-secure}
+      expiration: ${JWT_EXPIRATION:3600000}
+      header: ${JWT_HEADER:Authorization}
+      prefix: ${JWT_PREFIX:Bearer }
+      issuer: ${JWT_ISSUER:connect-luck-server}
+      audience: ${JWT_AUDIENCE:connect-luck-client}

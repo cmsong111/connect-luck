@@ -61,11 +61,11 @@ public class FoodTruckMenuService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH)
         );
-        if (user.getRole() != UserRole.FOOD_TRUCK_MANAGER) {
-            throw new CustomException(CustomErrorCode.ROLE_NOT_MATCH);
-        }
-        if (!foodTruck.getManager().equals(user)) {
-            throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
-        }
+//        if (user.getRoles() != UserRole.FOOD_TRUCK_MANAGER) {
+//            throw new CustomException(CustomErrorCode.ROLE_NOT_MATCH);
+//        }
+//        if (!foodTruck.getManager().equals(user)) {
+//            throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
+//        }
     }
 }

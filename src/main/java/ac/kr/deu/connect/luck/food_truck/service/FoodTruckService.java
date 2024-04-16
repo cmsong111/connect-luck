@@ -143,7 +143,7 @@ public class FoodTruckService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH)
         );
-        if (!user.getRole().equals(UserRole.FOOD_TRUCK_MANAGER)) {
+        if (!user.getRoles().contains(UserRole.FOOD_TRUCK_MANAGER)) {
             throw new CustomException(CustomErrorCode.ROLE_NOT_MATCH);
         }
     }

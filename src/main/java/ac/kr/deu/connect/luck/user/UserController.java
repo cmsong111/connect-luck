@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -16,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public String gerUserInfo(Model model, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
+    public String gerUserInfo(Principal principal, Model model) {
+        User user = userService.findUserByEmail(principal.getName());
         model.addAttribute("userInfo", userService.findUserInfo(user.getId()));
         return "user/profile";
     }

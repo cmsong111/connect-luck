@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="navBarFragment">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">
@@ -27,29 +27,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/food-truck">Food Truck</a>
                 </li>
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-                <!--                </li>-->
             </ul>
             <!--우측 메뉴-->
             <!--비 로그인 상태일 때-->
-            <ul class="navbar-nav ml-auto" th:if="${session.user == null}">
+            <ul class="navbar-nav ml-auto" sec:authorize="isAnonymous()">
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">로그인</a>
+                    <a class="nav-link" href="auth/login">로그인</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/agreement">회원가입</a>
+                    <a class="nav-link" href="auth/agreement">회원가입</a>
                 </li>
             </ul>
             <!--로그인 상태일 때-->
-            <ul class="navbar-nav ml-auto" th:if="${session.user != null}">
+            <ul class="navbar-nav ml-auto" sec:authorize="isAuthenticated()">
                 <!--이벤트 관리자일 때-->
-                <li class="nav-item" th:if="${session.user.getRole().name() == T(ac.kr.deu.connect.luck.user.UserRole).EVENT_MANAGER.name()}">
+                <li class="nav-item" sec:authorize="hasRole('ROLE_EVENT_MANAGER')">
                     <a class="nav-link" href="/my-event">내 이벤트</a>
                 </li>
 
                 <!--푸드트럭 관리자 때-->
-                <li class="nav-item" th:if="${session.user.getRole().name() == T(ac.kr.deu.connect.luck.user.UserRole).FOOD_TRUCK_MANAGER.name()}">
+                <li class="nav-item" sec:authorize="hasRole('ROLE_FOOD_TRUCK_MAMANER')">
                     <a class="nav-link" href="/my-truck">내 푸드트럭</a>
                 </li>
 
@@ -57,7 +54,7 @@
                     <a class="nav-link" href="/user">마이페이지</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">로그아웃</a>
+                    <a class="nav-link" href="/auth/logout">로그아웃</a>
                 </li>
             </ul>
         </div>

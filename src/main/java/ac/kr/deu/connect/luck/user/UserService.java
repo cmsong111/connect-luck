@@ -48,6 +48,10 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
     }
 
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+    }
+
     public User updateUser(Long id, SignUpRequest user) {
         User findUser = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
         if (user.email() != null) findUser.setEmail(user.email());
@@ -66,18 +70,13 @@ public class UserService {
 
     public User setUserRole(Long id, UserRole role) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
-        if (user.getRole() == role) {
-            throw new CustomException(CustomErrorCode.ALREADY_SET_ROLE);
+
+        List<UserRole> roles = user.getRoles();
+
+        if (!roles.contains(role)) {
+            roles.add(role);
         }
-        // 푸드트럭 매니저는 이벤트 매니저로 변경 불가
-        if (user.getRole() == UserRole.FOOD_TRUCK_MANAGER && role == UserRole.EVENT_MANAGER) {
-            throw new CustomException(CustomErrorCode.ROLE_NOT_BE_CHANGE);
-        }
-        // 이벤트 매니저는 푸드트럭 매니저로 변경 불가
-        if (user.getRole() == UserRole.EVENT_MANAGER && role == UserRole.FOOD_TRUCK_MANAGER) {
-            throw new CustomException(CustomErrorCode.ROLE_NOT_BE_CHANGE);
-        }
-        user.setRole(role);
+
         return userRepository.save(user);
     }
 }

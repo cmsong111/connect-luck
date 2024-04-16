@@ -4,6 +4,8 @@ import ac.kr.deu.connect.luck.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity(name = "users")
 @Getter
 @Setter
@@ -20,6 +22,8 @@ public class User extends BaseEntity {
     private String name;
     @Column(unique = true)
     private String phone;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    List<UserRole> roles;
 }

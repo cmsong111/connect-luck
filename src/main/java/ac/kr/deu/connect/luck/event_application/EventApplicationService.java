@@ -36,7 +36,7 @@ public class EventApplicationService {
         // 유저 정보 조회
         User user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
 
-        if (user.getRole() != UserRole.FOOD_TRUCK_MANAGER){
+        if (user.getRoles().contains(UserRole.ADMIN)) {
             throw new CustomException(CustomErrorCode.USER_ID_NOT_MATCH);
         }
 

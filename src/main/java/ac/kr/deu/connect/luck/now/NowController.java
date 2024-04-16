@@ -1,10 +1,14 @@
 package ac.kr.deu.connect.luck.now;
 
+import ac.kr.deu.connect.luck.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,20 +32,22 @@ public class NowController {
 
 
     @PostMapping("/start/{foodTruckId}")
-    @Operation(summary = "푸드트럭 운영 시작")
+    @Operation(summary = "푸드트럭 운영 시작", description = "위도, 경도 입력 시 해당 위치에서 운영을 시작합니다. 푸드트럭 매니저의 권한이 필요합니다.")
+    @PreAuthorize("hasRole(ROLE_FOOD_TRUCK_MANAGER)")
     public ResponseEntity<Now> startWorking(
             @PathVariable("foodTruckId") Long foodTruckId,
             @RequestParam(value = "latitude") Double latitude,
             @RequestParam(value = "longitude") Double longitude,
-            @RequestHeader("USER_ID") Long userId) {
-        return ResponseEntity.ok(nowService.saveStartNow(foodTruckId, userId, latitude, longitude));
+            HttpServletRequest req) {
+        return ResponseEntity.ok(nowService.saveStartNow(foodTruckId, req, latitude, longitude));
     }
 
+    @PreAuthorize("hasRole(ROLE_FOOD_TRUCK_MANAGER)")
     @PostMapping("/end/{foodTruckId}")
     @Operation(summary = "푸드트럭 운영 종료")
     public ResponseEntity<Now> stopWorking(
             @Parameter(name = "푸드트럭 IDX") @PathVariable("foodTruckId") Long foodTruckId,
-            @Parameter(name = "유저 IDX") @RequestHeader("USER_ID") Long userId) {
-        return ResponseEntity.ok(nowService.saveEndNow(foodTruckId, userId));
+            HttpServletRequest req) {
+        return ResponseEntity.ok(nowService.saveEndNow(foodTruckId, req));
     }
 }

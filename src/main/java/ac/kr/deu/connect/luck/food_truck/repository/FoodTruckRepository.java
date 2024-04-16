@@ -19,4 +19,5 @@ public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
     List<FoodTruck> findByNameContainingAndFoodType(String name, FoodType foodType);
 
     void deleteByManager(User manager);
+
 }

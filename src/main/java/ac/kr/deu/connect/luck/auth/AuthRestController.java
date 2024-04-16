@@ -1,7 +1,6 @@
 package ac.kr.deu.connect.luck.auth;
 
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
-import ac.kr.deu.connect.luck.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,18 +14,18 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Auth", description = "인증 관련 API")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthRestController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    @Operation(summary = "로그인")
+    @Operation(summary = "로그인", description = "로그인을 수행합니다. 로그인 성공 시 JWT 토큰을 반환합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "로그인 실패", content = @Content(schema = @Schema(implementation = CustomErrorResponse.class)))
     })
-    public User login(
+    public String login(
             @Parameter(description = "로그인 요청 정보") @RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
@@ -34,10 +33,10 @@ public class AuthRestController {
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "200", description = "회원가입 성공", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "회원가입 실패", content = @Content(schema = @Schema(implementation = CustomErrorResponse.class)))
     })
-    public User signUp(
+    public String signUp(
             @Parameter(name = "로그인 객체", description = "회원가입 요청 정보") @RequestBody SignUpRequest signUpRequest) {
         return authService.signUp(signUpRequest);
     }
