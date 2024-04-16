@@ -16,6 +16,8 @@ public record FoodTruckReviewResponse(
         int score,
         @Schema(description = "작성자 이름", example = "홍길동")
         String authorName,
+        @Schema(description = "답글", example = "감사합니다.")
+        String reply,
         @Schema(description = "생성일", example = "2021-08-01T00:00:00")
         LocalDateTime createdAt,
         @Schema(description = "수정일", example = "2021-08-01T00:00:00")
