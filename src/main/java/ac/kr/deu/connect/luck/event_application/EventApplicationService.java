@@ -21,6 +21,32 @@ public class EventApplicationService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
 
+    /**
+     * 내가 신청한 이벤트 목록 조회
+     * 푸드트럭 매니저만 사용 가능합니다
+     *
+     * @param email 현재 사용자 정보
+     */
+    public List<EventApplication> getMyEventApplicationsForTruckManager(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        return eventApplicationRepository.findAllByFoodTruckManager(user);
+    }
+
+    /**
+     * 내 이벤트에 대한 신청 목록 조회
+     * 이벤트 관리자만 사용 가능합니다
+     *
+     * @param eventId 이벤트 UID
+     *                이벤트 관리자만 사용 가능합니다
+     * @param email   현재 사용자 정보
+     */
+    public List<EventApplication> getMyEventApplicationsForEventManager(Long eventId, String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        if (eventId == null) {
+            return eventApplicationRepository.findAllByEventManager(user);
+        }
+        return eventApplicationRepository.findAllByEventManagerAndEventId(user, eventId);
+    }
 
     /**
      * 지원서 신규 작성 메소드
@@ -49,9 +75,24 @@ public class EventApplicationService {
         return eventApplicationRepository.save(eventApplicationSaved);
     }
 
-    //TODO: 지원서 취소(푸드트럭 매니저용)
-
-    //TODO: 지원서 status 상태 변경(승인,거절) (행사 관리자용)
+    /**
+     * 특정 이벤트에 대한 푸드트럭 신청 승인 / 거절
+     * 이벤트 관리자만 승인 가능합니다
+     *
+     * @param eventId       이벤트 UID
+     *                      이벤트 관리자만 승인 가능합니다
+     * @param applicationId 신청 UID
+     *                      이벤트 관리자만 승인 가능합니다
+     * @return 승인 결과
+     */
+    public EventApplication approveEventApplication(Long eventId, Long applicationId, ApplicationStatus applicationStatus) {
+        EventApplication eventApplication = eventApplicationRepository.findById(applicationId).orElseThrow(() -> new IllegalArgumentException("지원서가 존재하지 않습니다"));
+        if (!eventApplication.getEvent().getId().equals(eventId)) {
+            throw new IllegalArgumentException("이벤트 ID가 일치하지 않습니다");
+        }
+        eventApplication.setStatus(applicationStatus);
+        return eventApplicationRepository.save(eventApplication);
+    }
 
     /**
      * 이벤트에 대한 모든 지원서 조회

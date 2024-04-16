@@ -17,6 +17,7 @@ public interface EventApplicationRepository extends JpaRepository<EventApplicati
      * @return 이벤트에 신청한 신청자 목록
      */
     List<EventApplication> findAllByEvent(Event event);
+
     List<EventApplication> findAllByEventId(Long eventId);
 
     /**
@@ -26,4 +27,9 @@ public interface EventApplicationRepository extends JpaRepository<EventApplicati
      * @return 푸드트럭 매니저가 신청한 이벤트 목록
      */
     List<EventApplication> findAllByFoodTruckManager(User user);
+
+
+
+    List<EventApplication> findAllByEventManager(User user);
+    List<EventApplication> findAllByEventManagerAndEventId(User user, Long eventId);
 }
