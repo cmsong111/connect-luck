@@ -39,7 +39,7 @@ public class AuthController {
             @RequestParam("password") String password,
             HttpServletResponse response) {
         // 로그인
-        String token = authService.login(new LoginRequest(email, password));
+        String token = authService.login(new LoginRequest(email, password)).token();
         String encodedToken = URLEncoder.encode(TOKEN_PREFIX + token, StandardCharsets.UTF_8);
 
         // 쿠키에 토큰 저장
@@ -78,7 +78,7 @@ public class AuthController {
             HttpServletResponse response) {
         // 회원가입 후 자동 로그인
         // 쿠키 저장 시 토큰을 URL 인코딩(URLEncoder.encode)하여 저장
-        String token = authService.signUp(new SignUpRequest(email, password, name, phone));
+        String token = authService.signUp(new SignUpRequest(email, password, name, phone)).token();
         String encodedToken = URLEncoder.encode(TOKEN_PREFIX + token, StandardCharsets.UTF_8);
         Cookie cookie = new Cookie(AUTHORIZATION_HEADER, encodedToken);
         cookie.setMaxAge(60 * 30); // 30분

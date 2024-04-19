@@ -18,10 +18,10 @@
                         <h5 class="card-title" th:text="${event.title}"></h5>
                         <p class="card-text" th:text="'시작일: ' + ${#temporals.format(event.startAt, 'yyyy년 MM월 dd일')}"></p>
                         <p class="card-text" th:text="'장소: ' + ${event.streetAddress + ' ' + event.detailAddress}"></p>
-                        <p class="card-text" th:text="'담당자: '+${event.manager.name}"></p>
+                        <p class="card-text" th:text="'담당자: '+${event.managerName}"></p>
 
                         <a class="btn btn-primary btn-sm" th:href="@{'/event/' + ${event.id}}">자세히 보기</a>
-                        <a class="btn btn-primary btn-sm" th:href="@{'/contact/' + ${event.manager.id}}">문의하기</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/contact/' + ${event.managerName}}">문의하기</a>
                         <a class="btn btn-primary btn-sm" th:href="@{'/apply/' + ${event.id}}">신청하기</a>
                     </div>
                 </div>
