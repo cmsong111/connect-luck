@@ -19,10 +19,10 @@ public class ImageRestController {
     private final ImageUploader imageUploader;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadImage(
+    public ImageUrlResponse uploadImage(
             @Parameter(description = "multipart/form-data 형식의 이미지 리스트를 input으로 받습니다. 이때 key 값은 image 입니다.")
             @RequestPart("image") MultipartFile multipartFile) {
-        return imageUploader.uploadImage(multipartFile).getData().getUrl();
+        return new ImageUrlResponse(imageUploader.uploadImage(multipartFile).getData().getUrl());
     }
 
 }
