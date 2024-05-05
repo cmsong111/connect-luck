@@ -1,7 +1,6 @@
 package ac.kr.deu.connect.luck.user;
 
 import ac.kr.deu.connect.luck.auth.SignUpRequest;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,7 @@ public class UserController {
 
     @GetMapping
     public String gerUserInfo(Principal principal, Model model) {
-        User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("userInfo", userService.findUserInfo(user.getId()));
+        model.addAttribute("userInfo", userService.findUserInfo(principal.getName()));
         return "user/profile";
     }
 
@@ -36,9 +34,9 @@ public class UserController {
     }
 
     @GetMapping("/update")
-    public String updateUserPageRequest(Model model, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        model.addAttribute("userInfo", userService.findUserInfo(user.getId()));
+    public String updateUserPageRequest(
+            Model model, Principal principal) {
+        model.addAttribute("userInfo", userService.findUserInfo(principal.getName()));
         return "user/profile_edit";
     }
 
@@ -51,6 +49,20 @@ public class UserController {
     ) {
         SignUpRequest signUpRequest = new SignUpRequest(principal.getName(), password, name, phoneNumber);
         userService.updateUser(principal.getName(), signUpRequest);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/add-role")
+    public String addRolePageRequest() {
+        return "user/add_role";
+    }
+
+    @PostMapping("/add-role")
+    public String addRole(
+            Principal principal,
+            @RequestParam("role") UserRole role
+    ) {
+        userService.setUserRole(principal.getName(), role);
         return "redirect:/user";
     }
 

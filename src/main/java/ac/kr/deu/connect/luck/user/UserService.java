@@ -51,8 +51,8 @@ public class UserService {
         return userRepository.save(findUser);
     }
 
-    public UserInfo findUserInfo(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+    public UserInfo findUserInfo(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
         List<FoodTruckReview> reviews = foodTruckReviewRepository.findByAuthor(user);
 
         return new UserInfo(user, reviews);
