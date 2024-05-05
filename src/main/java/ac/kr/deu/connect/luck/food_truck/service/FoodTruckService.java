@@ -148,6 +148,10 @@ public class FoodTruckService {
         return foodTruckRepository.save(foodTruck);
     }
 
+    public List<FoodTruck> getMyFoodTrucks(String userEmail) {
+        return foodTruckRepository.findAllByManagerEmail(userEmail);
+    }
+
     /**
      * 푸드트럭 매니저인지 확인합니다.
      * 푸드트럭 매니저가 아닌 경우 예외를 발생시킵니다.

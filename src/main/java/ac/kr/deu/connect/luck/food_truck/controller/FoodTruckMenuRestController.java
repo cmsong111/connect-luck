@@ -49,7 +49,7 @@ public class FoodTruckMenuRestController {
 
     @PatchMapping(value = "/{foodTruckMenuId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
-    @Operation(summary = "푸드트럭 메뉴 수정")
+    @Operation(summary = "푸드트럭 메뉴 수정", description = "특정 푸드트럭 메뉴를 수정합니다. 푸드트럭 매니저의 역할이 필요합니다.")
     public ResponseEntity<FoodTruckMenu> updateFoodTruckMenu(
             @Parameter(description = "푸드트럭 UID") @PathVariable("foodTruckId") Long foodTruckId,
             @Parameter(description = "메뉴 UID") @PathVariable("foodTruckMenuId") Long foodTruckMenuId,

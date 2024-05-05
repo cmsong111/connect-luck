@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <h1 class="text-center">폼 수정</h1>
+    <div class="container mt-5">
+        <img alt="Food Truck Image" class="card-img-top" th:src="${foodTruck.imageUrl}">
+    </div>
+    <div class="container mt-5">
+        <form method="post" th:action="|/food-truck/${foodTruck.id}/edit|" th:object="${foodTruck}">
+            <input name="id" th:value="${foodTruck.id}" type="hidden">
+            <div class="form-group">
+                <label for="name">이름:</label>
+                <input class="form-control" id="name" name="name" required th:value="${foodTruck.name}" type="text">
+            </div>
+            <div class="form-group">
+                <label for="description">설명:</label>
+                <textarea class="form-control" id="description" name="description" required th:text="${foodTruck.description}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="foodType">카테고리:</label>
+                <select class="form-control" id="foodType" name="foodType" required>
+                    <option th:each="foodType : ${T(ac.kr.deu.connect.luck.food_truck.entity.FoodType).values()}" th:selected="${foodType == foodTruck.foodType.toString()}"
+                            th:text="${foodType}" th:value="${foodType}"></option>
+                </select>
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">수정</button>
+            <button class="btn btn-info" th:onclick="|location.href='/food-truck/' + ${foodTruck.id} + '/edit.photo'|" type="button">이미지 변경</button>
+            <button class="btn btn-danger" th:onclick="|location.href='/food-truck/' + ${foodTruck.id} + '/delete'|" type="button">삭제</button>
+        </form>
+    </div>
+
+
+</th:block>
+</html>
