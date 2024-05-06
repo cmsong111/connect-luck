@@ -66,7 +66,7 @@ public class FoodTruckController {
     @PostMapping(value = "{id}/edit.photo", consumes = "multipart/form-data")
     @PreAuthorize("hasRole('FOOD_TRUCK_MANAGER')")
     public String editFoodTruckPhotoPost(
-            @PathVariable Long id,Principal principal,
+            @PathVariable Long id, Principal principal,
             MultipartFile image
     ) {
         foodTruckService.updateFoodTruckImage(id, principal.getName(), image);

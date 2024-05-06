@@ -23,11 +23,11 @@ public class ImageUploader {
     @Value("${imgbb.api-key}")
     private String API_KEY;
 
-    private String BASE_URL = "https://api.imgbb.com/1/upload";
+    private final String BASE_URL = "https://api.imgbb.com/1/upload";
 
-    private Long EXPIRATION = 15552000L;
+    private final Long EXPIRATION = 15552000L;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
 
     public ImageUploadResponse uploadImage(MultipartFile file) {

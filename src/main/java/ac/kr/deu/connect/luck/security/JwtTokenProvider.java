@@ -26,25 +26,19 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
+    private final MyUserDetails myUserDetails;
     @Value("${security.jwt.token.secret}")
     private String secretKey;
-
     @Value("${security.jwt.token.expiration}")
     private long validityInMilliseconds;
-
     @Value("${security.jwt.token.header}")
     private String header;
-
     @Value("${security.jwt.token.prefix}")
     private String prefix;
-
     @Value("${security.jwt.token.issuer}")
     private String issuer;
-
     @Value("${security.jwt.token.audience}")
     private String audience;
-
-    private MyUserDetails myUserDetails;
 
     @Autowired
     public JwtTokenProvider(MyUserDetails myUserDetails) {

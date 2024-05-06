@@ -2,7 +2,7 @@ package ac.kr.deu.connect.luck.auth;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,20 +13,14 @@ import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
+    private final AuthService authService;
     @Value("${security.jwt.token.header}")
     private String AUTHORIZATION_HEADER;
-
     @Value("${security.jwt.token.prefix}")
     private String TOKEN_PREFIX;
-
-    private final AuthService authService;
-
-    @Autowired
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @GetMapping("/login")
     public String login() {
