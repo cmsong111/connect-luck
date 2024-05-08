@@ -53,7 +53,7 @@ public class FoodTruckRestController {
 
 
     @PatchMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
+    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER') and @checker.isFoodTruckManager(#truckId)")
     @Operation(summary = "푸드트럭 정보를 업데이트 합니다.", description = "푸드트럭 정보를 업데이트 합니다. 푸드트럭 관리자만 가능합니다.<br>푸드트럭의 대표 이미지를 변경하려면 /{id}/update-image API를 활용하십시오.")
     public ResponseEntity<FoodTruckDetailResponse> updateFoodTruck(
             @Parameter(description = "푸드트럭 UID") @PathVariable("id") Long truckId,

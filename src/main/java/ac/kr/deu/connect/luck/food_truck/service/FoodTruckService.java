@@ -106,8 +106,6 @@ public class FoodTruckService {
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
-        // Check if the user is the manager of the food truck
-        isManager(userEmail, foodTruck);
 
         // 수정할 정보가 있는 경우 수정
         if (foodTruckRequest.name() != null) {
