@@ -20,7 +20,7 @@ import java.util.Base64;
 @Slf4j
 public class ImageUploader {
 
-    @Value("${imgbb.api-key}")
+    @Value("${api-key.imgbb}")
     private String API_KEY;
 
     private final String BASE_URL = "https://api.imgbb.com/1/upload";

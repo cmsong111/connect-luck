@@ -30,6 +30,10 @@ jobs:
       - name: Set Environment Variables
         run: echo "IMGBB_API_KEY=${{ secrets.IMGBB_API_KEY }}" >> $GITHUB_ENV
 
+      - name: Set Environment Variables
+        run: echo "KAKAO_API_KEY=${{ secrets.KAKAO_API_KEY }}" >> $GITHUB_ENV
+
+
       - name: Test with Gradle
         run: ./gradlew --info test
 

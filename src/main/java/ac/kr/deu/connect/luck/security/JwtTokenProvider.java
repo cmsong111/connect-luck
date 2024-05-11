@@ -97,7 +97,7 @@ public class JwtTokenProvider {
     }
 
     /**
-     * 헤더에서 토큰 추출 메서드
+     * 토큰 추출 메서드
      *
      * @param req 요청
      * @return 토큰
