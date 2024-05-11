@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+
+    <style>
+        .checkbox-group, .submit-form {
+            margin-bottom: 20px;
+        }
+
+        .submit-form {
+            margin-top: 20px;
+        }
+    </style>
+    <div class="container mt-5">
+        <h1 class="text-center">푸드트럭 신청</h1>
+        <form action="/applyFoodTruck" method="post">
+            <div class="checkbox-group">
+                <h3>신청할 푸드트럭</h3>
+                <!-- 푸드트럭 콤보박스 -->
+                <select class="form-select" name="foodTruckId">
+                    <option value="">푸드트럭을 선택하세요</option>
+                    <option th:each="foodTruck : ${user.foodTrucks}" th:value="${foodTruck.id}"
+                            th:text="${foodTruck.name}"></option>
+                </select>
+            </div>
+
+            <div class="submit-form">
+                <h3>신청서 작성</h3>
+                <div class="form-group">
+                    <label for="applicationContent">신청 내용</label>
+                    <textarea class="form-control" id="applicationContent" name="applicationContent"
+                              rows="3"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">신청하기</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='/event'">취소하기</button>
+        </form>
+    </div>
+
+
+</th:block>
+</html>

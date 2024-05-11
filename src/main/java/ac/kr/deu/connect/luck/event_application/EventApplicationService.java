@@ -66,10 +66,10 @@ public class EventApplicationService {
             throw new CustomException(CustomErrorCode.USER_ID_NOT_MATCH);
         }
 
-        Event evnet = eventRepository.findById(eventId).orElseThrow(() -> new CustomException(CustomErrorCode.EVENT_NOT_FOUND));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new CustomException(CustomErrorCode.EVENT_NOT_FOUND));
 
         eventApplicationSaved.setFoodTruckManager(user);
-        eventApplicationSaved.setEvent(evnet);
+        eventApplicationSaved.setEvent(event);
         eventApplicationSaved.setStatus(ApplicationStatus.PENDING);
 
         return eventApplicationRepository.save(eventApplicationSaved);
