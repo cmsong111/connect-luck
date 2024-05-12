@@ -3,6 +3,7 @@ package ac.kr.deu.connect.luck.food_truck.service;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
@@ -63,6 +64,25 @@ public class FoodTruckMenuService {
                 .price(price)
                 .imageUrl(imageUrl)
                 .foodTruck(foodTruck)
+                .build();
+
+        return foodTruckMenuRepository.save(foodTruckMenu);
+    }
+
+    public FoodTruckMenu createFoodTruckMenu(Long foodTruckId, String userEmail, FoodTruckMenuRequest foodTruckMenuRequest){
+        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow();
+
+        String imageUrl = "https://picsum.photos/1600/900";
+        if (!foodTruckMenuRequest.getImage().isEmpty()){
+            imageUrl = imageUploader.uploadImage(foodTruckMenuRequest.getImage()).getData().getImage().getUrl();
+        }
+
+        FoodTruckMenu foodTruckMenu = FoodTruckMenu.builder()
+                .name(foodTruckMenuRequest.getName())
+                .description(foodTruckMenuRequest.getDescription())
+                .price(foodTruckMenuRequest.getPrice())
+                .foodTruck(foodTruck)
+                .imageUrl(imageUrl)
                 .build();
 
         return foodTruckMenuRepository.save(foodTruckMenu);

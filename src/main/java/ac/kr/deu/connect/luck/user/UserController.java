@@ -3,6 +3,7 @@ package ac.kr.deu.connect.luck.user;
 import ac.kr.deu.connect.luck.auth.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public String gerUserInfo(Principal principal, Model model) {
         model.addAttribute("userInfo", userService.findUserInfo(principal.getName()));
         return "user/profile";
@@ -64,6 +66,7 @@ public class UserController {
     ) {
         userService.setUserRole(principal.getName(), role);
         return "redirect:/user";
+
     }
 
 
