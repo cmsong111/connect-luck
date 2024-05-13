@@ -3,6 +3,7 @@ package ac.kr.deu.connect.luck.auth
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -12,13 +13,13 @@ import java.nio.charset.StandardCharsets
 @Controller
 @RequestMapping("/auth")
 class AuthController(
-    val authService: AuthService
+    private val authService: AuthService
 ) {
     @Value("\${security.jwt.token.header}")
-    private val AUTHORIZATION_HEADER: String? = null
+    lateinit var AUTHORIZATION_HEADER: String
 
     @Value("\${security.jwt.token.prefix}")
-    private val TOKEN_PREFIX: String? = null
+    lateinit var TOKEN_PREFIX: String
 
     @GetMapping("/login")
     fun login(model: Model): String {
@@ -82,6 +83,7 @@ class AuthController(
     }
 
     @GetMapping("/logout")
+    @PreAuthorize("isAuthenticated()")
     fun logout(
         @CookieValue(value = "Authorization", defaultValue = "", required = false) jwtCookie: Cookie,
         httpServletResponse: HttpServletResponse
