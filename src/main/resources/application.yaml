@@ -45,7 +45,7 @@ server:
 #    certificate: "classpath:fullchain.pem"
 
 imgbb:
-  api-key: ${IMGBB_API_KEY:a3ffbc7f297f7b0460b7ca34575636ac}
+  api-key: ${IMGBB_API_KEY}
 
 security:
   jwt:
