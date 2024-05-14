@@ -42,7 +42,7 @@
             <ul class="navbar-nav ml-auto" sec:authorize="isAuthenticated()">
                 <!--이벤트 관리자일 때-->
                 <li class="nav-item" sec:authorize="hasRole('ROLE_EVENT_MANAGER')">
-                    <a class="nav-link" href="/my-event">내 이벤트</a>
+                    <a class="nav-link" href="/event/my">내 이벤트</a>
                 </li>
 
                 <!--푸드트럭 관리자 때-->
