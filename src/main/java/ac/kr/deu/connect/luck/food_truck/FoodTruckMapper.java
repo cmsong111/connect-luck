@@ -36,7 +36,7 @@ public interface FoodTruckMapper {
      * @return 푸드트럭 검색 시 소량의 정보만 보여주기 위한 DTO
      */
     @Mapping(target = "managerName", source = "manager.name")
-    @Mapping(target = "avgScore", expression = "java(foodTruck.getReviews().stream().mapToDouble(FoodTruckReview::getScore).average().orElse(0))")
+    @Mapping(target = "avgRating", expression = "java(foodTruck.getReviews().stream().mapToDouble(FoodTruckReview::getRating).average().orElse(0))")
     @Mapping(target = "reviewCount", expression = "java(foodTruck.getReviews().size())")
     FoodTruckHeader toFoodTruckHeader(FoodTruck foodTruck);
 
@@ -77,4 +77,5 @@ public interface FoodTruckMapper {
     @Mapping(target = "imageUrl", constant = "https://picsum.photos/1600/900")
     FoodTruckMenu toFoodTruckMenu(FoodTruckMenuRequest foodTruckMenuRequest);
 
+    FoodTruckReview toFoodTruckReview(FoodTruckReviewRequest foodTruckReviewRequest);
 }

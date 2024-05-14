@@ -18,7 +18,7 @@ public class FoodTruckReview extends BaseEntity {
     private Long id;
 
     private String content;
-    private int score;
+    private int rating;
     private String imageUrl;
     private String reply;
 
