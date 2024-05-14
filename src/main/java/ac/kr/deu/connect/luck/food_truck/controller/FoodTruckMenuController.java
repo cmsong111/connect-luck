@@ -36,9 +36,9 @@ public class FoodTruckMenuController {
     public String addFoodTruckMenu(
             @PathVariable(value = "truckId") Long truckId,
             FoodTruckMenuRequest foodTruckMenuRequest,
-            Model model, Principal principal
+            Model model
     ) {
-        foodTruckMenuService.createFoodTruckMenu(truckId, principal.getName(), foodTruckMenuRequest);
+        foodTruckMenuService.saveFoodTruckMenu(truckId, foodTruckMenuRequest);
         model.addAttribute("foodTruckId", truckId);
         return "redirect:/food-truck/menu/" + truckId;
     }

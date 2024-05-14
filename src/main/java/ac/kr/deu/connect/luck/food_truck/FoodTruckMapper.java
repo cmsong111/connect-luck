@@ -17,7 +17,7 @@ public interface FoodTruckMapper {
      * @param foodTruckRequest 푸드트럭 생성 요청 DTO
      * @return 푸드트럭 엔티티
      */
-    @Mapping(target = "imageUrl", constant = "imageUrl")
+    @Mapping(target = "imageUrl", constant = "https://picsum.photos/1600/900")
     FoodTruck toFoodTruck(FoodTruckRequestV2 foodTruckRequest);
 
     /**
@@ -67,4 +67,14 @@ public interface FoodTruckMapper {
      */
     @Mapping(target = "image", ignore = true)
     FoodTruckRequestV2 toFoodTruckRequest(FoodTruck foodTruck);
+
+    /**
+     * 푸드트럭 요청객체를 푸드트럭 엔티티로 변환합니다.
+     *
+     * @param foodTruckMenuRequest 푸드트럭 메뉴 요청 객체
+     * @return 푸드트럭 메뉴 엔티티
+     */
+    @Mapping(target = "imageUrl", constant = "https://picsum.photos/1600/900")
+    FoodTruckMenu toFoodTruckMenu(FoodTruckMenuRequest foodTruckMenuRequest);
+
 }

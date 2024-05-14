@@ -1,18 +1,27 @@
 package ac.kr.deu.connect.luck.food_truck.controller;
 
+import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Context;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 
@@ -32,45 +41,45 @@ public class FoodTruckMenuRestController {
         return ResponseEntity.ok(foodTruckMenuService.getFoodTruckMenus(foodTruckId));
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
     @Operation(summary = "푸드트럭 메뉴 등록", description = "신규 푸드트럭 메뉴를 등록합니다. 푸드트럭 매니저의 역할이 필요합니다.")
-    public ResponseEntity<FoodTruckMenu> saveFoodTruckMenu(
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "생성 완료", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = FoodTruckMenuResponse.class))}),
+            @ApiResponse(responseCode = "403", description = "권한 없음", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomErrorResponse.class))}),
+    })
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER') and @checker.isFoodTruckManager(#foodTruckId)")
+    public ResponseEntity<FoodTruckMenuResponse> saveFoodTruckMenu(
             @Parameter(description = "푸드트럭 UID") @PathVariable("foodTruckId") Long foodTruckId,
-            @Parameter(description = "메뉴 이름") @RequestPart("name") String name,
-            @Parameter(description = "메뉴 설명") @RequestPart("description") String description,
-            @Parameter(description = "메뉴 가격(숫자만 넣어주세요)") @RequestPart("price") String price,
-            @Parameter(description = "메뉴 이미지") @RequestPart("image") MultipartFile multipartFile,
-            Principal principal
+            @ModelAttribute FoodTruckMenuRequest foodTruckMenuRequest
     ) {
-        return ResponseEntity.ok(foodTruckMenuService.saveFoodTruckMenu(foodTruckId, principal.getName(), name, description, Integer.parseInt(price), multipartFile));
+        FoodTruckMenuResponse foodTruckMenuResponse = foodTruckMenuService.saveFoodTruckMenu(foodTruckId, foodTruckMenuRequest);
+        return ResponseEntity.created(URI.create("api/food-truck/" + foodTruckMenuResponse.id())).body(foodTruckMenuResponse);
     }
 
 
     @PatchMapping(value = "/{foodTruckMenuId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
+    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER') and @checker.isFoodTruckManager(#foodTruckId) and @checker.isFoodTruckMenu(#foodTruckId, #foodTruckMenuId)")
     @Operation(summary = "푸드트럭 메뉴 수정", description = "특정 푸드트럭 메뉴를 수정합니다. 푸드트럭 매니저의 역할이 필요합니다.")
-    public ResponseEntity<FoodTruckMenu> updateFoodTruckMenu(
+    public ResponseEntity<FoodTruckMenuResponse> updateFoodTruckMenu(
             @Parameter(description = "푸드트럭 UID") @PathVariable("foodTruckId") Long foodTruckId,
             @Parameter(description = "메뉴 UID") @PathVariable("foodTruckMenuId") Long foodTruckMenuId,
-            @Parameter(description = "메뉴 이름") @RequestPart(value = "name", required = false) String name,
-            @Parameter(description = "메뉴 설명") @RequestPart(value = "description", required = false) String description,
-            @Parameter(description = "메뉴 가격(숫자만 넣어주세요)") @RequestPart(value = "price", required = false) String price,
-            @Parameter(description = "메뉴 이미지") @RequestPart(value = "image", required = false) MultipartFile multipartFile,
-            Principal principal
+            @ModelAttribute FoodTruckMenuRequest foodTruckMenuRequest
     ) {
-        return ResponseEntity.ok(foodTruckMenuService.updateFoodTruckMenu(foodTruckId, foodTruckMenuId, principal.getName(), name, description, Integer.parseInt(price), multipartFile));
+        return ResponseEntity.ok(foodTruckMenuService.saveFoodTruckMenu(foodTruckId, foodTruckMenuRequest, foodTruckMenuId));
     }
 
-    @DeleteMapping("/{foodTruckMenuId}")
-    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
     @Operation(summary = "푸드트럭 메뉴 삭제")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "성공", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Null.class))}),
+            @ApiResponse(responseCode = "403", description = "권한 없음", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomErrorResponse.class))}),
+    })
+    @DeleteMapping("/{foodTruckMenuId}")
+    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER') and @checker.isFoodTruckManager(#foodTruckId) and @checker.isFoodTruckMenu(#foodTruckId, #foodTruckMenuId)")
     public ResponseEntity<String> deleteFoodTruckMenu(
             @Parameter(description = "푸드트럭 UID") @PathVariable("foodTruckId") Long foodTruckId,
-            @Parameter(description = "메뉴 UID") @PathVariable("foodTruckMenuId") Long foodTruckMenuId,
-            Principal principal
+            @Parameter(description = "메뉴 UID") @PathVariable("foodTruckMenuId") Long foodTruckMenuId
     ) {
-        foodTruckMenuService.deleteFoodTruckMenu(principal.getName(), foodTruckId, foodTruckMenuId);
-        return ResponseEntity.ok("success");
+        foodTruckMenuService.deleteFoodTruckMenu(foodTruckMenuId);
+        return ResponseEntity.noContent().build();
     }
 }
