@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
+
+    <style>
+        img.card-img-top {
+            height: 450px;
+            width: 100%;
+            object-fit: contain;
+        }
+    </style>
+
+
     <h1 class="text-center">폼 수정</h1>
     <div class="container mt-5">
-        <img alt="Food Truck Image" class="card-img-top" th:src="${foodTruck.imageUrl}">
+        <img alt="Food Truck Image" class="card-img-top d-flex justify-center " th:src="${foodTruckOriginal.imageUrl}">
     </div>
     <div class="container mt-5">
-        <form method="post" th:action="|/food-truck/${foodTruck.id}/edit|" th:object="${foodTruck}">
-            <input name="id" th:value="${foodTruck.id}" type="hidden">
+        <form method="post" th:action="|/food-truck/${foodTruckOriginal.id}/edit|" th:object="${foodTruck}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">이름:</label>
                 <input class="form-control" id="name" name="name" required th:value="${foodTruck.name}" type="text">
@@ -24,12 +33,16 @@
                             th:selected="${foodType == foodTruck.foodType.toString()}"
                             th:text="${foodType}" th:value="${foodType}"></option>
                 </select>
-
+            </div>
+            <div class="form-group">
+                <label for="image">이미지:</label>
+                <input accept="image/*" class="form-control" id="image" name="image" type="file">
             </div>
 
             <button class="btn btn-primary" type="submit">수정</button>
-            <button class="btn btn-info" th:onclick="|location.href='/food-truck/' + ${foodTruck.id} + '/edit.photo'|" type="button">이미지 변경</button>
-            <button class="btn btn-danger" th:onclick="|location.href='/food-truck/' + ${foodTruck.id} + '/delete'|" type="button">삭제</button>
+            <button class="btn btn-danger" th:id="delete" th:onclick="|location.href='/food-truck/' + ${foodTruckOriginal.id} + '/delete'|"
+                    type="button">삭제
+            </button>
         </form>
     </div>
 </th:block>

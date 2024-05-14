@@ -56,4 +56,15 @@ public interface FoodTruckMapper {
      */
     @Mapping(target = "authorName", source = "author.name")
     FoodTruckReviewResponse toFoodTruckReviewResponse(FoodTruckReview foodTruckReview);
+
+
+    /**
+     * 푸드트럭 엔티티를 푸드트럭 생성 요청 DTO로 변환합니다.
+     * <p>푸드트럭 수정 폼을 요청할때 사용합니다.</p>
+     *
+     * @param foodTruck 푸드트럭 엔티티
+     * @return 푸드트럭 생성 요청 DTO
+     */
+    @Mapping(target = "image", ignore = true)
+    FoodTruckRequestV2 toFoodTruckRequest(FoodTruck foodTruck);
 }

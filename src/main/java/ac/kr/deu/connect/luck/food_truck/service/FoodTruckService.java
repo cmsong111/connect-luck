@@ -8,6 +8,7 @@ import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
+import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
@@ -64,7 +65,13 @@ public class FoodTruckService {
         );
 
         return foodTruckMapper.toFoodTruckDetailResponse(foodTruck);
+    }
 
+    public FoodTruckRequestV2 getFoodTruckForEdit(Long id) {
+        FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
+        );
+        return foodTruckMapper.toFoodTruckRequest(foodTruck);
     }
 
     /**
@@ -74,7 +81,7 @@ public class FoodTruckService {
      * @param foodTruckRequest 추가할 푸드트럭 정보
      * @return 저장된 푸드트럭 정보
      */
-    public FoodTruckDetailResponse createFoodTruck(String userEmail, FoodTruckRequestV2 foodTruckRequest) {
+    public FoodTruckDetailResponse saveFoodTruck(String userEmail, FoodTruckRequestV2 foodTruckRequest) {
         FoodTruck foodTruck = foodTruckMapper.toFoodTruck(foodTruckRequest);
         foodTruck.setManager(userRepository.findByEmail(userEmail).orElseThrow());
 
@@ -93,11 +100,10 @@ public class FoodTruckService {
      * @param id 삭제할 푸드트럭의 ID
      */
     @Transactional
-    public String deleteFoodTruck(Long id, String userEmail) {
+    public String deleteFoodTruck(Long id) {
         FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
-        isManager(userEmail, foodTruck);
         foodTruckRepository.delete(foodTruck);
         return "삭제되었습니다.";
     }
@@ -109,50 +115,25 @@ public class FoodTruckService {
      * @param foodTruckRequest 수정할 푸드트럭 정보
      * @return 수정된 푸드트럭 정보
      */
-    public FoodTruckDetailResponse updateFoodTruck(Long foodTruckId, String userEmail, FoodTruckRequestV2 foodTruckRequest) {
+    public FoodTruckDetailResponse saveFoodTruck(Long foodTruckId, FoodTruckRequestV2 foodTruckRequest) {
         // Search food truck
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
 
-        // 수정할 정보가 있는 경우 수정
-        if (foodTruckRequest.getName() != null) {
-            foodTruck.setName(foodTruckRequest.getName());
+        foodTruck.setName(foodTruckRequest.getName());
+        foodTruck.setDescription(foodTruckRequest.getDescription());
+        foodTruck.setFoodType(foodTruckRequest.getFoodType());
+
+        if (!foodTruckRequest.getImage().isEmpty()) {
+            foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
         }
-        if (foodTruckRequest.getDescription() != null) {
-            foodTruck.setDescription(foodTruckRequest.getDescription());
-        }
-        if (foodTruckRequest.getFoodType() != null) {
-            foodTruck.setFoodType(foodTruckRequest.getFoodType());
-        }
+
         // 수정된 푸드트럭 정보 저장
         FoodTruck saved = foodTruckRepository.save(foodTruck);
         return foodTruckMapper.toFoodTruckDetailResponse(saved);
     }
 
-    /**
-     * 푸드트럭의 대표 이미지를 변경합니다.
-     *
-     * @param foodTruckId   푸드트럭 ID
-     * @param userEmail     사용자 Email
-     * @param multipartFile 이미지 파일
-     * @return 변경된 푸드트럭 정보
-     */
-    public FoodTruck updateFoodTruckImage(Long foodTruckId, String userEmail, MultipartFile multipartFile) {
-        // Search food truck
-        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
-                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
-        );
-
-        // Check if the user is the manager of the food truck
-        isManager(userEmail, foodTruck);
-
-        // Upload image
-        String imageUrl = imageUploader.uploadImage(multipartFile).getData().getUrl();
-
-        foodTruck.setImageUrl(imageUrl);
-        return foodTruckRepository.save(foodTruck);
-    }
 
     public List<FoodTruck> getMyFoodTrucks(String userEmail) {
         return foodTruckRepository.findAllByManagerEmail(userEmail);
