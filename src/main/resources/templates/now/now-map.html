@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<th:block layout:fragment="content">
+    <div id="map" style="height:80vh; width: 100vw;"></div>
+    <script th:src="|//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services,clusterer,drawing|" type="text/javascript"></script>
+    <script th:inline="javascript">
+        var container = document.getElementById('map');
+        var options = {
+            center: new kakao.maps.LatLng(35.1618, 129.0415),
+            level: 6
+        };
+
+        let nowTruckList = [[${nowTruckList}]];
+
+
+        var map = new kakao.maps.Map(container, options);
+
+
+        nowTruckList.forEach(function (truck) {
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(truck.latitude, truck.longitude)
+            })
+            marker.setMap(map);
+            marker.setClickable(true);
+        });
+
+    </script>
+</th:block>
+</html>

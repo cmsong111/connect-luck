@@ -1,8 +1,6 @@
 package ac.kr.deu.connect.luck.auth;
 
-import ac.kr.deu.connect.luck.dto.EmailResponse;
-import ac.kr.deu.connect.luck.dto.IdCheckResponse;
-import ac.kr.deu.connect.luck.dto.TokenResponse;
+import ac.kr.deu.connect.luck.auth.dto.*;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

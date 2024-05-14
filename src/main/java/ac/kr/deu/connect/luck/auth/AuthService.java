@@ -1,8 +1,6 @@
 package ac.kr.deu.connect.luck.auth;
 
-import ac.kr.deu.connect.luck.dto.EmailResponse;
-import ac.kr.deu.connect.luck.dto.IdCheckResponse;
-import ac.kr.deu.connect.luck.dto.TokenResponse;
+import ac.kr.deu.connect.luck.auth.dto.*;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.security.JwtTokenProvider;
@@ -11,7 +9,6 @@ import ac.kr.deu.connect.luck.user.UserMapper;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import ac.kr.deu.connect.luck.user.UserRole;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -54,10 +50,10 @@ public class AuthService {
      * @return User 엔티티
      */
     public TokenResponse login(LoginRequest loginRequest) {
-        Optional<User> user = userRepository.findByEmail(loginRequest.email());
+        Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
 
         if (user.isEmpty()) throw new CustomException(CustomErrorCode.EMAIL_NOT_FOUND);
-        if (!passwordEncoder.matches(loginRequest.password(), user.get().getPassword()))
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword()))
             throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
 
         return new TokenResponse(jwtTokenProvider.createToken(user.get().getEmail(), user.get().getRoles()));

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+
+    <div class="container mt-5">
+        <h1 class="text-center">푸드트럭 등록</h1>
+        <form method="post" th:action="@{/food-truck/register}">
+            <div class="form-group">
+                <label for="name">이름:</label>
+                <input class="form-control" id="name" name="name" required type="text">
+            </div>
+            <div class="form-group">
+                <label for="description">설명:</label>
+                <textarea class="form-control" id="description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="foodType">카테고리:</label>
+                <select class="form-control" id="foodType" name="foodType" required>
+                    <option th:each="foodType : ${T(ac.kr.deu.connect.luck.food_truck.entity.FoodType).values()}" th:text="${foodType}"
+                            th:value="${foodType}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">이미지 (아직 미지원 기능입니다. 추후에 이미지 변경 기능을 활용 해 주세요)</label>
+                <input class="form-control" id="image" name="image" type="file">
+            </div>
+            <button class="btn btn-primary" type="submit">등록</button>
+        </form>
+    </div>
+
+</th:block>
+</html>

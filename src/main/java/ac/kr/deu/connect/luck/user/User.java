@@ -18,6 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseEntity {
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    List<UserRole> roles;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,11 +30,6 @@ public class User extends BaseEntity {
     private String name;
     @Column(unique = true)
     private String phone;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    List<UserRole> roles;
-
     @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<FoodTruckReview> reviews;

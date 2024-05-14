@@ -25,7 +25,7 @@
                                     <div th:if="${review.reply} != null">
                                         <p th:text="'답글: ' + ${review.reply}"></p>
                                     </div>
-                                    <p th:text="'평점: ' + ${review.score}"></p>
+                                    <p th:text="'평점: ' + ${review.rating}"></p>
                                     <!-- 필요한 리뷰 정보들을 추가로 표시 -->
                                 </div>
                             </div>
@@ -40,6 +40,8 @@
             <div class="card-footer">
                 <!--회원 정보 수정 링크-->
                 <a class="btn btn-primary" href="/user/update">회원 정보 수정</a>
+                <!--회원 권한 추가 링크-->
+                <a class="btn btn-success" href="/user/add-role">회원 권한 추가</a>
                 <!--회원 탈퇴 링크-->
                 <a class="btn btn-danger" href="/user/delete">회원 탈퇴</a>
             </div>

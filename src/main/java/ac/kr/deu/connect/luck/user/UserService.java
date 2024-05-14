@@ -1,20 +1,15 @@
 package ac.kr.deu.connect.luck.user;
 
-import ac.kr.deu.connect.luck.auth.SignUpRequest;
-import ac.kr.deu.connect.luck.event.EventRepository;
+import ac.kr.deu.connect.luck.auth.dto.SignUpRequest;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
-import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
-import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -51,8 +46,8 @@ public class UserService {
         return userRepository.save(findUser);
     }
 
-    public UserInfo findUserInfo(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+    public UserInfo findUserInfo(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
         List<FoodTruckReview> reviews = foodTruckReviewRepository.findByAuthor(user);
 
         return new UserInfo(user, reviews);
