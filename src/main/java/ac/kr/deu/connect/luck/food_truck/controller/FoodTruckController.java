@@ -1,6 +1,5 @@
 package ac.kr.deu.connect.luck.food_truck.controller;
 
-import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 

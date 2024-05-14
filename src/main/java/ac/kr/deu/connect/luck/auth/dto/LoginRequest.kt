@@ -8,5 +8,4 @@ data class LoginRequest(
     val email: String,
     @field:Schema(description = "비밀번호", example = "test1")
     val password: String
-) {
-}
+)

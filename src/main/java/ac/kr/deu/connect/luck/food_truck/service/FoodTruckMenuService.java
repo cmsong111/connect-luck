@@ -1,7 +1,5 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
-import ac.kr.deu.connect.luck.exception.CustomErrorCode;
-import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
@@ -12,7 +10,6 @@ import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,7 +80,7 @@ public class FoodTruckMenuService {
         foodTruckMenu.setName(foodTruckMenuRequest.getName());
         foodTruckMenu.setDescription(foodTruckMenuRequest.getDescription());
         foodTruckMenu.setPrice(foodTruckMenuRequest.getPrice());
-        
+
 
         // 이미지가 있으면 업로드
         if (foodTruckMenuRequest.getImage() != null) {

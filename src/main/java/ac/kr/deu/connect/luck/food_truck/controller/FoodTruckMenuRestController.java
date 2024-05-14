@@ -3,7 +3,6 @@ package ac.kr.deu.connect.luck.food_truck.controller;
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,15 +13,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Context;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 
 @Tag(name = "04-Food Truck Menu API", description = "푸드트럭 메뉴 API")

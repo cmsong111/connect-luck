@@ -1,7 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.controller
 
 import ac.kr.deu.connect.luck.exception.CustomErrorResponse
-import ac.kr.deu.connect.luck.exception.CustomException
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2
@@ -20,7 +19,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 import java.security.Principal
-import javax.swing.text.AbstractDocument.Content as Content1
 
 @Tag(name = "03-Food Truck", description = "Food Truck API")
 @RestController
@@ -120,6 +118,6 @@ class FoodTruckRestController(
         @PathVariable id: Long
     ): ResponseEntity<String> {
         foodTruckService.deleteFoodTruck(id)
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build()
     }
 }

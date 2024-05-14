@@ -5,10 +5,8 @@ import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader;
-import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
@@ -19,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
