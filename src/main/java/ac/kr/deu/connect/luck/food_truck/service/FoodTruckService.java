@@ -109,21 +109,21 @@ public class FoodTruckService {
      * @param foodTruckRequest 수정할 푸드트럭 정보
      * @return 수정된 푸드트럭 정보
      */
-    public FoodTruckDetailResponse updateFoodTruck(Long foodTruckId, String userEmail, FoodTruckRequest foodTruckRequest) {
+    public FoodTruckDetailResponse updateFoodTruck(Long foodTruckId, String userEmail, FoodTruckRequestV2 foodTruckRequest) {
         // Search food truck
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
 
         // 수정할 정보가 있는 경우 수정
-        if (foodTruckRequest.name() != null) {
-            foodTruck.setName(foodTruckRequest.name());
+        if (foodTruckRequest.getName() != null) {
+            foodTruck.setName(foodTruckRequest.getName());
         }
-        if (foodTruckRequest.description() != null) {
-            foodTruck.setDescription(foodTruckRequest.description());
+        if (foodTruckRequest.getDescription() != null) {
+            foodTruck.setDescription(foodTruckRequest.getDescription());
         }
-        if (foodTruckRequest.foodType() != null) {
-            foodTruck.setFoodType(foodTruckRequest.foodType());
+        if (foodTruckRequest.getFoodType() != null) {
+            foodTruck.setFoodType(foodTruckRequest.getFoodType());
         }
         // 수정된 푸드트럭 정보 저장
         FoodTruck saved = foodTruckRepository.save(foodTruck);

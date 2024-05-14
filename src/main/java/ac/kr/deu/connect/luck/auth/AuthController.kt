@@ -31,7 +31,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun loginPost(
-        loginRequest: LoginRequest?,
+        loginRequest: LoginRequest,
         response: HttpServletResponse
     ): String {
         // 로그인
@@ -61,10 +61,8 @@ class AuthController(
     /**
      * 회원가입 처리
      *
-     * @param email    이메일
-     * @param password 비밀번호
-     * @param name     이름
-     * @param
+     * @param signUpRequest 회원가입 정보
+     * @param response HttpServletResponse
      * @return 홈 화면
      */
     @PostMapping("/signup")

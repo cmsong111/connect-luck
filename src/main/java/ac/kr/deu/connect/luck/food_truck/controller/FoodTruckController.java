@@ -49,7 +49,7 @@ public class FoodTruckController {
     @PreAuthorize("hasRole('FOOD_TRUCK_MANAGER')")
     public String editFoodTruckPost(
             @PathVariable Long id, Principal principal,
-            FoodTruckRequest foodTruckRequest
+            FoodTruckRequestV2 foodTruckRequest
     ) {
         foodTruckService.updateFoodTruck(id, principal.getName(), foodTruckRequest);
         return "redirect:/food-truck/my";

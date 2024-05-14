@@ -2,9 +2,7 @@ package ac.kr.deu.connect.luck.food_truck.controller
 
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader
-import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService
 import io.swagger.v3.oas.annotations.Operation
@@ -14,7 +12,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MultipartFile
+import java.net.URI
 import java.security.Principal
 
 @Tag(name = "03-Food Truck", description = "Food Truck API")
@@ -50,44 +48,34 @@ class FoodTruckRestController(
         @ModelAttribute foodTruckRequestV2: FoodTruckRequestV2,
         principal: Principal
     ): ResponseEntity<FoodTruckDetailResponse> {
-        return ResponseEntity.ok(foodTruckService.createFoodTruck(principal.name, foodTruckRequestV2))
+        val result: FoodTruckDetailResponse = foodTruckService.createFoodTruck(principal.name, foodTruckRequestV2)
+        return ResponseEntity.created(URI.create("/api/food-truck/${result.id}")).body(result)
     }
 
 
-    @PatchMapping("/{id}")
+    @PatchMapping(value = ["/{id}"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER') and @checker.isFoodTruckManager(#truckId)")
     @Operation(
         summary = "푸드트럭 정보를 업데이트 합니다.",
-        description = "푸드트럭 정보를 업데이트 합니다. 푸드트럭 관리자만 가능합니다.<br>푸드트럭의 대표 이미지를 변경하려면 /{id}/update-image API를 활용하십시오."
+        description = "푸드트럭 정보를 업데이트 합니다. 푸드트럭 관리자만 가능합니다.<br>값을 변경하지 않더라도 값을 꼭 넣어야 합니다. (이미지는 예외)"
     )
     fun updateFoodTruck(
-        @Parameter(description = "푸드트럭 UID") @PathVariable("id") truckId: Long?,
-        @RequestBody foodTruckRequest: FoodTruckRequest?,
+        @Parameter(description = "푸드트럭 ID") @PathVariable("id") truckId: Long?,
+        @ModelAttribute foodTruckRequestV2: FoodTruckRequestV2,
         principal: Principal
     ): ResponseEntity<FoodTruckDetailResponse> {
-        return ResponseEntity.ok(foodTruckService.updateFoodTruck(truckId, principal.name, foodTruckRequest))
-    }
-
-    @PostMapping(value = ["/{id}/update-image"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
-    @Operation(summary = "푸드트럭의 대표 이미지를 변경합니다.", description = "Image를 업로드하여 푸드트럭의 대표 이미지를 변경합니다.")
-    fun updateFoodTruckImage(
-        @Parameter(description = "푸드트럭 UID") @PathVariable("id") truckId: Long?,
-        @Parameter(description = "변경할 이미지") @RequestPart("image") multipartFile: MultipartFile?,
-        principal: Principal
-    ): ResponseEntity<FoodTruck> {
-        return ResponseEntity.ok(foodTruckService.updateFoodTruckImage(truckId, principal.name, multipartFile))
+        return ResponseEntity.ok(foodTruckService.updateFoodTruck(truckId, principal.name, foodTruckRequestV2))
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
+    @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER') and @checker.isFoodTruckManager(#truckId)")
     @Operation(
         summary = "푸드트럭 정보 삭제",
         description = "<h1>푸드트럭 정보를 삭제합니다.</h1><h3>삭제 되는 정보</h3><ol><li>푸드트럭 정보</li><li>푸드트럭 메뉴</li><li>푸드트럭 리뷰</li></ol>"
     )
     fun deleteFoodTruck(
         principal: Principal,
-        @PathVariable id: Long?
+        @PathVariable id: Long
     ): ResponseEntity<String> {
         return ResponseEntity.ok(foodTruckService.deleteFoodTruck(id, principal.name))
     }
