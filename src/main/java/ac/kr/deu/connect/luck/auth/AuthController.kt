@@ -1,5 +1,7 @@
 package ac.kr.deu.connect.luck.auth
 
+import ac.kr.deu.connect.luck.auth.dto.LoginRequest
+import ac.kr.deu.connect.luck.auth.dto.SignUpRequest
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Value

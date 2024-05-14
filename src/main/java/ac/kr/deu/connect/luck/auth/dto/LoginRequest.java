@@ -1,4 +1,4 @@
-package ac.kr.deu.connect.luck.auth;
+package ac.kr.deu.connect.luck.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -3,24 +3,24 @@
 <th:block layout:fragment="content">
     <div class="container mt-5">
         <h1 class="text-center">회원 정보 수정</h1>
-        <form th:action="@{/user/update}" method="post">
+        <form method="post" th:action="@{/user/update}">
             <div class="form-group">
                 <label for="email">이메일:</label>
-                <input type="email" class="form-control" id="email" name="email" th:value="${userInfo.user.email}" disabled>
+                <input class="form-control" disabled id="email" name="email" th:value="${userInfo.user.email}" type="email">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input class="form-control" id="password" name="password" required type="password">
             </div>
             <div class="form-group">
                 <label for="name">이름:</label>
-                <input type="text" class="form-control" id="name" name="name" th:value="${userInfo.user.name}" required>
+                <input class="form-control" id="name" name="name" required th:value="${userInfo.user.name}" type="text">
             </div>
             <div class="form-group">
                 <label for="phoneNumber">휴대폰 번호:</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${userInfo.user.phone}" required>
+                <input class="form-control" id="phoneNumber" name="phoneNumber" required th:value="${userInfo.user.phone}" type="text">
             </div>
-            <button type="submit" class="btn btn-primary">저장</button>
+            <button class="btn btn-primary" type="submit">저장</button>
         </form>
     </div>
 </th:block>

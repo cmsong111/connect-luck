@@ -1,6 +1,7 @@
 package ac.kr.deu.connect.luck.food_truck.controller;
 
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService;
 import lombok.RequiredArgsConstructor;
@@ -98,7 +99,7 @@ public class FoodTruckController {
             MultipartFile image
     ) {
         FoodType type = FoodType.valueOf(foodType);
-        FoodTruckRequest foodTruckRequest = new FoodTruckRequest(name, description, type);
+        FoodTruckRequestV2 foodTruckRequest = new FoodTruckRequestV2(name, description, image, type);
         foodTruckService.createFoodTruck(principal.getName(), foodTruckRequest);
         return "redirect:/food-truck/my";
     }

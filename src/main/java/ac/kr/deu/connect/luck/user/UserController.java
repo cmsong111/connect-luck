@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.user;
 
-import ac.kr.deu.connect.luck.auth.SignUpRequest;
+import ac.kr.deu.connect.luck.auth.dto.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;

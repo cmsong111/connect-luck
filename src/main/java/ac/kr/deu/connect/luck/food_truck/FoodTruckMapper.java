@@ -17,7 +17,8 @@ public interface FoodTruckMapper {
      * @param foodTruckRequest 푸드트럭 생성 요청 DTO
      * @return 푸드트럭 엔티티
      */
-    FoodTruck toFoodTruck(FoodTruckRequest foodTruckRequest);
+    @Mapping(target = "imageUrl", constant = "imageUrl")
+    FoodTruck toFoodTruck(FoodTruckRequestV2 foodTruckRequest);
 
     /**
      * 푸드트럭 엔티티를 푸드트럭 상세 응답 DTO로 변환합니다.

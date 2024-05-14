@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.user;
 
-import ac.kr.deu.connect.luck.auth.SignUpRequest;
+import ac.kr.deu.connect.luck.auth.dto.SignUpRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

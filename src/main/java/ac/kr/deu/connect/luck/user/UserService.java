@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.user;
 
-import ac.kr.deu.connect.luck.auth.SignUpRequest;
+import ac.kr.deu.connect.luck.auth.dto.SignUpRequest;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;

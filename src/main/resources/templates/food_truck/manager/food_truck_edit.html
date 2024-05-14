@@ -20,7 +20,8 @@
             <div class="form-group">
                 <label for="foodType">카테고리:</label>
                 <select class="form-control" id="foodType" name="foodType" required>
-                    <option th:each="foodType : ${T(ac.kr.deu.connect.luck.food_truck.entity.FoodType).values()}" th:selected="${foodType == foodTruck.foodType.toString()}"
+                    <option th:each="foodType : ${T(ac.kr.deu.connect.luck.food_truck.entity.FoodType).values()}"
+                            th:selected="${foodType == foodTruck.foodType.toString()}"
                             th:text="${foodType}" th:value="${foodType}"></option>
                 </select>
 

@@ -5,14 +5,14 @@
 
     <div class="card mt-4">
         <div class="card-body">
-            <form th:action="@{/user/add-role}" method="post">
+            <form method="post" th:action="@{/user/add-role}">
                 <div class="form-group">
                     <label for="role">역할:</label>
-                    <select name="role" id="role" class="form-control">
-                        <option th:each="role : ${T(ac.kr.deu.connect.luck.user.UserRole).values()}" th:value="${role}" th:text="${role}"></option>
+                    <select class="form-control" id="role" name="role">
+                        <option th:each="role : ${T(ac.kr.deu.connect.luck.user.UserRole).values()}" th:text="${role}" th:value="${role}"></option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">추가</button>
+                <button class="btn btn-primary" type="submit">추가</button>
             </form>
         </div>
     </div>

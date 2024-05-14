@@ -69,11 +69,11 @@ public class FoodTruckMenuService {
         return foodTruckMenuRepository.save(foodTruckMenu);
     }
 
-    public FoodTruckMenu createFoodTruckMenu(Long foodTruckId, String userEmail, FoodTruckMenuRequest foodTruckMenuRequest){
+    public FoodTruckMenu createFoodTruckMenu(Long foodTruckId, String userEmail, FoodTruckMenuRequest foodTruckMenuRequest) {
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow();
 
         String imageUrl = "https://picsum.photos/1600/900";
-        if (!foodTruckMenuRequest.getImage().isEmpty()){
+        if (!foodTruckMenuRequest.getImage().isEmpty()) {
             imageUrl = imageUploader.uploadImage(foodTruckMenuRequest.getImage()).getData().getImage().getUrl();
         }
 

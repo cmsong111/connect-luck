@@ -13,7 +13,7 @@
     <h1 class="text-center">메뉴 관리</h1>
     <div class="container mt-5">
         <div class="col-md-4 mb-4">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#addMenuModal" id="addMenuBtn">신규 메뉴 등록</button>
+            <button class="btn btn-primary" data-target="#addMenuModal" data-toggle="modal" id="addMenuBtn">신규 메뉴 등록</button>
         </div>
         <div class="row">
             <div class="col-md-4 mb-4" th:each="foodTruckMenu : ${foodTruckMenus}">
@@ -40,35 +40,35 @@
     </div>
 
     <!--신규 메뉴 추가 모달 폼-->
-    <div class="modal fade" id="addMenuModal" tabindex="-1" role="dialog" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div aria-hidden="true" aria-labelledby="addMenuModalLabel" class="modal fade" id="addMenuModal" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMenuModalLabel">신규 메뉴 등록</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="|/food-truck/menu/${foodTruckId}/add|" method="post" th:object="${foodTruckMenuRequest}"
-                          enctype="multipart/form-data">
+                    <form enctype="multipart/form-data" method="post" th:action="|/food-truck/menu/${foodTruckId}/add|"
+                          th:object="${foodTruckMenuRequest}">
                         <div class="form-group">
                             <label for="name">메뉴 이름</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input class="form-control" id="name" name="name" required type="text">
                         </div>
                         <div class="form-group">
                             <label for="description">메뉴 설명</label>
-                            <input type="text" class="form-control" id="description" name="description" required>
+                            <input class="form-control" id="description" name="description" required type="text">
                         </div>
                         <div class="form-group">
                             <label for="price">가격</label>
-                            <input type="number" class="form-control" id="price" name="price" required>
+                            <input class="form-control" id="price" name="price" required type="number">
                         </div>
                         <div class="form-group">
                             <label for="image">이미지 파일</label>
-                            <input type="file" class="form-control" id="image" name="image" required>
+                            <input class="form-control" id="image" name="image" required type="file">
                         </div>
-                        <button type="submit" class="btn btn-primary">등록</button>
+                        <button class="btn btn-primary" type="submit">등록</button>
                     </form>
                 </div>
             </div>

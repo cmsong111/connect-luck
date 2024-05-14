@@ -31,7 +31,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="menu : ${foodTruck.menus}">
-                        <td><img alt="Menu Image" th:src="${menu.imageUrl}" style="width: 100px; height: 100px;"></td>
+                        <td><img alt="Menu Image" style="width: 100px; height: 100px;" th:src="${menu.imageUrl}"></td>
                         <td th:text="${menu.name}"></td>
                         <td th:text="${menu.price}"></td>
                         <td th:text="${menu.description}"></td>

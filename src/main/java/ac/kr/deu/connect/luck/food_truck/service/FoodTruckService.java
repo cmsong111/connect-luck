@@ -6,6 +6,7 @@ import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
@@ -14,12 +15,14 @@ import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FoodTruckService {
@@ -71,11 +74,16 @@ public class FoodTruckService {
      * @param foodTruckRequest 추가할 푸드트럭 정보
      * @return 저장된 푸드트럭 정보
      */
-    public FoodTruck createFoodTruck(String userEmail, FoodTruckRequest foodTruckRequest) {
+    public FoodTruckDetailResponse createFoodTruck(String userEmail, FoodTruckRequestV2 foodTruckRequest) {
         FoodTruck foodTruck = foodTruckMapper.toFoodTruck(foodTruckRequest);
         foodTruck.setManager(userRepository.findByEmail(userEmail).orElseThrow());
-        foodTruck.setImageUrl("https://picsum.photos/1600/900");
-        return foodTruckRepository.save(foodTruck);
+
+        // 이미지가 있는 경우 이미지 업로드
+        if (foodTruckRequest.getImage() != null) {
+            foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
+        }
+
+        return foodTruckMapper.toFoodTruckDetailResponse(foodTruckRepository.save(foodTruck));
     }
 
     /**
