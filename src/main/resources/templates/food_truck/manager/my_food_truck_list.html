@@ -37,6 +37,9 @@
                         <button class="btn btn-primary"
                                 th:onclick="|location.href='/food-truck/menu/' + ${foodTruck.id}|" type="button">메뉴 수정
                         </button>
+                        <button class="btn btn-primary"
+                                th:onclick="|location.href='/food-truck/' + ${foodTruck.id} + '/review'|" type="button">후기 보기
+                        </button>
                     </div>
                 </div>
             </div>
