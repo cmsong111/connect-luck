@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <script th:inline="javascript">
+
+        // 삭제 버튼 클릭 시, 확인 후 URL 이동
+        function deleteReview(foodTruckId, reviewId) {
+            if (confirm('정말 삭제하시겠습니까?')) {
+                location.href = '/food-truck/' + foodTruckId + '/review/' + reviewId + '/delete';
+            }
+        }
+
+
+    </script>
+
+
+    <h1 class="text-center">후기 관리</h1>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="review : ${foodTruckDetailResponse.reviews()}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${review.content()}"></h5>
+                        <p class="card-text">
+                            <span>평점: </span>
+                            <span th:text="${review.rating()}"></span>
+                            <span>점</span>
+                        </p>
+                        <p class="card-text">
+                            <span>작성자: </span>
+                            <span th:text="${review.authorName()}"></span>
+                        </p>
+                        <p class="card-text">
+                            <span>작성일: </span>
+                            <span th:text="${review.createdAt()}"></span>
+                        </p>
+                        <p class="card-text">
+                            <span>답장: </span>
+                            <span th:text="${review.reply()}"></span>
+                        </p>
+                        <button class="btn btn-primary"
+                                th:onclick="|location.href='/food-truck/' + ${foodTruckDetailResponse.id()} + '/review/' + ${review.id} + '/reply'|"
+                                type="button">
+                            답장
+                        </button>
+
+                        <button class="btn btn-danger" th:onclick="|deleteReview(${foodTruckDetailResponse.id()}, ${review.id})|"
+                                type="button">
+                            삭제
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
