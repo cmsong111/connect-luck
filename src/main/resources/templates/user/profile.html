@@ -26,7 +26,12 @@
                                         <p th:text="'답글: ' + ${review.reply}"></p>
                                     </div>
                                     <p th:text="'평점: ' + ${review.rating}"></p>
-                                    <!-- 필요한 리뷰 정보들을 추가로 표시 -->
+                                </div>
+                                <div class="col-md-12">
+                                    <a class="btn btn-primary"
+                                       th:href="@{'/food-truck/' + ${review.id} + '/review/' + ${review.id} + '/edit'}">수정</a>
+                                    <a class="btn btn-danger"
+                                       th:href="@{'/food-truck/' + ${review.id} + '/review/' + ${review.id} + '/delete'}">삭제</a>
                                 </div>
                             </div>
                         </div>

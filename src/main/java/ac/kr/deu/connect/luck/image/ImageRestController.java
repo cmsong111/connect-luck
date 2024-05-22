@@ -1,5 +1,6 @@
 package ac.kr.deu.connect.luck.image;
 
+import ac.kr.deu.connect.luck.image.dto.ImageUrlResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
