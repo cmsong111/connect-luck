@@ -25,9 +25,9 @@
                         <!-- Food Truck 소유자 -->
                         <p class="card-text" th:text="${foodTruck.managerName()}"></p>
                         <!-- '신청하기' 버튼 -->
-                        <a class="btn btn-primary" href="#">후기보기</a>
+                        <a class="btn btn-primary" th:href="'/food-truck/'+ ${foodTruck.id() + '/review'}">리뷰 작성</a>
                         <!-- '연락하기' 버튼 -->
-                        <a class="btn btn-primary" href="#">메뉴보기</a>
+                        <a class="btn btn-primary" th:href="'/food-truck/'+ ${foodTruck.id()}">자세히 보기</a>
                     </div>
                 </div>
             </div>

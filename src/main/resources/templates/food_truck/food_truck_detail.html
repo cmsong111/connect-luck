@@ -56,7 +56,7 @@
                     <tr th:each="review : ${foodTruck.reviews}">
                         <td th:text="${review.authorName()}"></td>
                         <td th:text="${review.content}"></td>
-                        <td th:text="${review.score}"></td>
+                        <td th:text="${review.rating()}"></td>
                     </tr>
                     </tbody>
                 </table>
