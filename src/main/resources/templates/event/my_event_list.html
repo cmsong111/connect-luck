@@ -8,7 +8,14 @@
         }
     </style>
     <div class="container mt-5">
-        <h1 class="text-center">내 이벤트 목록</h1>
+        <!-- 타이틀과 버튼을 담을 컨테이너 -->
+        <div class="d-flex justify-content-center flex-column align-items-center">
+            <h1 class="text-center">내 이벤트 목록</h1>
+            <!-- 버튼을 타이틀 바로 아래 좌측에 배치 -->
+            <div class="align-self-start mt-2">
+                <a class="btn btn-primary" href="/event/register">이벤트 생성하기</a>
+            </div>
+        </div>
         <div class="row mt-4">
             <!-- 이벤트 카드 반복 -->
             <div class="col-md-4 mb-4" th:each="event : ${events}">
@@ -21,7 +28,7 @@
                         <p class="card-text" th:text="'담당자: '+${event.managerName}"></p>
 
                         <a class="btn btn-primary btn-sm" th:href="@{'/apply/list' + ${event.id}}">신청서 조회</a>
-                        <a class="btn btn-primary btn-sm" th:href="@{'/event/edit' + ${event.id}}">이벤트 정보 수정</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/event/edit' + ${event.id}}">이벤트 수정</a>
                         <a class="btn btn-primary btn-sm" th:href="@{'/event/delete' + ${event.id}}">이벤트 삭제</a>
                     </div>
                 </div>
