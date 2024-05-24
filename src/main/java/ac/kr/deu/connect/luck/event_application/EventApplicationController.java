@@ -30,8 +30,8 @@ public class EventApplicationController {
     public String registerFoodTruckPost(
             Principal principal,
             EventApplicationRequest eventApplicationRequest
-    ) {
+    ){
         eventApplicationService.createEventApplication(eventApplicationRequest, principal.getName());
-        return "redirect:/event/event-list";
+        return "redirect:/event";
     }
 }
