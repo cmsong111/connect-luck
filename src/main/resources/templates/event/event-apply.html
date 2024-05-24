@@ -14,7 +14,8 @@
     </style>
     <div class="container mt-5">
         <h1 class="text-center">푸드트럭 신청</h1>
-        <form action="/applyFoodTruck" method="post">
+        <form th:action="@{/apply/create}" method="post">
+            <input type="hidden" name="eventId" th:value="${event.id}" />
             <div class="checkbox-group">
                 <h3>신청할 푸드트럭</h3>
                 <!-- 푸드트럭 콤보박스 -->
@@ -28,8 +29,8 @@
             <div class="submit-form">
                 <h3>신청서 작성</h3>
                 <div class="form-group">
-                    <label for="applicationContent">신청 내용</label>
-                    <textarea class="form-control" id="applicationContent" name="applicationContent"
+                    <label for="comment">신청 내용</label>
+                    <textarea class="form-control" id="comment" name="comment"
                               rows="3"></textarea>
                 </div>
             </div>
