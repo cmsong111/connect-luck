@@ -12,4 +12,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     void deleteByManager(User manager);
 
     List<Event> findAllByStatus(EventStatus status);
+    List<Event> findAllByManager(User manager);
 }

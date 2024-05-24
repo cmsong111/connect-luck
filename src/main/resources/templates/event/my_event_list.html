@@ -1,7 +1,32 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 250px; /* 원하는 높이로 조절 */
+        }
+    </style>
+    <div class="container mt-5">
+        <h1 class="text-center">내 이벤트 목록</h1>
+        <div class="row mt-4">
+            <!-- 이벤트 카드 반복 -->
+            <div class="col-md-4 mb-4" th:each="event : ${events}">
+                <div class="card">
+                    <img alt="Event Image" class="card-img-top" th:src="${event.imageUrl}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${event.title}"></h5>
+                        <p class="card-text" th:text="'시작일: ' + ${#temporals.format(event.startAt, 'yyyy년 MM월 dd일')}"></p>
+                        <p class="card-text" th:text="'장소: ' + ${event.streetAddress + ' ' + event.detailAddress}"></p>
+                        <p class="card-text" th:text="'담당자: '+${event.managerName}"></p>
 
-
+                        <a class="btn btn-primary btn-sm" th:href="@{'/apply/list' + ${event.id}}">신청서 조회</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/event/edit' + ${event.id}}">이벤트 정보 수정</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/event/delete' + ${event.id}}">이벤트 삭제</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>
 </html>

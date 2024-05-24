@@ -36,6 +36,21 @@ public class EventService {
     }
 
     /**
+     * email 로 이벤트 목록 조회
+     *
+     * @param email 이벤트 매니저 email
+     * @return 이벤트 목록
+     */
+    public List<EventDetailResponse> getEvents(String email) {
+        List<Event> events;
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
+        );
+        events = eventRepository.findAllByManager(user);
+        return events.stream().map(eventMapper::toEventResponse).toList();
+    }
+
+    /**
      * 이벤트 상세 조회
      *
      * @param id 이벤트 ID
