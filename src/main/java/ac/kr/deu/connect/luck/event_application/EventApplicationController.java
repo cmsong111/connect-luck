@@ -26,6 +26,14 @@ public class EventApplicationController {
         return "event/event-apply";
     }
 
+    //푸드트럭 id 이용해서 푸드트럭 사장 정보에서 푸드트럭 id에 맞는 푸드트럭 빼와서 푸드트럭 이미지랑 그런거 보여줘여할듯 아직 미구현
+    @GetMapping("/list/{id}")
+    public String getApplyList(@PathVariable("id") Long id, Model model, Principal principal) {
+        model.addAttribute("user", userService.findUserByEmail(principal.getName()));
+        model.addAttribute("applications", eventApplicationService.getEventApplications(id));
+        return "event/my_apply_list";
+    }
+
     @PostMapping("/create")
     public String registerFoodTruckPost(
             Principal principal,
