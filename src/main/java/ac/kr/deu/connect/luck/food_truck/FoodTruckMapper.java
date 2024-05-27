@@ -78,4 +78,6 @@ public interface FoodTruckMapper {
     FoodTruckMenu toFoodTruckMenu(FoodTruckMenuRequest foodTruckMenuRequest);
 
     FoodTruckReview toFoodTruckReview(FoodTruckReviewRequest foodTruckReviewRequest);
+
+    FoodTruckReviewRequest toFoodTruckReviewRequest(FoodTruckReview foodTruckReview);
 }

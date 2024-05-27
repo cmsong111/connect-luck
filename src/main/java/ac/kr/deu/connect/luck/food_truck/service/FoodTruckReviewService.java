@@ -93,4 +93,13 @@ public class FoodTruckReviewService {
         review.setReply(content);
         return foodTruckMapper.toFoodTruckReviewResponse(foodTruckReviewRepository.save(review));
     }
+
+    public FoodTruckReview getFoodTruckReview(Long reviewId) {
+        return foodTruckReviewRepository.findById(reviewId).get();
+    }
+
+    public FoodTruckReviewRequest getFoodTruckReviewForRequest(Long reviewId) {
+        FoodTruckReview review = foodTruckReviewRepository.findById(reviewId).get();
+        return foodTruckMapper.toFoodTruckReviewRequest(review);
+    }
 }
