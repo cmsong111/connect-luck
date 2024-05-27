@@ -2,20 +2,22 @@ package ac.kr.deu.connect.luck.event;
 
 import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
 import ac.kr.deu.connect.luck.event.dto.EventRequest;
-import ac.kr.deu.connect.luck.event_application.EventApplication;
+import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.User;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class EventService {
+    private static final Logger log = LoggerFactory.getLogger(EventService.class);
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final UserRepository userRepository;
@@ -68,13 +70,12 @@ public class EventService {
     /**
      * 이벤트 생성
      *
-     * @param eventRequest  이벤트 생성 요청 폼
-     * @param multipartFile 이벤트 대표 이미지
-     *                      null이면 기본 이미지 사용
-     * @param managerEmail  매니저 이름
+     * @param eventRequest 이벤트 생성 요청 폼
+     *                     null이면 기본 이미지 사용
+     * @param managerEmail 매니저 이름
      * @return 생성된 이벤트
      */
-    public Event createEvent(EventRequest eventRequest, MultipartFile multipartFile, String managerEmail) {
+    public Event createEvent(EventRequestV2 eventRequest, String managerEmail) {
         Event eventSaved = eventMapper.toEvent(eventRequest);
 
         User user = userRepository.findByEmail(managerEmail).orElseThrow(
@@ -82,8 +83,9 @@ public class EventService {
         );
         // 기본 이미지 설정 후 이미지가 있으면 업로드
         String image = "https://picsum.photos/1600/900";
-        if (multipartFile != null) {
-            image = imageUploader.uploadImage(multipartFile).getData().getUrl();
+        log.info("image : {}", eventRequest.getImage());
+        if (eventRequest.getImage() != null) {
+            image = imageUploader.uploadImage(eventRequest.getImage()).getData().getUrl();
         }
         eventSaved.setImageUrl(image);
         eventSaved.setManager(user);

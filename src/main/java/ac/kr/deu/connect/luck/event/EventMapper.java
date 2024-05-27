@@ -2,6 +2,7 @@ package ac.kr.deu.connect.luck.event;
 
 import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
 import ac.kr.deu.connect.luck.event.dto.EventRequest;
+import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -23,4 +24,6 @@ public interface EventMapper {
      */
     @Mapping(source = "manager.name", target = "managerName")
     EventDetailResponse toEventResponse(Event event);
+
+    Event toEvent(EventRequestV2 eventRequest);
 }

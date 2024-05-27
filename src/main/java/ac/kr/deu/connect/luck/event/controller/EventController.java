@@ -3,14 +3,18 @@ package ac.kr.deu.connect.luck.event.controller;
 import ac.kr.deu.connect.luck.event.EventService;
 import ac.kr.deu.connect.luck.event.EventStatus;
 import ac.kr.deu.connect.luck.event.dto.EventRequest;
+import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
+@Slf4j
 @Controller
 @RequestMapping("/event")
 @RequiredArgsConstructor
@@ -38,15 +42,16 @@ public class EventController {
 
     @GetMapping("/register")
     public String getEventRegister(Model model) {
+        model.addAttribute("eventRequest", new EventRequestV2("", "", "", "", "", LocalDateTime.now(), LocalDateTime.now(), null));
         return "event/event_register";
     }
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = "multipart/form-data")
     public String registerEventPost(
             Principal principal,
-            EventRequest eventRequest, @RequestParam("multipartFile") MultipartFile multipartFile
-    ){
-        eventService.createEvent(eventRequest, multipartFile, principal.getName());
+            EventRequestV2 eventRequest
+    ) {
+        eventService.createEvent(eventRequest, principal.getName());
         return "redirect:/event/my";
     }
 
@@ -68,16 +73,17 @@ public class EventController {
             Principal principal,
             EventRequest eventRequest,
             @RequestParam("multipartFile") MultipartFile multipartFile
-    ){
+    ) {
         eventService.updateEvent(id, eventRequest, multipartFile, principal.getName());
         return "redirect:/event/my";
     }
+
     @PostMapping("/statusUpdate/{id}")
     public String updateEventPost(
             @PathVariable("id") Long id,
             Principal principal,
             @RequestParam("status") EventStatus eventStatus
-    ){
+    ) {
         eventService.changeEventStatus(id, eventStatus, principal.getName());
         return "redirect:/event/my";
     }
