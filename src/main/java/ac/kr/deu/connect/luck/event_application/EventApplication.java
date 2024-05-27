@@ -20,6 +20,8 @@ public class EventApplication extends BaseEntity {
     @ManyToOne
     private Event event;
 
+    private Long foodTruckId;
+
     @ManyToOne
     private User foodTruckManager;
 

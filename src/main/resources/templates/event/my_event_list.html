@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 250px; /* 원하는 높이로 조절 */
+        }
+    </style>
+    <div class="container mt-5">
+        <!-- 타이틀과 버튼을 담을 컨테이너 -->
+        <div class="d-flex justify-content-center flex-column align-items-center">
+            <h1 class="text-center">내 이벤트 목록</h1>
+            <!-- 버튼을 타이틀 바로 아래 좌측에 배치 -->
+            <div class="align-self-start mt-2">
+                <a class="btn btn-primary" href="/event/register">이벤트 생성하기</a>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <!-- 이벤트 카드 반복 -->
+            <div class="col-md-4 mb-4" th:each="event : ${events}">
+                <div class="card">
+                    <img alt="Event Image" class="card-img-top" th:src="${event.imageUrl}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${event.title}"></h5>
+                        <p class="card-text" th:text="'시작일: ' + ${#temporals.format(event.startAt, 'yyyy년 MM월 dd일')}"></p>
+                        <p class="card-text" th:text="'장소: ' + ${event.streetAddress + ' ' + event.detailAddress}"></p>
+                        <p class="card-text" th:text="'담당자: '+${event.managerName}"></p>
+
+                        <a class="btn btn-primary btn-sm" th:href="@{'/apply/list/' + ${event.id}}">신청서 조회</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/event/edit/' + ${event.id}}">이벤트 수정</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/event/delete/' + ${event.id}}">이벤트 삭제</a>
+                        <form th:action="@{'/event/statusUpdate/' + ${event.id}}" method="post">
+                            <div class="mt-3">
+                                <label for="eventStatus">이벤트 상태:</label>
+                                <select class="form-select" name="status" id="eventStatus">
+                                    <option value="BEFORE_APPLICATION" th:selected="${event.status == 'BEFORE_APPLICATION'}">모집 전</option>
+                                    <option value="OPEN_FOR_APPLICATION" th:selected="${event.status == 'OPEN_FOR_APPLICATION'}">신청 가능</option>
+                                    <option value="APPLICATION_FINISHED" th:selected="${event.status == 'APPLICATION_FINISHED'}">신청 만료</option>
+                                    <option value="EVENT_START" th:selected="${event.status == 'EVENT_START'}">행사 시작</option>
+                                    <option value="EVENT_END" th:selected="${event.status == 'EVENT_END'}">행사 끝</option>
+                                </select>
+                                <button type="submit" class="btn btn-secondary btn-sm mt-2">변경</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
