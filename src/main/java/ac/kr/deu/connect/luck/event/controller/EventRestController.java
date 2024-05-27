@@ -39,8 +39,8 @@ public class EventRestController {
         return ResponseEntity.ok(eventService.getEvent(id));
     }
 
-
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    //서비스 로직 수정함 레스트도 수정되어야할듯
+    /*@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
     @Operation(summary = "이벤트 생성", description = "이벤트 생성\n이벤트 주소입력 시 카카오 우편번호 서비스를 사용해서 주소를 입력받아야함.")
     public ResponseEntity<Event> createEvent(
@@ -72,7 +72,7 @@ public class EventRestController {
             @Parameter(description = "이벤트 대표 이미지") @RequestPart(value = "image", required = false) MultipartFile multipartFile,
             Principal principal) {
         return ResponseEntity.ok(eventService.updateEvent(id, title, content, zipCode, streetAddress, detailAddress, startAt, endAt, multipartFile, principal.getName()));
-    }
+    }*/
 
 
     @DeleteMapping("/{id}")

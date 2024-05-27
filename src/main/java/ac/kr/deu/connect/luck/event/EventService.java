@@ -1,6 +1,8 @@
 package ac.kr.deu.connect.luck.event;
 
 import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
+import ac.kr.deu.connect.luck.event.dto.EventRequest;
+import ac.kr.deu.connect.luck.event_application.EventApplication;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.User;
 import ac.kr.deu.connect.luck.user.UserRepository;
@@ -36,6 +38,21 @@ public class EventService {
     }
 
     /**
+     * email 로 이벤트 목록 조회
+     *
+     * @param email 이벤트 매니저 email
+     * @return 이벤트 목록
+     */
+    public List<EventDetailResponse> getEvents(String email) {
+        List<Event> events;
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
+        );
+        events = eventRepository.findAllByManager(user);
+        return events.stream().map(eventMapper::toEventResponse).toList();
+    }
+
+    /**
      * 이벤트 상세 조회
      *
      * @param id 이벤트 ID
@@ -51,21 +68,15 @@ public class EventService {
     /**
      * 이벤트 생성
      *
-     * @param title         이벤트 제목
-     * @param content       이벤트 내용
-     * @param zipCode       우편번호
-     * @param streetAddress 도로명 주소
-     * @param detailAddress 상세 주소
-     * @param startAt       시작 일시
-     *                      예시) 2021-08-01T00:00:00
-     *                      형식) yyyy-MM-dd'T'HH:mm:ss
-     * @param endAt         종료 일시
+     * @param eventRequest  이벤트 생성 요청 폼
      * @param multipartFile 이벤트 대표 이미지
      *                      null이면 기본 이미지 사용
      * @param managerEmail  매니저 이름
      * @return 생성된 이벤트
      */
-    public Event createEvent(String title, String content, String zipCode, String streetAddress, String detailAddress, String startAt, String endAt, MultipartFile multipartFile, String managerEmail) {
+    public Event createEvent(EventRequest eventRequest, MultipartFile multipartFile, String managerEmail) {
+        Event eventSaved = eventMapper.toEvent(eventRequest);
+
         User user = userRepository.findByEmail(managerEmail).orElseThrow(
                 () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
         );
@@ -74,37 +85,23 @@ public class EventService {
         if (multipartFile != null) {
             image = imageUploader.uploadImage(multipartFile).getData().getUrl();
         }
-        Event event = Event.builder()
-                .title(title)
-                .content(content)
-                .zipCode(zipCode)
-                .streetAddress(streetAddress)
-                .detailAddress(detailAddress)
-                .startAt(LocalDateTime.parse(startAt))
-                .endAt(LocalDateTime.parse(endAt))
-                .imageUrl(image)
-                .status(EventStatus.OPEN_FOR_APPLICATION)
-                .manager(user)
-                .build();
-        return eventRepository.save(event);
+        eventSaved.setImageUrl(image);
+        eventSaved.setManager(user);
+        eventSaved.setStatus(EventStatus.OPEN_FOR_APPLICATION);
+
+        return eventRepository.save(eventSaved);
     }
 
     /**
      * 이벤트 수정
      *
      * @param id            이벤트 UID
-     * @param title         이벤트 제목
-     * @param content       이벤트 내용
-     * @param zipCode       우편번호
-     * @param streetAddress 도로명주소
-     * @param detailAddress 상세주소
-     * @param startAt       시작 시간
-     * @param endAt         종료 시간
+     * @param eventRequest  이벤트 생성 요청 폼
      * @param multipartFile 이벤트 대표 이미지
      * @param managerEmail  이벤트 매니저 이메일
      * @return 수정된 이벤트
      */
-    public Event updateEvent(Long id, String title, String content, String zipCode, String streetAddress, String detailAddress, String startAt, String endAt, MultipartFile multipartFile, String managerEmail) {
+    public Event updateEvent(Long id, EventRequest eventRequest, MultipartFile multipartFile, String managerEmail) {
         Event findEvent = eventRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 이벤트가 존재하지 않습니다.")
         );
@@ -117,32 +114,32 @@ public class EventService {
             String image = imageUploader.uploadImage(multipartFile).getData().getUrl();
             findEvent.setImageUrl(image);
         }
-        if (title != null) {
-            findEvent.setTitle(title);
+        if (eventRequest.title() != null) {
+            findEvent.setTitle(eventRequest.title());
         }
 
-        if (content != null) {
-            findEvent.setContent(content);
+        if (eventRequest.content() != null) {
+            findEvent.setContent(eventRequest.content());
         }
 
-        if (zipCode != null) {
-            findEvent.setZipCode(zipCode);
+        if (eventRequest.zipCode() != null) {
+            findEvent.setZipCode(eventRequest.zipCode());
         }
 
-        if (streetAddress != null) {
-            findEvent.setStreetAddress(streetAddress);
+        if (eventRequest.streetAddress() != null) {
+            findEvent.setStreetAddress(eventRequest.streetAddress());
         }
 
-        if (detailAddress != null) {
-            findEvent.setDetailAddress(detailAddress);
+        if (eventRequest.detailAddress() != null) {
+            findEvent.setDetailAddress(eventRequest.detailAddress());
         }
 
-        if (startAt != null) {
-            findEvent.setStartAt(LocalDateTime.parse(startAt));
+        if (eventRequest.startAt() != null) {
+            findEvent.setStartAt(eventRequest.startAt());
         }
 
-        if (endAt != null) {
-            findEvent.setEndAt(LocalDateTime.parse(endAt));
+        if (eventRequest.endAt() != null) {
+            findEvent.setEndAt(eventRequest.endAt());
         }
         return eventRepository.save(findEvent);
     }

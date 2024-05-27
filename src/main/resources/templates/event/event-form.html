@@ -1,7 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
+    <div class="container mt-5">
+        <h1 class="text-center">이벤트 상세 조회</h1>
 
+        <h2 th:text="${event.title}"></h2>
+
+        <!-- 이벤트 대표 이미지 -->
+        <div th:if="${event.imageUrl}">
+            <img alt="Event Image" th:src="${event.imageUrl}" style="width:100%; margin-bottom:20px;">
+        </div>
+
+
+        <!-- 이벤트 담당자 이름 -->
+        <p><strong>담당자:</strong> <span th:text="${event.managerName}"></span></p>
+
+        <!-- 이벤트 상태 -->
+        <p class="card-text">
+            <strong>이벤트 상태:</strong>
+            <span th:switch="${event.status}">
+                <span th:case="'BEFORE_APPLICATION'" th:text="'모집 전'"></span>
+                <span th:case="'OPEN_FOR_APPLICATION'" th:text="'신청 가능'"></span>
+                <span th:case="'APPLICATION_FINISHED'" th:text="'신청 만료'"></span>
+                <span th:case="'EVENT_START'" th:text="'행사 시작'"></span>
+                <span th:case="'EVENT_END'" th:text="'행사 끝'"></span>
+            </span>
+        </p>
+
+        <!-- 이벤트 내용 -->
+        <div>
+            <p><strong>이벤트 내용:</strong>
+                <span th:text="${event.content}"></span>
+            </p>
+        </div>
+
+        <!-- 이벤트 주소 -->
+        <div>
+            <p><strong>이벤트 주소:</strong>
+                <span th:text="${event.zipCode} + ', ' + ${event.streetAddress} + ', ' + ${event.detailAddress}"></span>
+            </p>
+        </div>
+
+        <!-- 이벤트 시작/종료 일시 -->
+        <div>
+            <p><strong>시작 일시:</strong> <span th:text="${event.startAt}"></span></p>
+            <p><strong>종료 일시:</strong> <span th:text="${event.endAt}"></span></p>
+        </div>
+
+        <button type="button" class="btn btn-secondary" onclick="location.href='/event'">목록으로</button>
+    </div>
 
 </th:block>
 </html>
