@@ -1,7 +1,5 @@
 package ac.kr.deu.connect.luck.image;
 
-import ac.kr.deu.connect.luck.exception.CustomErrorCode;
-import ac.kr.deu.connect.luck.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -20,15 +18,11 @@ import java.util.Base64;
 @Slf4j
 public class ImageUploader {
 
-    @Value("${imgbb.api-key}")
+    private final String BASE_URL = "https://api.imgbb.com/1/upload";
+    private final Long EXPIRATION = 15552000L;
+    private final RestTemplate restTemplate = new RestTemplate();
+    @Value("${api-key.imgbb}")
     private String API_KEY;
-
-    private String BASE_URL = "https://api.imgbb.com/1/upload";
-
-    private Long EXPIRATION = 15552000L;
-
-    private RestTemplate restTemplate = new RestTemplate();
-
 
     public ImageUploadResponse uploadImage(MultipartFile file) {
         try {
@@ -52,7 +46,10 @@ public class ImageUploader {
             return response.getBody();
         } catch (Exception e) {
             log.error("Image upload failed: {}", e.getMessage());
-            throw new CustomException(CustomErrorCode.IMAGE_UPLOAD_FAILED);
+            ImageUploadResponse response = new ImageUploadResponse();
+            response.setData(new ImageUploadResponse.Data());
+            response.getData().setUrl("https://picsum.photos/1600/900");
+            return response;
         }
     }
 }

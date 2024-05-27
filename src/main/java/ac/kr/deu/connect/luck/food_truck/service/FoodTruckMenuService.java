@@ -1,8 +1,7 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
-import ac.kr.deu.connect.luck.exception.CustomErrorCode;
-import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
@@ -11,7 +10,6 @@ import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +22,7 @@ public class FoodTruckMenuService {
     private final FoodTruckRepository foodTruckRepository;
     private final FoodTruckMapper mapStructMapper;
     private final ImageUploader imageUploader;
+    private final FoodTruckMapper foodTruckMapper;
 
 
     /**
@@ -40,85 +39,61 @@ public class FoodTruckMenuService {
 
     /**
      * 푸드트럭 메뉴 등록
+     * <p>컨트룰러에서 검증을 마치고 요청되는 메소드 이므로 믿고 사용할 수 있다.</p>
      *
-     * @param foodTruckId   푸드트럭 ID
-     * @param userEmail     푸드트럭 매니저 이메일
-     * @param name          메뉴 이름
-     * @param description   메뉴 설명
-     * @param price         메뉴 가격
-     * @param multipartFile 메뉴 이미지
+     * @param foodTruckId          푸드트럭 ID
+     * @param foodTruckMenuRequest 푸드트럭 메뉴 요청
      * @return FoodTruckMenu
      */
-    public FoodTruckMenu saveFoodTruckMenu(Long foodTruckId, String userEmail, String name, String description, int price, MultipartFile multipartFile) {
-        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
-                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
-        );
-        isManager(userEmail, foodTruck);
+    public FoodTruckMenuResponse saveFoodTruckMenu(Long foodTruckId, FoodTruckMenuRequest foodTruckMenuRequest) {
+        // 객체 생성
+        FoodTruck foodTruck = FoodTruck.builder().id(foodTruckId).build();
+        FoodTruckMenu foodTruckMenu = foodTruckMapper.toFoodTruckMenu(foodTruckMenuRequest);
 
-        String imageUrl = imageUploader.uploadImage(multipartFile).getData().getImage().getUrl();
+        // 푸드트럭 메뉴에 푸드트럭 설정
+        foodTruckMenu.setFoodTruck(foodTruck);
 
-        FoodTruckMenu foodTruckMenu = FoodTruckMenu.builder()
-                .name(name)
-                .description(description)
-                .price(price)
-                .imageUrl(imageUrl)
-                .foodTruck(foodTruck)
-                .build();
-
-        return foodTruckMenuRepository.save(foodTruckMenu);
-    }
-
-    public FoodTruckMenu updateFoodTruckMenu(Long foodTruckId, Long foodTruckMenuId, String userEmail, String name, String description, int price, MultipartFile multipartFile) {
-        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow();
-        FoodTruckMenu foodTruckMenu = foodTruckMenuRepository.findById(foodTruckMenuId).orElseThrow();
-        isManager(userEmail, foodTruck);
-
-        if (foodTruckMenu.getFoodTruck().getId() != foodTruckId) {
-            throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
-        }
-
-        if (name != null) {
-            foodTruckMenu.setName(name);
-        }
-
-        if (description != null) {
-            foodTruckMenu.setDescription(description);
-        }
-
-        if (price != 0) {
-            foodTruckMenu.setPrice(price);
-        }
-
-        if (multipartFile != null) {
-            String imageUrl = imageUploader.uploadImage(multipartFile).getData().getImage().getUrl();
+        // 이미지가 있으면 업로드
+        if (foodTruckMenuRequest.getImage() != null) {
+            String imageUrl = imageUploader.uploadImage(foodTruckMenuRequest.getImage()).getData().getImage().getUrl();
             foodTruckMenu.setImageUrl(imageUrl);
         }
 
-        return foodTruckMenuRepository.save(foodTruckMenu);
-    }
-
-    public void deleteFoodTruckMenu(String userEmail, Long foodTruckId, Long foodTruckMenuId) {
-        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow();
-        FoodTruckMenu foodTruckMenu = foodTruckMenuRepository.findById(foodTruckMenuId).orElseThrow();
-        isManager(userEmail, foodTruck);
-
-        // 메뉴가 푸드트럭의 메뉴인지 확인
-        if (foodTruckMenu.getFoodTruck().getId() != foodTruckId) {
-            throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
-        }
-
-        foodTruckMenuRepository.deleteById(foodTruckMenuId);
+        // 저장 후 응답
+        return foodTruckMapper.toFoodTruckMenuResponse(foodTruckMenuRepository.save(foodTruckMenu));
     }
 
     /**
-     * 푸드트럭 매니저인지 확인
+     * 푸드트럭 메뉴 수정
      *
-     * @param email     매니저 이메일
-     * @param foodTruck 푸드트럭
+     * @param foodTruckId          푸드트럭 ID
+     * @param foodTruckMenuRequest 푸드트럭 메뉴 요청
+     * @param foodTruckMenuId      푸드트럭 메뉴 ID
+     * @return FoodTruckMenu 응답
      */
-    protected void isManager(String email, FoodTruck foodTruck) {
-        if (!foodTruck.getManager().getEmail().equals(email)) {
-            throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
+    public FoodTruckMenuResponse saveFoodTruckMenu(Long foodTruckId, FoodTruckMenuRequest foodTruckMenuRequest, Long foodTruckMenuId) {
+        // 객체 생성
+        FoodTruckMenu foodTruckMenu = foodTruckMenuRepository.findById(foodTruckMenuId)
+                .orElseThrow(RuntimeException::new);
+
+        // 푸드트럭 메뉴 ID 설정
+        foodTruckMenu.setName(foodTruckMenuRequest.getName());
+        foodTruckMenu.setDescription(foodTruckMenuRequest.getDescription());
+        foodTruckMenu.setPrice(foodTruckMenuRequest.getPrice());
+
+
+        // 이미지가 있으면 업로드
+        if (foodTruckMenuRequest.getImage() != null) {
+            String imageUrl = imageUploader.uploadImage(foodTruckMenuRequest.getImage()).getData().getImage().getUrl();
+            foodTruckMenu.setImageUrl(imageUrl);
         }
+
+        // 저장 후 응답
+        return foodTruckMapper.toFoodTruckMenuResponse(foodTruckMenuRepository.save(foodTruckMenu));
+    }
+
+
+    public void deleteFoodTruckMenu(Long foodTruckMenuId) {
+        foodTruckMenuRepository.deleteById(foodTruckMenuId);
     }
 }

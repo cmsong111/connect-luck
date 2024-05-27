@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <!-- 회원가입 폼 추가 -->
-                        <form method="post" th:action="@{/signup}">
+                        <form method="post" th:action="@{/auth/signup}" th:object="${signUpRequest}">
                             <div class="form-group">
                                 <label for="email">이메일:</label>
                                 <input class="form-control" id="email" name="email" required type="email">

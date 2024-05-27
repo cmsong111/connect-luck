@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="navBarFragment">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">
@@ -27,6 +27,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/food-truck">Food Truck</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/now">현재 운영중인 트럭</a>
+                </li>
             </ul>
             <!--우측 메뉴-->
             <!--비 로그인 상태일 때-->
@@ -47,7 +50,7 @@
 
                 <!--푸드트럭 관리자 때-->
                 <li class="nav-item" sec:authorize="hasRole('ROLE_FOOD_TRUCK_MANAGER')">
-                    <a class="nav-link" href="/my-truck">내 푸드트럭</a>
+                    <a class="nav-link" href="/food-truck/my">내 푸드트럭</a>
                 </li>
 
                 <!-- 웹 관리자 때-->

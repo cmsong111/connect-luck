@@ -14,13 +14,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class NowService {
+    protected static Double DISTANCE = 0.05;
     private final NowRepository nowRepository;
     private final FoodTruckRepository foodTruckRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
-
-    protected static Double DISTANCE = 0.05;
-
 
     /**
      * 현재 운영중인 푸드트럭 조회

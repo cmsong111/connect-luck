@@ -44,8 +44,10 @@ server:
 #    certificate-private-key: "classpath:privkey.pem"
 #    certificate: "classpath:fullchain.pem"
 
-imgbb:
-  api-key: ${IMGBB_API_KEY}
+
+api-key:
+  imgbb: ${IMGBB_API_KEY}
+  kakao: ${KAKAO_API_KEY}
 
 security:
   jwt:

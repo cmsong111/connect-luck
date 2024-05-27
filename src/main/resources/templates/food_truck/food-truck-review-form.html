@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+
+    <h1 class="text-center">리뷰 작성</h1>
+    <div class="container mt-5">
+        <form method="post" th:action="|/food-truck/${foodTruckId}/review|" th:object="${reviewRequestForm}" enctype="multipart/form-data">
+            <input name="foodTruckId" th:value="${reviewRequestForm}" type="hidden">
+
+            <div class="form-group">
+                <label for="content">내용:</label>
+                <textarea class="form-control" id="content" name="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">평점:</label>
+                <select class="form-control" id="rating" name="rating" required>
+                    <option value="1">1점</option>
+                    <option value="2">2점</option>
+                    <option value="3">3점</option>
+                    <option value="4">4점</option>
+                    <option value="5">5점</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">이미지:</label>
+                <input accept="image/*" class="form-control" id="image" name="image" type="file">
+            </div>
+            <button class="btn btn-primary" type="submit">작성</button>
+        </form>
+    </div>
+</th:block>
+</html>

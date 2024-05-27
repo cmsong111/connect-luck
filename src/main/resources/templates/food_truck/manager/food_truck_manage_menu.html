@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <script>
+        const model = document.getElementById('addMenuModal');
+        const btn = document.getElementById('addMenuBtn');
+
+        btn.addEventListener('click', () => {
+            model.style.display = 'block';
+        });
+
+    </script>
+    <h1 class="text-center">메뉴 관리</h1>
+    <div class="container mt-5">
+        <div class="col-md-4 mb-4">
+            <button class="btn btn-primary" data-target="#addMenuModal" data-toggle="modal" id="addMenuBtn">신규 메뉴 등록</button>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="foodTruckMenu : ${foodTruckMenus}">
+                <div class="card">
+                    <img alt="Food Truck Menu Image" class="card-img-top" th:src="${foodTruckMenu.imageUrl}">
+                    <div class="card-body">
+                        <h5 class="card-title " th:text="${foodTruckMenu.name}"></h5>
+                        <p class="card-text" th:text="${foodTruckMenu.description}"></p>
+                        <p class="card-text" th:text="${foodTruckMenu.price}"></p>
+
+                        <button class="btn btn-primary" th:onclick="|location.href='/food-truck/menu/' + ${foodTruckMenu.id} + '/edit'|"
+                                type="button">수정
+                        </button>
+                        <button class="btn btn-secondary" th:onclick="|location.href='/food-truck/menu/' + ${foodTruckMenu.id} + '/edit'|"
+                                type="button">이미지 변경
+                        </button>
+                        <button class="btn btn-danger" th:onclick="|location.href='/food-truck/menu/' + ${foodTruckMenu.id} + '/delete'|"
+                                type="button">삭제
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--신규 메뉴 추가 모달 폼-->
+    <div aria-hidden="true" aria-labelledby="addMenuModalLabel" class="modal fade" id="addMenuModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMenuModalLabel">신규 메뉴 등록</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" method="post" th:action="|/food-truck/menu/${foodTruckId}/add|"
+                          th:object="${foodTruckMenuRequest}">
+                        <div class="form-group">
+                            <label for="name">메뉴 이름</label>
+                            <input class="form-control" id="name" name="name" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">메뉴 설명</label>
+                            <input class="form-control" id="description" name="description" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">가격</label>
+                            <input class="form-control" id="price" name="price" required type="number">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">이미지 파일</label>
+                            <input class="form-control" id="image" name="image" required type="file">
+                        </div>
+                        <button class="btn btn-primary" type="submit">등록</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

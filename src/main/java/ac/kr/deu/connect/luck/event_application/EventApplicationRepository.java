@@ -29,7 +29,7 @@ public interface EventApplicationRepository extends JpaRepository<EventApplicati
     List<EventApplication> findAllByFoodTruckManager(User user);
 
 
-
     List<EventApplication> findAllByEventManager(User user);
+
     List<EventApplication> findAllByEventManagerAndEventId(User user, Long eventId);
 }

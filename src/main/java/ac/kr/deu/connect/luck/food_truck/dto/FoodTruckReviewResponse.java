@@ -13,7 +13,7 @@ public record FoodTruckReviewResponse(
         @Schema(description = "이미지 URL", example = "https://picsum.photos/1600/900")
         String imageUrl,
         @Schema(description = "평점", example = "5")
-        int score,
+        int rating,
         @Schema(description = "작성자 이름", example = "홍길동")
         String authorName,
         @Schema(description = "답글", example = "감사합니다.")

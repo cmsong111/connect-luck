@@ -10,6 +10,6 @@ public record FoodTruckHeader(
         String managerName,
         FoodType foodType,
         int reviewCount,
-        double avgScore
+        double avgRating
 ) {
 }

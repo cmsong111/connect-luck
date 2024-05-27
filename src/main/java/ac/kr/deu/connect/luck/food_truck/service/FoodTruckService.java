@@ -5,7 +5,7 @@ import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader;
-import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequest;
+import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckRequestV2;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
@@ -14,12 +14,13 @@ import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FoodTruckService {
@@ -61,7 +62,13 @@ public class FoodTruckService {
         );
 
         return foodTruckMapper.toFoodTruckDetailResponse(foodTruck);
+    }
 
+    public FoodTruckRequestV2 getFoodTruckForEdit(Long id) {
+        FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
+        );
+        return foodTruckMapper.toFoodTruckRequest(foodTruck);
     }
 
     /**
@@ -71,11 +78,16 @@ public class FoodTruckService {
      * @param foodTruckRequest 추가할 푸드트럭 정보
      * @return 저장된 푸드트럭 정보
      */
-    public FoodTruck createFoodTruck(String userEmail, FoodTruckRequest foodTruckRequest) {
+    public FoodTruckDetailResponse saveFoodTruck(String userEmail, FoodTruckRequestV2 foodTruckRequest) {
         FoodTruck foodTruck = foodTruckMapper.toFoodTruck(foodTruckRequest);
         foodTruck.setManager(userRepository.findByEmail(userEmail).orElseThrow());
-        foodTruck.setImageUrl("https://picsum.photos/1600/900");
-        return foodTruckRepository.save(foodTruck);
+
+        // 이미지가 있는 경우 이미지 업로드
+        if (foodTruckRequest.getImage() != null) {
+            foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
+        }
+
+        return foodTruckMapper.toFoodTruckDetailResponse(foodTruckRepository.save(foodTruck));
     }
 
     /**
@@ -85,11 +97,10 @@ public class FoodTruckService {
      * @param id 삭제할 푸드트럭의 ID
      */
     @Transactional
-    public String deleteFoodTruck(Long id, String userEmail) {
+    public String deleteFoodTruck(Long id) {
         FoodTruck foodTruck = foodTruckRepository.findById(id).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
-        isManager(userEmail, foodTruck);
         foodTruckRepository.delete(foodTruck);
         return "삭제되었습니다.";
     }
@@ -101,51 +112,28 @@ public class FoodTruckService {
      * @param foodTruckRequest 수정할 푸드트럭 정보
      * @return 수정된 푸드트럭 정보
      */
-    public FoodTruckDetailResponse updateFoodTruck(Long foodTruckId, String userEmail, FoodTruckRequest foodTruckRequest) {
+    public FoodTruckDetailResponse saveFoodTruck(Long foodTruckId, FoodTruckRequestV2 foodTruckRequest) {
         // Search food truck
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
-        // Check if the user is the manager of the food truck
-        isManager(userEmail, foodTruck);
 
-        // 수정할 정보가 있는 경우 수정
-        if (foodTruckRequest.name() != null) {
-            foodTruck.setName(foodTruckRequest.name());
+        foodTruck.setName(foodTruckRequest.getName());
+        foodTruck.setDescription(foodTruckRequest.getDescription());
+        foodTruck.setFoodType(foodTruckRequest.getFoodType());
+
+        if (!foodTruckRequest.getImage().isEmpty()) {
+            foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
         }
-        if (foodTruckRequest.description() != null) {
-            foodTruck.setDescription(foodTruckRequest.description());
-        }
-        if (foodTruckRequest.foodType() != null) {
-            foodTruck.setFoodType(foodTruckRequest.foodType());
-        }
+
         // 수정된 푸드트럭 정보 저장
         FoodTruck saved = foodTruckRepository.save(foodTruck);
         return foodTruckMapper.toFoodTruckDetailResponse(saved);
     }
 
-    /**
-     * 푸드트럭의 대표 이미지를 변경합니다.
-     *
-     * @param foodTruckId   푸드트럭 ID
-     * @param userEmail     사용자 Email
-     * @param multipartFile 이미지 파일
-     * @return 변경된 푸드트럭 정보
-     */
-    public FoodTruck updateFoodTruckImage(Long foodTruckId, String userEmail, MultipartFile multipartFile) {
-        // Search food truck
-        FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
-                () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
-        );
 
-        // Check if the user is the manager of the food truck
-        isManager(userEmail, foodTruck);
-
-        // Upload image
-        String imageUrl = imageUploader.uploadImage(multipartFile).getData().getUrl();
-
-        foodTruck.setImageUrl(imageUrl);
-        return foodTruckRepository.save(foodTruck);
+    public List<FoodTruck> getMyFoodTrucks(String userEmail) {
+        return foodTruckRepository.findAllByManagerEmail(userEmail);
     }
 
     /**

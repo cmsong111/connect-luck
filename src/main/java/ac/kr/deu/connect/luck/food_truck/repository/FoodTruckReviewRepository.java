@@ -12,8 +12,12 @@ import java.util.List;
 public interface FoodTruckReviewRepository extends JpaRepository<FoodTruckReview, Long> {
 
     void deleteAllByFoodTruck(FoodTruck foodTruck);
+
     void deleteAllByAuthor(User author);
+
     List<FoodTruckReview> findByFoodTruck(FoodTruck foodTruck);
+
     List<FoodTruckReview> findByFoodTruckId(Long foodTruckId);
+
     List<FoodTruckReview> findByAuthor(User author);
 }
