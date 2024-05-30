@@ -6,6 +6,7 @@ import ac.kr.deu.connect.luck.event.dto.EventRequest;
 import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -68,13 +69,13 @@ public class EventController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
     public String updateEventPost(
             @RequestParam("eventId") Long id,
             Principal principal,
-            EventRequest eventRequest,
-            @RequestParam("multipartFile") MultipartFile multipartFile
+            EventRequestV2 eventRequest
     ) {
-        eventService.updateEvent(id, eventRequest, multipartFile, principal.getName());
+        eventService.updateEvent(id, eventRequest, principal.getName());
         return "redirect:/event/my";
     }
 

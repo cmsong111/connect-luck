@@ -99,11 +99,10 @@ public class EventService {
      *
      * @param id            이벤트 UID
      * @param eventRequest  이벤트 생성 요청 폼
-     * @param multipartFile 이벤트 대표 이미지
      * @param managerEmail  이벤트 매니저 이메일
      * @return 수정된 이벤트
      */
-    public Event updateEvent(Long id, EventRequest eventRequest, MultipartFile multipartFile, String managerEmail) {
+    public Event updateEvent(Long id, EventRequestV2 eventRequest, String managerEmail) {
         Event findEvent = eventRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 이벤트가 존재하지 않습니다.")
         );
@@ -112,37 +111,19 @@ public class EventService {
             throw new IllegalArgumentException("해당 이벤트의 매니저가 아닙니다.");
         }
 
-        if (multipartFile != null) {
-            String image = imageUploader.uploadImage(multipartFile).getData().getUrl();
+        if (eventRequest.getImage() != null) {
+            String image = imageUploader.uploadImage(eventRequest.getImage()).getData().getUrl();
             findEvent.setImageUrl(image);
         }
-        if (eventRequest.title() != null) {
-            findEvent.setTitle(eventRequest.title());
-        }
 
-        if (eventRequest.content() != null) {
-            findEvent.setContent(eventRequest.content());
-        }
+        findEvent.setTitle(eventRequest.getTitle());
+        findEvent.setContent(eventRequest.getContent());
+        findEvent.setZipCode(eventRequest.getZipCode());
+        findEvent.setStreetAddress(eventRequest.getStreetAddress());
+        findEvent.setDetailAddress(eventRequest.getDetailAddress());
+        findEvent.setStartAt(eventRequest.getStartAt());
+        findEvent.setEndAt(eventRequest.getEndAt());
 
-        if (eventRequest.zipCode() != null) {
-            findEvent.setZipCode(eventRequest.zipCode());
-        }
-
-        if (eventRequest.streetAddress() != null) {
-            findEvent.setStreetAddress(eventRequest.streetAddress());
-        }
-
-        if (eventRequest.detailAddress() != null) {
-            findEvent.setDetailAddress(eventRequest.detailAddress());
-        }
-
-        if (eventRequest.startAt() != null) {
-            findEvent.setStartAt(eventRequest.startAt());
-        }
-
-        if (eventRequest.endAt() != null) {
-            findEvent.setEndAt(eventRequest.endAt());
-        }
         return eventRepository.save(findEvent);
     }
 

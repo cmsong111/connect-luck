@@ -1,6 +1,7 @@
 package ac.kr.deu.connect.luck.event.dto
 
 import io.swagger.v3.oas.annotations.media.Schema
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDateTime
 
@@ -16,9 +17,11 @@ data class EventRequestV2(
     val streetAddress: String,
     @field:Schema(description = "상세 주소", example = "역삼동 123-456")
     val detailAddress: String,
-    @field:Schema(description = "이벤트 시작일", example = "2021-01-01T00:00:00")
+    @field:Schema(description = "이벤트 시작일", example = "2021-01-01T00:00:00Z")
+    @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     val startAt: LocalDateTime,
-    @field:Schema(description = "이벤트 종료일", example = "2021-01-01T23:59:59")
+    @field:Schema(description = "이벤트 종료일", example = "2021-01-01T23:59:59Z")
+    @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     val endAt: LocalDateTime,
     @field:Schema(description = "이미지", format = "binary")
     var image: MultipartFile?
