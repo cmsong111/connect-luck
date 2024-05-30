@@ -122,8 +122,12 @@ public class FoodTruckService {
         foodTruck.setDescription(foodTruckRequest.getDescription());
         foodTruck.setFoodType(foodTruckRequest.getFoodType());
 
-        if (!foodTruckRequest.getImage().isEmpty()) {
-            foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
+        try {
+            if (foodTruckRequest.getImage() != null) {
+                foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
+            }
+        } catch (Exception e) {
+            log.error("Failed to upload image", e);
         }
 
         // 수정된 푸드트럭 정보 저장
@@ -140,19 +144,5 @@ public class FoodTruckService {
         return foodTruckRepository.findAllByManagerEmail(userEmail).stream()
                 .map(foodTruckMapper::toFoodTruckDetailResponse)
                 .toList();
-    }
-
-    /**
-     * 푸드트럭 매니저인지 확인합니다.
-     * 푸드트럭 매니저가 아닌 경우 예외를 발생시킵니다.
-     * 푸드트럭 매니저이지만 해당 푸드트럭의 매니저가 아닌 경우 예외를 발생시킵니다.
-     *
-     * @param userEmail 사용자 Email
-     * @param foodTruck 푸드트럭
-     */
-    protected void isManager(String userEmail, FoodTruck foodTruck) {
-        if (!foodTruck.getManager().getEmail().equals(userEmail)) {
-            throw new CustomException(CustomErrorCode.FOOD_TRUCK_IS_NOT_YOURS);
-        }
     }
 }
