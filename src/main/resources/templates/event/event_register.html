@@ -12,45 +12,45 @@
     </style>
     <div class="container mt-5">
         <h1 class="text-center">이벤트 생성</h1>
-        <form th:action="@{/event/create}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/event/create}" method="post" enctype="multipart/form-data" th:object="${eventRequest}">
             <div class="form-group">
                 <label for="title">이벤트 제목</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" class="form-control" id="title" name="title" th:field="*{title}" required>
             </div>
 
             <div class="form-group">
                 <label for="content">이벤트 내용</label>
-                <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                <textarea class="form-control" id="content" name="content" rows="3" th:field="*{content}" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="zipCode">우편번호</label>
-                <input type="text" class="form-control" id="zipCode" name="zipCode" required>
+                <input type="text" class="form-control" id="zipCode" name="zipCode" th:field="*{zipCode}" required>
             </div>
 
             <div class="form-group">
                 <label for="streetAddress">도로명 주소</label>
-                <input type="text" class="form-control" id="streetAddress" name="streetAddress" required>
+                <input type="text" class="form-control" id="streetAddress" name="streetAddress" th:field="*{streetAddress}" required>
             </div>
 
             <div class="form-group">
                 <label for="detailAddress">상세 주소</label>
-                <input type="text" class="form-control" id="detailAddress" name="detailAddress" required>
+                <input type="text" class="form-control" id="detailAddress" name="detailAddress" th:field="*{detailAddress}" required>
             </div>
 
             <div class="form-group">
                 <label for="startAt">시작 일시</label>
-                <input type="datetime-local" class="form-control" id="startAt" name="startAt" required>
+                <input type="datetime-local" class="form-control" id="startAt" name="startAt" th:field="*{startAt}" required>
             </div>
 
             <div class="form-group">
                 <label for="endAt">종료 일시</label>
-                <input type="datetime-local" class="form-control" id="endAt" name="endAt" required>
+                <input type="datetime-local" class="form-control" id="endAt" name="endAt" th:field="*{endAt}" required>
             </div>
 
             <div class="form-group">
-                <label for="multipartFile">이벤트 대표 이미지</label>
-                <input type="file" class="form-control" id="multipartFile" name="multipartFile">
+                <label for="image">이벤트 대표 이미지</label>
+                <input type="file" class="form-control-file" id="image" name="image" th:field="*{image}" required>
             </div>
 
             <button type="submit" class="btn btn-primary">이벤트 생성</button>
