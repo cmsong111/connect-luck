@@ -136,6 +136,12 @@ public class FoodTruckService {
         return foodTruckRepository.findAllByManagerEmail(userEmail);
     }
 
+    public List<FoodTruckDetailResponse> getMyFoodTrucksForApi(String userEmail) {
+        return foodTruckRepository.findAllByManagerEmail(userEmail).stream()
+                .map(foodTruckMapper::toFoodTruckDetailResponse)
+                .toList();
+    }
+
     /**
      * 푸드트럭 매니저인지 확인합니다.
      * 푸드트럭 매니저가 아닌 경우 예외를 발생시킵니다.

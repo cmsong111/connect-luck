@@ -120,4 +120,26 @@ class FoodTruckRestController(
         foodTruckService.deleteFoodTruck(id)
         return ResponseEntity.noContent().build()
     }
+
+    @Operation(
+        summary = "내 푸드트럭 정보를 조회합니다.", description = "내 푸드트럭 정보를 조회합니다."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "내 푸드트럭 정보 조회 성공",
+                content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = FoodTruckDetailResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "403",
+                description = "내 푸드트럭 정보 조회 실패 (권한 없음)",
+                content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = CustomErrorResponse::class))]
+            )
+        ]
+    )
+    @GetMapping("/my")
+    fun getMyFoodTruck(principal: Principal): ResponseEntity<List<FoodTruckDetailResponse>> {
+        return ResponseEntity.ok(foodTruckService.getMyFoodTrucksForApi(principal.name));
+    }
 }
