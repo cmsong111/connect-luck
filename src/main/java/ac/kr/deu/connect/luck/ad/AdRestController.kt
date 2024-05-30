@@ -2,10 +2,12 @@ package ac.kr.deu.connect.luck.ad
 
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "10-Advertisement API", description = "광고 관련 API")
 @RestController
+@RequestMapping("/api/ad")
 class AdRestController {
 
     val adList: List<String> = listOf(
@@ -19,7 +21,7 @@ class AdRestController {
         "https://i.ibb.co/Q99zZj0/Lime-Wire-AI-Studio-Asset.jpg"
     )
 
-    @GetMapping("/ad")
+    @GetMapping
     fun getAd(): List<String> {
         return adList;
     }
