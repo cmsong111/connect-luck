@@ -17,6 +17,7 @@ public class FoodTruckMenu extends BaseEntity {
     private Long id;
     private String name;
     private String description;
+    @Column(columnDefinition = "LONGTEXT")
     private String imageUrl;
     private int price;
 
