@@ -40,15 +40,14 @@ public class EventApplicationRestController {
     }
 
     //서비스 로직 수정했는데 Rest 로직은 수정 못하겠음 남주 SOS 바람
-    /*@PostMapping("/application")
+    @PostMapping("/application")
     @PreAuthorize("hasRole('ROLE_FOOD_TRUCK_MANAGER')")
     @Operation(summary = "이벤트 신청", description = "푸드트럭 매니저가 이벤트에 신청하는 API<br>푸드트럭 매니저만 사용 가능합니다")
     public ResponseEntity<EventApplication> applyEvent(
-            @Parameter(description = "이벤트 UID") @RequestParam(name = "eventId") Long id,
             @RequestBody EventApplicationRequest eventApplicationRequest,
             Principal principal) {
-        return ResponseEntity.ok(eventApplicationService.createEventApplication(eventApplicationRequest, id, principal.getName()));
-    }*/
+        return ResponseEntity.ok(eventApplicationService.createEventApplication(eventApplicationRequest, principal.getName()));
+    }
 
 
     @PostMapping("/event/{eventId}/applications/{applicationId}")
