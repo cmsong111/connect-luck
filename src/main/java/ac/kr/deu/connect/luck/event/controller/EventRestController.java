@@ -89,4 +89,11 @@ public class EventRestController {
         eventService.changeEventStatus(id, eventStatus, principal.getName());
         return ResponseEntity.ok("이벤트 상태 변경 성공");
     }
+
+    @GetMapping("/my")
+    @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
+    @Operation(summary = "내 이벤트 목록 조회", description = "내가 생성한 이벤트 목록 조회")
+    public ResponseEntity<List<EventDetailResponse>> getMyEvent(Principal principal) {
+        return ResponseEntity.ok(eventService.getEvents(principal.getName()));
+    }
 }
