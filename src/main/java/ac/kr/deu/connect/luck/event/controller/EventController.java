@@ -41,7 +41,9 @@ public class EventController {
 
     @GetMapping("/register")
     public String getEventRegister(Model model) {
-        model.addAttribute("eventRequest", new EventRequestV2("", "", "", "", "", LocalDateTime.now(), LocalDateTime.now(), null));
+        model.addAttribute("eventRequest",
+                new EventRequestV2("", "", "", "", "",
+                        LocalDateTime.now(), LocalDateTime.now(), null));
         return "event/event_register";
     }
 

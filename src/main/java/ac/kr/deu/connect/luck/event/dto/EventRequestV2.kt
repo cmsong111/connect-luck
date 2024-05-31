@@ -28,6 +28,10 @@ data class EventRequestV2(
 ) {
 
     override fun toString(): String {
-        return "EventRequestV2(title='$title', content='$content', zipCode='$zipCode', streetAddress='$streetAddress', detailAddress='$detailAddress', startAt=$startAt, endAt=$endAt, image=${image?.originalFilename})"
+        return "EventRequestV2(title='$title'," +
+                " content='$content', zipCode='$zipCode'," +
+                " streetAddress='$streetAddress'," +
+                " detailAddress='$detailAddress', startAt=$startAt," +
+                " endAt=$endAt, image=${image?.originalFilename})"
     }
 }
