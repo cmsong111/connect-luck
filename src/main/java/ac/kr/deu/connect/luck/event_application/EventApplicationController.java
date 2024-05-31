@@ -1,4 +1,5 @@
 package ac.kr.deu.connect.luck.event_application;
+
 import ac.kr.deu.connect.luck.event.EventService;
 import ac.kr.deu.connect.luck.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.security.Principal;
 
 @Controller
@@ -38,7 +40,7 @@ public class EventApplicationController {
     public String registerFoodTruckPost(
             Principal principal,
             EventApplicationRequest eventApplicationRequest
-    ){
+    ) {
         eventApplicationService.createEventApplication(eventApplicationRequest, principal.getName());
         return "redirect:/event";
     }

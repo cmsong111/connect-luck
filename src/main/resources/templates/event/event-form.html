@@ -8,7 +8,7 @@
 
         <!-- 이벤트 대표 이미지 -->
         <div th:if="${event.imageUrl}">
-            <img alt="Event Image" th:src="${event.imageUrl}" style="width:100%; margin-bottom:20px;">
+            <img alt="Event Image" style="width:100%; margin-bottom:20px;" th:src="${event.imageUrl}">
         </div>
 
 
@@ -47,7 +47,7 @@
             <p><strong>종료 일시:</strong> <span th:text="${event.endAt}"></span></p>
         </div>
 
-        <button type="button" class="btn btn-secondary" onclick="location.href='/event'">목록으로</button>
+        <button class="btn btn-secondary" onclick="location.href='/event'" type="button">목록으로</button>
     </div>
 
 </th:block>

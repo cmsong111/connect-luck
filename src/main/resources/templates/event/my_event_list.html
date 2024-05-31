@@ -30,17 +30,17 @@
                         <a class="btn btn-primary btn-sm" th:href="@{'/apply/list/' + ${event.id}}">신청서 조회</a>
                         <a class="btn btn-primary btn-sm" th:href="@{'/event/edit/' + ${event.id}}">이벤트 수정</a>
                         <a class="btn btn-primary btn-sm" th:href="@{'/event/delete/' + ${event.id}}">이벤트 삭제</a>
-                        <form th:action="@{'/event/statusUpdate/' + ${event.id}}" method="post">
+                        <form method="post" th:action="@{'/event/statusUpdate/' + ${event.id}}">
                             <div class="mt-3">
                                 <label for="eventStatus">이벤트 상태:</label>
-                                <select class="form-select" name="status" id="eventStatus">
-                                    <option value="BEFORE_APPLICATION" th:selected="${event.status == 'BEFORE_APPLICATION'}">모집 전</option>
-                                    <option value="OPEN_FOR_APPLICATION" th:selected="${event.status == 'OPEN_FOR_APPLICATION'}">신청 가능</option>
-                                    <option value="APPLICATION_FINISHED" th:selected="${event.status == 'APPLICATION_FINISHED'}">신청 만료</option>
-                                    <option value="EVENT_START" th:selected="${event.status == 'EVENT_START'}">행사 시작</option>
-                                    <option value="EVENT_END" th:selected="${event.status == 'EVENT_END'}">행사 끝</option>
+                                <select class="form-select" id="eventStatus" name="status">
+                                    <option th:selected="${event.status == 'BEFORE_APPLICATION'}" value="BEFORE_APPLICATION">모집 전</option>
+                                    <option th:selected="${event.status == 'OPEN_FOR_APPLICATION'}" value="OPEN_FOR_APPLICATION">신청 가능</option>
+                                    <option th:selected="${event.status == 'APPLICATION_FINISHED'}" value="APPLICATION_FINISHED">신청 만료</option>
+                                    <option th:selected="${event.status == 'EVENT_START'}" value="EVENT_START">행사 시작</option>
+                                    <option th:selected="${event.status == 'EVENT_END'}" value="EVENT_END">행사 끝</option>
                                 </select>
-                                <button type="submit" class="btn btn-secondary btn-sm mt-2">변경</button>
+                                <button class="btn btn-secondary btn-sm mt-2" type="submit">변경</button>
                             </div>
                         </form>
                     </div>

@@ -4,7 +4,7 @@
 
     <h1 class="text-center">리뷰 작성</h1>
     <div class="container mt-5">
-        <form method="post" th:action="|/food-truck/${foodTruckId}/review|" th:object="${reviewRequestForm}" enctype="multipart/form-data">
+        <form enctype="multipart/form-data" method="post" th:action="|/food-truck/${foodTruckId}/review|" th:object="${reviewRequestForm}">
             <input name="foodTruckId" th:value="${reviewRequestForm}" type="hidden">
 
             <div class="form-group">

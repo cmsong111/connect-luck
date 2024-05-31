@@ -27,6 +27,7 @@ public interface FoodTruckMapper {
      * @return 푸드트럭 상세 응답 DTO
      */
     @Mapping(target = "managerName", source = "manager.name")
+    @Mapping(target = "avgRating", expression = "java(foodTruck.getReviews().stream().mapToDouble(FoodTruckReview::getRating).average().orElse(0))")
     FoodTruckDetailResponse toFoodTruckDetailResponse(FoodTruck foodTruck);
 
     /**

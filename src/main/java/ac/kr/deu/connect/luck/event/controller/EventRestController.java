@@ -57,7 +57,6 @@ public class EventRestController {
     }
 
 
-
     @PatchMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ROLE_EVENT_MANAGER')")
     @Operation(summary = "이벤트 수정", description = "이벤트 수정")

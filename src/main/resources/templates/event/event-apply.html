@@ -14,15 +14,15 @@
     </style>
     <div class="container mt-5">
         <h1 class="text-center">푸드트럭 신청</h1>
-        <form th:action="@{/apply/create}" method="post">
-            <input type="hidden" name="eventId" th:value="${event.id}" />
+        <form method="post" th:action="@{/apply/create}">
+            <input name="eventId" th:value="${event.id}" type="hidden"/>
             <div class="checkbox-group">
                 <h3>신청할 푸드트럭</h3>
                 <!-- 푸드트럭 콤보박스 -->
                 <select class="form-select" name="foodTruckId">
                     <option value="">푸드트럭을 선택하세요</option>
-                    <option th:each="foodTruck : ${user.foodTrucks}" th:value="${foodTruck.id}"
-                            th:text="${foodTruck.name}"></option>
+                    <option th:each="foodTruck : ${user.foodTrucks}" th:text="${foodTruck.name}"
+                            th:value="${foodTruck.id}"></option>
                 </select>
             </div>
 
@@ -35,8 +35,8 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">신청하기</button>
-            <button type="button" class="btn btn-secondary" onclick="location.href='/event'">취소하기</button>
+            <button class="btn btn-primary" type="submit">신청하기</button>
+            <button class="btn btn-secondary" onclick="location.href='/event'" type="button">취소하기</button>
         </form>
     </div>
 

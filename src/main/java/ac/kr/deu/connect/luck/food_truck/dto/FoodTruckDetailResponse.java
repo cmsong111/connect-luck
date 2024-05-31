@@ -21,6 +21,8 @@ public record FoodTruckDetailResponse(
         @Schema(description = "푸드트럭 리뷰 목록")
         List<FoodTruckReviewResponse> reviews,
         @Schema(description = "푸드트럭 메뉴 목록")
-        List<FoodTruckMenuResponse> menus
+        List<FoodTruckMenuResponse> menus,
+        @Schema(description = "리뷰 평균 점수", example = "4.5")
+        Double avgRating
 ) {
 }

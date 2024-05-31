@@ -42,6 +42,15 @@ public class UserController {
         return "user/profile_edit";
     }
 
+    /**
+     * 유저 정보 수정
+     *
+     * @param principal   로그인한 유저 정보
+     * @param password    비밀번호
+     * @param name        이름
+     * @param phoneNumber 전화번호
+     * @return 유저 정보 수정 후 프로필 페이지로 이동
+     */
     @PostMapping("/update")
     public String updateUser(
             Principal principal,

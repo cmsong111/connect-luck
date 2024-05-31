@@ -16,7 +16,7 @@
         <img alt="Food Truck Image" class="card-img-top d-flex justify-center " th:src="${foodTruckOriginal.imageUrl}">
     </div>
     <div class="container mt-5">
-        <form method="post" th:action="|/food-truck/${foodTruckOriginal.id}/edit|" th:object="${foodTruck}" enctype="multipart/form-data">
+        <form enctype="multipart/form-data" method="post" th:action="|/food-truck/${foodTruckOriginal.id}/edit|" th:object="${foodTruck}">
             <div class="form-group">
                 <label for="name">이름:</label>
                 <input class="form-control" id="name" name="name" required th:value="${foodTruck.name}" type="text">

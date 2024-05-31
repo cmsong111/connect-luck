@@ -10,12 +10,12 @@
     <div class="container mt-5">
         <h1 class="text-center">이벤트 목록</h1>
         <div class="text-left mb-3">
-            <input type="checkbox" id="filterOpenForApplication" onchange="filterEvents()">
+            <input id="filterOpenForApplication" onchange="filterEvents()" type="checkbox">
             <label for="filterOpenForApplication">신청 가능만 보기</label>
         </div>
         <div class="row mt-4" id="eventsContainer">
             <!-- 이벤트 카드 반복 -->
-            <div class="col-md-4 mb-4" th:each="event : ${events}" th:data-status="${event.status}">
+            <div class="col-md-4 mb-4" th:data-status="${event.status}" th:each="event : ${events}">
                 <div class="card">
                     <img alt="Event Image" class="card-img-top" th:src="${event.imageUrl}">
                     <div class="card-body">
@@ -37,9 +37,10 @@
                         <a class="btn btn-primary btn-sm" th:href="@{'/event/' + ${event.id}}">자세히 보기</a>
                         <a class="btn btn-primary btn-sm" th:href="@{'/contact/' + ${event.managerName}}">문의하기</a>
                         <!-- 신청하기 버튼 활성화 조건 -->
-                        <a class="btn btn-primary btn-sm" th:href="@{'/apply/' + ${event.id}}" th:if="${event.status == 'OPEN_FOR_APPLICATION'}">신청하기</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/apply/' + ${event.id}}"
+                           th:if="${event.status == 'OPEN_FOR_APPLICATION'}">신청하기</a>
                         <!-- 비활성화 상태의 신청하기 버튼 -->
-                        <a class="btn btn-secondary btn-sm" th:if="${event.status != 'OPEN_FOR_APPLICATION'}" disabled="disabled">신청하기</a>
+                        <a class="btn btn-secondary btn-sm" disabled="disabled" th:if="${event.status != 'OPEN_FOR_APPLICATION'}">신청하기</a>
                     </div>
                 </div>
             </div>

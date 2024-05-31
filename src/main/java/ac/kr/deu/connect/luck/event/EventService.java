@@ -1,7 +1,6 @@
 package ac.kr.deu.connect.luck.event;
 
 import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
-import ac.kr.deu.connect.luck.event.dto.EventRequest;
 import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
 import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.User;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -97,9 +95,9 @@ public class EventService {
     /**
      * 이벤트 수정
      *
-     * @param id            이벤트 UID
-     * @param eventRequest  이벤트 생성 요청 폼
-     * @param managerEmail  이벤트 매니저 이메일
+     * @param id           이벤트 UID
+     * @param eventRequest 이벤트 생성 요청 폼
+     * @param managerEmail 이벤트 매니저 이메일
      * @return 수정된 이벤트
      */
     public Event updateEvent(Long id, EventRequestV2 eventRequest, String managerEmail) {

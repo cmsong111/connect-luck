@@ -2,8 +2,6 @@ package ac.kr.deu.connect.luck.event_application;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 public record EventApplicationRequest(
         @Schema(description = "이벤트 ID", example = "1")
         Long eventId,

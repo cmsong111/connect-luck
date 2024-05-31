@@ -37,6 +37,13 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
     }
 
+    /**
+     * 유저 정보 수정
+     *
+     * @param userEmail     수정할 유저 이메일
+     * @param signUpRequest 수정할 정보
+     * @return 수정된 유저 정보
+     */
     public User updateUser(String userEmail, SignUpRequest signUpRequest) {
         User findUser = userRepository.findByEmail(userEmail).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
         if (signUpRequest.email() != null) findUser.setEmail(signUpRequest.email());
