@@ -1,7 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
-
+    <style>
+        .card-img-top {
+            object-fit: cover;
+            height: 250px; /* 이미지 높이 */
+        }
+        .card-body {
+            max-height: 300px; /* 본문 최대 높이 */
+            overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+        }
+    </style>
+    <div class="container mt-5">
+        <!-- 요청 대기 중인 신청서 -->
+        <h1 class="text-center">승인 대기 요청</h1>
+        <div class="row">
+            <div th:each="foodTruck, iterStat : ${foodTrucks}" th:if="${applications[iterStat.index].status.name() == 'PENDING'}">
+                <div class="card">
+                    <img alt="Food Truck Image" class="card-img-top" th:src="${foodTruck.imageUrl}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${foodTruck.name}"></h5>
+                        <p class="card-text" th:text="${foodTruck.description}"></p>
+                        <p class="card-text" th:text="${foodTruck.foodType.name()}"></p>
+                        <p class="card-text" th:text="${foodTruck.managerName()}"></p>
+                        <p class="card-text" th:text="${applications[iterStat.index].comment}">신청서 내용</p>
+                        <a class="btn btn-success" th:href="'/apply/accept/' + ${applications[iterStat.index].id} + '?eventId=' + ${id}">수락</a>
+                        <a class="btn btn-danger" th:href="'/apply/reject/' + ${applications[iterStat.index].id} + '?eventId=' + ${id}">거절</a>
+                        <a class="btn btn-primary" th:href="'/food-truck/' + ${foodTruck.id}">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 승인된 요청 -->
+        <h1 class="text-center">승인된 요청</h1>
+        <div class="row">
+            <div th:each="foodTruck, iterStat : ${foodTrucks}" th:if="${applications[iterStat.index].status.name() == 'APPROVED'}">
+                <div class="card">
+                    <img alt="Food Truck Image" class="card-img-top" th:src="${foodTruck.imageUrl}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${foodTruck.name}"></h5>
+                        <p class="card-text" th:text="${foodTruck.description}"></p>
+                        <p class="card-text" th:text="${foodTruck.foodType.name()}"></p>
+                        <p class="card-text" th:text="${foodTruck.managerName()}"></p>
+                        <p class="card-text" th:text="${applications[iterStat.index].comment}">신청서 내용</p>
+                        <a class="btn btn-primary" th:href="'/food-truck/' + ${foodTruck.id}">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </th:block>
 </html>
