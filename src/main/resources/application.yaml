@@ -46,8 +46,8 @@ server:
 
 
 api-key:
-  imgbb: ${IMGBB_API_KEY}
-  kakao: ${KAKAO_API_KEY}
+  imgbb: ${IMGBB_API_KEY:imagebb-api-key}
+  kakao: ${KAKAO_API_KEY:kakao-api-key}
 
 security:
   jwt:
