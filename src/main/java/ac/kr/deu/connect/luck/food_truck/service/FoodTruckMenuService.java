@@ -1,5 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
+import ac.kr.deu.connect.luck.common.storage.StorageService;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
@@ -7,12 +8,10 @@ import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckMenu;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
-import ac.kr.deu.connect.luck.image.ImageUploader;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +20,7 @@ public class FoodTruckMenuService {
     private final FoodTruckMenuRepository foodTruckMenuRepository;
     private final FoodTruckRepository foodTruckRepository;
     private final FoodTruckMapper mapStructMapper;
-    private final ImageUploader imageUploader;
+    private final StorageService storageService;
     private final FoodTruckMapper foodTruckMapper;
 
 
@@ -55,8 +54,9 @@ public class FoodTruckMenuService {
 
         // 이미지가 있으면 업로드
         if (foodTruckMenuRequest.getImage() != null) {
-            String imageUrl = imageUploader.uploadImage(foodTruckMenuRequest.getImage()).getData().getImage().getUrl();
-            foodTruckMenu.setImageUrl(imageUrl);
+            foodTruckMenu.setImageUrl(
+                    storageService.save(foodTruckMenuRequest.getImage())
+            );
         }
 
         // 저장 후 응답
@@ -84,8 +84,9 @@ public class FoodTruckMenuService {
 
         // 이미지가 있으면 업로드
         if (foodTruckMenuRequest.getImage() != null) {
-            String imageUrl = imageUploader.uploadImage(foodTruckMenuRequest.getImage()).getData().getImage().getUrl();
-            foodTruckMenu.setImageUrl(imageUrl);
+            foodTruckMenu.setImageUrl(
+                    storageService.save(foodTruckMenuRequest.getImage())
+            );
         }
 
         // 저장 후 응답

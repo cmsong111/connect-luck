@@ -1,16 +1,15 @@
 package ac.kr.deu.connect.luck.event;
 
+import ac.kr.deu.connect.luck.common.storage.StorageService;
 import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
 import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
-import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.entity.User;
 import ac.kr.deu.connect.luck.user.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +18,7 @@ public class EventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final UserRepository userRepository;
-    private final ImageUploader imageUploader;
+    private final StorageService storageService;
 
     /**
      * 이벤트 목록 조회
@@ -79,7 +78,7 @@ public class EventService {
         String image = "https://picsum.photos/1600/900";
         log.info("image : {}", eventRequest.getImage());
         if (eventRequest.getImage() != null) {
-            image = imageUploader.uploadImage(eventRequest.getImage()).getData().getUrl();
+            image = storageService.save(eventRequest.getImage());
         }
         eventSaved.setImageUrl(image);
         eventSaved.setManager(user);
@@ -106,8 +105,9 @@ public class EventService {
         }
 
         if (eventRequest.getImage() != null) {
-            String image = imageUploader.uploadImage(eventRequest.getImage()).getData().getUrl();
-            findEvent.setImageUrl(image);
+            findEvent.setImageUrl(
+                    storageService.save(eventRequest.getImage())
+            );
         }
 
         findEvent.setTitle(eventRequest.getTitle());

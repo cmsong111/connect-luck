@@ -1,5 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
+import ac.kr.deu.connect.luck.common.storage.StorageService;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckReviewRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckReviewResponse;
@@ -7,7 +8,6 @@ import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
-import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.entity.User;
 import ac.kr.deu.connect.luck.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,7 +21,7 @@ public class FoodTruckReviewService {
     private final FoodTruckRepository foodTruckRepository;
     private final FoodTruckReviewRepository foodTruckReviewRepository;
     private final UserRepository userRepository;
-    private final ImageUploader imageUploader;
+    private final StorageService storageService;
     private final FoodTruckMapper foodTruckMapper;
 
     /**
@@ -41,8 +41,9 @@ public class FoodTruckReviewService {
         review.setAuthor(author);
 
         if (foodTruckReviewRequest.getImage() != null) {
-            String imageUrl = imageUploader.uploadImage(foodTruckReviewRequest.getImage()).getData().getUrl();
-            review.setImageUrl(imageUrl);
+            review.setImageUrl(
+                    storageService.save(foodTruckReviewRequest.getImage())
+            );
         }
 
         return foodTruckMapper.toFoodTruckReviewResponse(foodTruckReviewRepository.save(review));
@@ -64,8 +65,9 @@ public class FoodTruckReviewService {
         review.setContent(foodTruckReviewRequest.getContent());
 
         if (foodTruckReviewRequest.getImage() != null) {
-            String imageUrl = imageUploader.uploadImage(foodTruckReviewRequest.getImage()).getData().getUrl();
-            review.setImageUrl(imageUrl);
+            review.setImageUrl(
+                    storageService.save(foodTruckReviewRequest.getImage())
+            );
         }
 
         return foodTruckMapper.toFoodTruckReviewResponse(foodTruckReviewRepository.save(review));

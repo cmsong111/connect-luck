@@ -32,6 +32,7 @@ server:
     encoding:
       charset: UTF-8
       force-response: true
+  forward-headers-strategy: framework
 
 ### Uncomment the following block to enable HTTPS and HTTP/2
 #  port: 8443
@@ -49,10 +50,13 @@ jwt:
   issuer: ${JWT_ISSUER:connect-luck}
   expiry: ${JWT_EXPIRATION:3600000}
 
-api-key:
-  imgbb: ${IMGBB_API_KEY:imagebb-api-key}
-  kakao: ${KAKAO_API_KEY:kakao-api-key}
 
 springdoc:
   swagger-ui:
     tags-sorter: alpha
+
+imgbb:
+  key: ${IMGBB_API_KEY}
+
+api-key:
+  kakao: ${KAKAO_API_KEY:kakao-api-key}

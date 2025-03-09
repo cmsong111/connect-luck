@@ -1,5 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
+import ac.kr.deu.connect.luck.common.storage.StorageService;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
@@ -11,7 +12,6 @@ import ac.kr.deu.connect.luck.food_truck.entity.FoodType;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
-import ac.kr.deu.connect.luck.image.ImageUploader;
 import ac.kr.deu.connect.luck.user.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class FoodTruckService {
     private final FoodTruckReviewRepository foodTruckReviewRepository;
     private final UserRepository userRepository;
     private final FoodTruckMapper foodTruckMapper;
-    private final ImageUploader imageUploader;
+    private final StorageService storageService;
 
     /**
      * 모든 푸드트럭을 조회합니다.
@@ -83,7 +83,9 @@ public class FoodTruckService {
 
         // 이미지가 있는 경우 이미지 업로드
         if (foodTruckRequest.getImage() != null) {
-            foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
+            foodTruck.setImageUrl(
+                    storageService.save(foodTruckRequest.getImage())
+            );
         }
 
         return foodTruckMapper.toFoodTruckDetailResponse(foodTruckRepository.save(foodTruck));
@@ -123,7 +125,9 @@ public class FoodTruckService {
 
         try {
             if (foodTruckRequest.getImage() != null) {
-                foodTruck.setImageUrl(imageUploader.uploadImage(foodTruckRequest.getImage()).getData().getUrl());
+                foodTruck.setImageUrl(
+                        storageService.save(foodTruckRequest.getImage())
+                );
             }
         } catch (Exception e) {
             log.error("Failed to upload image", e);
