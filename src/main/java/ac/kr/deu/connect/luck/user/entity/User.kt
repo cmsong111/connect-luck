@@ -1,10 +1,5 @@
 package ac.kr.deu.connect.luck.user.entity
 
-import ac.kr.deu.connect.luck.event.entity.Event
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview
-import com.fasterxml.jackson.annotation.JsonManagedReference
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
@@ -15,10 +10,7 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
 import java.time.Instant
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 @Entity(name = "users")
@@ -41,22 +33,8 @@ class User(
     @Column(columnDefinition = "text")
     var profileImage: String? = null,
 
-    @OneToMany(mappedBy = "author", cascade = [CascadeType.REMOVE])
-    @JsonManagedReference
-    var reviews: MutableList<FoodTruckReview> = mutableListOf(),
-
-    @OneToMany(mappedBy = "manager", cascade = [CascadeType.REMOVE])
-    @JsonManagedReference
-    var foodTrucks: MutableList<FoodTruck> = mutableListOf(),
-
-    @OneToMany(mappedBy = "manager", cascade = [CascadeType.REMOVE])
-    @JsonManagedReference
-    var events: MutableList<Event> = mutableListOf(),
-
-    @CreatedDate
     val createdAt: Instant = Instant.now(),
 
-    @LastModifiedDate
     var updatedAt: Instant = Instant.now(),
 ) {
     companion object {
