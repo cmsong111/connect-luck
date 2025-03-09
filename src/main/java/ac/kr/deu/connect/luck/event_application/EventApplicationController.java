@@ -1,10 +1,9 @@
 package ac.kr.deu.connect.luck.event_application;
 
 import ac.kr.deu.connect.luck.event.EventService;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService;
-import ac.kr.deu.connect.luck.user.User;
-import ac.kr.deu.connect.luck.user.UserService;
+import ac.kr.deu.connect.luck.user.entity.User;
+import ac.kr.deu.connect.luck.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

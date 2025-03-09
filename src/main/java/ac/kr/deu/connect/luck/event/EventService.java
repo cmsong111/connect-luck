@@ -3,8 +3,8 @@ package ac.kr.deu.connect.luck.event;
 import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
 import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
 import ac.kr.deu.connect.luck.image.ImageUploader;
-import ac.kr.deu.connect.luck.user.User;
-import ac.kr.deu.connect.luck.user.UserRepository;
+import ac.kr.deu.connect.luck.user.entity.User;
+import ac.kr.deu.connect.luck.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +45,7 @@ public class EventService {
      */
     public List<EventDetailResponse> getEvents(String email) {
         List<Event> events;
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
-        );
+        User user = userRepository.findByEmail(email);
         events = eventRepository.findAllByManager(user);
         return events.stream().map(eventMapper::toEventResponse).toList();
     }
@@ -76,9 +74,7 @@ public class EventService {
     public Event createEvent(EventRequestV2 eventRequest, String managerEmail) {
         Event eventSaved = eventMapper.toEvent(eventRequest);
 
-        User user = userRepository.findByEmail(managerEmail).orElseThrow(
-                () -> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
-        );
+        User user = userRepository.findByEmail(managerEmail);
         // 기본 이미지 설정 후 이미지가 있으면 업로드
         String image = "https://picsum.photos/1600/900";
         log.info("image : {}", eventRequest.getImage());

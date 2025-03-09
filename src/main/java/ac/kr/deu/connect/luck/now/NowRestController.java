@@ -1,15 +1,20 @@
 package ac.kr.deu.connect.luck.now;
 
+import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "08-Now API", description = "현재 운영중인 푸드트럭 API")
 @RestController
@@ -36,8 +41,8 @@ public class NowRestController {
             @Parameter(description = "푸드트럭 UID") @PathVariable("foodTruckId") Long foodTruckId,
             @Parameter(description = "위도") @RequestParam(value = "latitude") Double latitude,
             @Parameter(description = "경도") @RequestParam(value = "longitude") Double longitude,
-            HttpServletRequest req) {
-        return ResponseEntity.ok(nowService.saveStartNow(foodTruckId, req, latitude, longitude));
+            @AuthenticationPrincipal AuthenticatedUser user) {
+        return ResponseEntity.ok(nowService.saveStartNow(foodTruckId, user.getEmail(), latitude, longitude));
     }
 
     @PreAuthorize("hasRole(ROLE_FOOD_TRUCK_MANAGER)")
@@ -45,7 +50,7 @@ public class NowRestController {
     @Operation(summary = "푸드트럭 운영 종료", description = "푸드트럭 운영을 종료합니다. 푸드트럭 매니저의 권한이 필요합니다.")
     public ResponseEntity<Now> stopWorking(
             @Parameter(description = "푸드트럭 UID") @PathVariable("foodTruckId") Long foodTruckId,
-            HttpServletRequest req) {
-        return ResponseEntity.ok(nowService.saveEndNow(foodTruckId, req));
+            @AuthenticationPrincipal AuthenticatedUser user) {
+        return ResponseEntity.ok(nowService.saveEndNow(foodTruckId, user.getEmail()));
     }
 }

@@ -1,8 +1,8 @@
 package ac.kr.deu.connect.luck.event_application;
 
-import ac.kr.deu.connect.luck.common.BaseEntity;
+import ac.kr.deu.connect.luck.common.entity.BaseEntity;
 import ac.kr.deu.connect.luck.event.Event;
-import ac.kr.deu.connect.luck.user.User;
+import ac.kr.deu.connect.luck.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

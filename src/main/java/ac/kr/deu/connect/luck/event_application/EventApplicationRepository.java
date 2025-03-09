@@ -1,7 +1,7 @@
 package ac.kr.deu.connect.luck.event_application;
 
 import ac.kr.deu.connect.luck.event.Event;
-import ac.kr.deu.connect.luck.user.User;
+import ac.kr.deu.connect.luck.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

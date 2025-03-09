@@ -4,7 +4,7 @@ import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
-import ac.kr.deu.connect.luck.security.JwtTokenProvider;
+import ac.kr.deu.connect.luck.auth.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,9 +50,8 @@ public class NowService {
      * @param longitude   경도
      * @return 현재 운영중인 푸드트럭 정보
      */
-    public Now saveStartNow(Long foodTruckId, HttpServletRequest req, Double latitude, Double longitude) {
+    public Now saveStartNow(Long foodTruckId, String userEmail, Double latitude, Double longitude) {
         // 정보 확인
-        String userEmail = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req));
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );
@@ -80,9 +79,8 @@ public class NowService {
      * @param req         요청 정보(JWT 토큰)
      * @return 현재 운영중인 푸드트럭 정보
      */
-    public Now saveEndNow(Long foodTruckId, HttpServletRequest req) {
+    public Now saveEndNow(Long foodTruckId, String userEmail) {
         // 정보 확인
-        String userEmail = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req));
         FoodTruck foodTruck = foodTruckRepository.findById(foodTruckId).orElseThrow(
                 () -> new CustomException(CustomErrorCode.FOOD_TRUCK_NOT_FOUND)
         );

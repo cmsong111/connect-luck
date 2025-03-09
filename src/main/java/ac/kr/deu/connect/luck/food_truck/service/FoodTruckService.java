@@ -12,13 +12,12 @@ import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckMenuRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import ac.kr.deu.connect.luck.image.ImageUploader;
-import ac.kr.deu.connect.luck.user.UserRepository;
+import ac.kr.deu.connect.luck.user.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -80,7 +79,7 @@ public class FoodTruckService {
      */
     public FoodTruckDetailResponse saveFoodTruck(String userEmail, FoodTruckRequestV2 foodTruckRequest) {
         FoodTruck foodTruck = foodTruckMapper.toFoodTruck(foodTruckRequest);
-        foodTruck.setManager(userRepository.findByEmail(userEmail).orElseThrow());
+        foodTruck.setManager(userRepository.findByEmail(userEmail));
 
         // 이미지가 있는 경우 이미지 업로드
         if (foodTruckRequest.getImage() != null) {

@@ -4,9 +4,9 @@ import ac.kr.deu.connect.luck.event.Event;
 import ac.kr.deu.connect.luck.event.EventRepository;
 import ac.kr.deu.connect.luck.exception.CustomErrorCode;
 import ac.kr.deu.connect.luck.exception.CustomException;
-import ac.kr.deu.connect.luck.user.User;
-import ac.kr.deu.connect.luck.user.UserRepository;
-import ac.kr.deu.connect.luck.user.UserRole;
+import ac.kr.deu.connect.luck.user.entity.User;
+import ac.kr.deu.connect.luck.user.repository.UserRepository;
+import ac.kr.deu.connect.luck.user.entity.UserRole;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class EventApplicationService {
      * @param email 현재 사용자 정보
      */
     public List<EventApplication> getMyEventApplicationsForTruckManager(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        User user = userRepository.findByEmail(email);
         return eventApplicationRepository.findAllByFoodTruckManager(user);
     }
 
@@ -41,7 +41,7 @@ public class EventApplicationService {
      * @param email   현재 사용자 정보
      */
     public List<EventApplication> getMyEventApplicationsForEventManager(Long eventId, String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        User user = userRepository.findByEmail(email);
         if (eventId == null) {
             return eventApplicationRepository.findAllByEventManager(user);
         }
@@ -59,7 +59,7 @@ public class EventApplicationService {
         EventApplication eventApplicationSaved = eventApplicationMapper.toEventApplication(eventApplicationRequest);
 
         // 유저 정보 조회
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new CustomException(CustomErrorCode.USER_ID_NOT_MATCH));
+        User user = userRepository.findByEmail(email);
 
         if (user.getRoles().contains(UserRole.ADMIN)) {
             throw new CustomException(CustomErrorCode.USER_ID_NOT_MATCH);

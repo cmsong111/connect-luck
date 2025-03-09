@@ -8,8 +8,8 @@ import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
 import ac.kr.deu.connect.luck.image.ImageUploader;
-import ac.kr.deu.connect.luck.user.User;
-import ac.kr.deu.connect.luck.user.UserRepository;
+import ac.kr.deu.connect.luck.user.entity.User;
+import ac.kr.deu.connect.luck.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class FoodTruckReviewService {
      */
     public FoodTruckReviewResponse saveFoodTruckReview(Long foodTruckId, FoodTruckReviewRequest foodTruckReviewRequest, String userEmail) {
         FoodTruck foodTruck = FoodTruck.builder().id(foodTruckId).build();
-        User author = userRepository.findByEmail(userEmail).orElseThrow();
+        User author = userRepository.findByEmail(userEmail);
 
         FoodTruckReview review = foodTruckMapper.toFoodTruckReview(foodTruckReviewRequest);
 

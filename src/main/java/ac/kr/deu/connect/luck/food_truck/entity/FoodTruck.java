@@ -1,8 +1,8 @@
 package ac.kr.deu.connect.luck.food_truck.entity;
 
-import ac.kr.deu.connect.luck.common.BaseEntity;
+import ac.kr.deu.connect.luck.common.entity.BaseEntity;
 import ac.kr.deu.connect.luck.now.Now;
-import ac.kr.deu.connect.luck.user.User;
+import ac.kr.deu.connect.luck.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
