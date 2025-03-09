@@ -41,9 +41,9 @@ class JwtTokenProvider(
     private fun encode(user: AuthenticatedUser): String {
         return Jwts.builder()
             .id(user.jti)
-            .subject(user.email)
-            .claim("userId", user.userId)
-            .claim("roles", user.roles.map { it.name }.joinToString(","))
+            .subject(user.userId.toString())
+            .claim("email", user.email)
+            .claim("roles", user.roles.joinToString(",") { it.name })
             .issuer(user.issuer)
             .issuedAt(Date.from(user.issuedAt))
             .expiration(Date.from(user.expiry))
@@ -65,14 +65,12 @@ class JwtTokenProvider(
 
         return AuthenticatedUser(
             jti = claims.id,
-            userId = claims["userId"] as Long,
-            email = claims.subject,
+            userId = claims.subject.toLong(),
+            email = claims["email"] as String,
             roles = (claims["roles"] as String).split(",").map { UserRole.valueOf(it) }.toSet(),
             issuer = claims.issuer,
             issuedAt = claims.issuedAt.toInstant(),
             expiry = claims.expiration.toInstant(),
         )
     }
-
-
 }

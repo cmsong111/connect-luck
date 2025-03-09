@@ -23,6 +23,7 @@ class JwtTokenFilter(
             val authenticatedUser: AuthenticatedUser = try {
                 tokenProvider.decode(token)
             } catch (e: Exception) {
+                println(e.message)
                 return
             }
             val authentication = UsernamePasswordAuthenticationToken(authenticatedUser, token, authenticatedUser.roles)

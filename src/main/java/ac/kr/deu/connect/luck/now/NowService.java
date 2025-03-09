@@ -1,11 +1,10 @@
 package ac.kr.deu.connect.luck.now;
 
-import ac.kr.deu.connect.luck.exception.CustomErrorCode;
-import ac.kr.deu.connect.luck.exception.CustomException;
+import ac.kr.deu.connect.luck.common.exception.CustomErrorCode;
+import ac.kr.deu.connect.luck.common.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
 import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
 import ac.kr.deu.connect.luck.auth.JwtTokenProvider;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

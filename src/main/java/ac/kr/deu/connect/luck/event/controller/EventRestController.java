@@ -1,10 +1,10 @@
 package ac.kr.deu.connect.luck.event.controller;
 
-import ac.kr.deu.connect.luck.event.Event;
-import ac.kr.deu.connect.luck.event.EventService;
-import ac.kr.deu.connect.luck.event.EventStatus;
-import ac.kr.deu.connect.luck.event.dto.EventDetailResponse;
-import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
+import ac.kr.deu.connect.luck.event.entity.Event;
+import ac.kr.deu.connect.luck.event.service.EventService;
+import ac.kr.deu.connect.luck.event.entity.EventStatus;
+import ac.kr.deu.connect.luck.event.controller.response.EventDetailResponse;
+import ac.kr.deu.connect.luck.event.controller.request.EventRequestV2;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

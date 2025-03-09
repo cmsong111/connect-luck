@@ -6,7 +6,7 @@
         <form method="post" th:action="@{/user/update}">
             <div class="form-group">
                 <label for="email">이메일:</label>
-                <input class="form-control" disabled id="email" name="email" th:value="${userInfo.user.email}" type="email">
+                <input class="form-control" disabled id="email" name="email" th:value="${userUpdateForm.email}" type="email">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호:</label>
@@ -14,11 +14,11 @@
             </div>
             <div class="form-group">
                 <label for="name">이름:</label>
-                <input class="form-control" id="name" name="name" required th:value="${userInfo.user.name}" type="text">
+                <input class="form-control" id="name" name="name" required th:value="${userUpdateForm.name}" type="text">
             </div>
             <div class="form-group">
                 <label for="phoneNumber">휴대폰 번호:</label>
-                <input class="form-control" id="phoneNumber" name="phoneNumber" required th:value="${userInfo.user.phone}" type="text">
+                <input class="form-control" id="phoneNumber" name="phoneNumber" required th:value="${userUpdateForm.phone}" type="text">
             </div>
             <button class="btn btn-primary" type="submit">저장</button>
         </form>

@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.user.entity
 
-import ac.kr.deu.connect.luck.event.Event
+import ac.kr.deu.connect.luck.event.entity.Event
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck
 import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview
 import com.fasterxml.jackson.annotation.JsonManagedReference
@@ -38,6 +38,9 @@ class User(
     @Enumerated(EnumType.STRING)
     val roles: MutableSet<UserRole> = mutableSetOf(UserRole.USER),
 
+    @Column(columnDefinition = "text")
+    var profileImage: String? = null,
+
     @OneToMany(mappedBy = "author", cascade = [CascadeType.REMOVE])
     @JsonManagedReference
     var reviews: MutableList<FoodTruckReview> = mutableListOf(),
@@ -68,7 +71,18 @@ class User(
                 password = password,
                 name = name,
                 phone = phone,
+                profileImage = "https://picsum.photos/id/12/200"
             )
         }
+    }
+
+    fun update(
+        name: String? = null,
+        phone: String? = null,
+        profileImage: String? = null,
+    ) {
+        name?.let { this.name = it }
+        phone?.let { this.phone = it }
+        profileImage?.let { this.profileImage = it }
     }
 }

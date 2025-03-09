@@ -1,8 +1,8 @@
 package ac.kr.deu.connect.luck.event.controller;
 
-import ac.kr.deu.connect.luck.event.EventService;
-import ac.kr.deu.connect.luck.event.EventStatus;
-import ac.kr.deu.connect.luck.event.dto.EventRequestV2;
+import ac.kr.deu.connect.luck.event.service.EventService;
+import ac.kr.deu.connect.luck.event.entity.EventStatus;
+import ac.kr.deu.connect.luck.event.controller.request.EventRequestV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;

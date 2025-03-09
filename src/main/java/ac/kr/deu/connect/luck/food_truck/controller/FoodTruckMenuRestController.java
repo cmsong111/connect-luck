@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.food_truck.controller;
 
-import ac.kr.deu.connect.luck.exception.CustomErrorResponse;
+import ac.kr.deu.connect.luck.common.exception.CustomErrorResponse;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuRequest;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckMenuResponse;
 import ac.kr.deu.connect.luck.food_truck.service.FoodTruckMenuService;

@@ -1,8 +1,8 @@
 package ac.kr.deu.connect.luck.food_truck.service;
 
 import ac.kr.deu.connect.luck.common.storage.StorageService;
-import ac.kr.deu.connect.luck.exception.CustomErrorCode;
-import ac.kr.deu.connect.luck.exception.CustomException;
+import ac.kr.deu.connect.luck.common.exception.CustomErrorCode;
+import ac.kr.deu.connect.luck.common.exception.CustomException;
 import ac.kr.deu.connect.luck.food_truck.FoodTruckMapper;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckDetailResponse;
 import ac.kr.deu.connect.luck.food_truck.dto.FoodTruckHeader;

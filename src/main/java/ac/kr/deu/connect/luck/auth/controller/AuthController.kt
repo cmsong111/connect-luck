@@ -1,7 +1,7 @@
 package ac.kr.deu.connect.luck.auth.controller
 
 import ac.kr.deu.connect.luck.auth.controller.request.LoginRequest
-import ac.kr.deu.connect.luck.auth.controller.request.SignUpRequest
+import ac.kr.deu.connect.luck.auth.controller.request.SignupRequest
 import ac.kr.deu.connect.luck.auth.service.AuthService
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
@@ -31,7 +31,10 @@ class AuthController(
         response: HttpServletResponse
     ): String {
         // 로그인
-        val token = authService.login(loginRequest).token
+        val token = authService.login(
+            email = loginRequest.email,
+            password = loginRequest.password
+        )
 
         // 쿠키에 토큰 저장
         val cookie = Cookie("token", token)
@@ -47,7 +50,7 @@ class AuthController(
 
     @GetMapping("/signup")
     fun signup(model: Model): String {
-        model.addAttribute("signUpRequest", SignUpRequest("", "", "", ""))
+        model.addAttribute("signUpRequest", SignupRequest("", "", "", ""))
         return "auth/signup"
     }
 
@@ -60,17 +63,17 @@ class AuthController(
      */
     @PostMapping("/signup")
     fun signupPost(
-        signUpRequest: SignUpRequest,
-        response: HttpServletResponse
+        signUpRequest: SignupRequest,
+        httpServletResponse: HttpServletResponse
     ): String {
         // 회원가입 후 자동 로그인
         // 쿠키 저장 시 토큰을 저장
-        val token = authService.signUp(signUpRequest).token
-        val cookie = Cookie("token", token)
-        cookie.maxAge = 60 * 30 // 30분
-        cookie.path = "/"
-        response.addCookie(cookie)
-
+        httpServletResponse.addCookie(
+            Cookie("token", authService.signup(signUpRequest)).apply {
+                maxAge = 60 * 30 // 30분
+                path = "/"
+            }
+        )
         return "redirect:/"
     }
 
@@ -81,10 +84,13 @@ class AuthController(
         httpServletResponse: HttpServletResponse
     ): String {
         // 쿠키 삭제
-        jwtCookie.maxAge = 0
-        jwtCookie.path = "/"
-        jwtCookie.value = null
-        httpServletResponse.addCookie(jwtCookie)
+        httpServletResponse.addCookie(
+            Cookie("token", "").apply {
+                maxAge = 0
+                path = "/"
+            }
+        )
+
         return "redirect:/"
     }
 
@@ -94,9 +100,8 @@ class AuthController(
     }
 
     @PostMapping("/find-id")
-    fun idSearch(@RequestParam("phone") phone: String?, model: Model): String {
+    fun idSearch(@RequestParam("phone") phone: String, model: Model): String {
         model.addAttribute("email", authService.findEmailByPhone(phone))
         return "auth/found-id"
     }
-
 }
