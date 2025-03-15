@@ -10,18 +10,18 @@ object TokenResolver {
      * @return 토큰
      */
     fun resolveToken(request: HttpServletRequest): String? {
-        // 쿠키에서 토큰 추출
-        val tokenFromCookie: String? = request.cookies?.find { it.name == "token" }?.value
-        if (tokenFromCookie != null) {
-            return tokenFromCookie
-        }
-
         // 헤더에서 토큰 추출
         val tokenFromHeader: String? = request.getHeader("Authorization")
         if (tokenFromHeader != null && tokenFromHeader.startsWith("Bearer ")) {
             return tokenFromHeader.substring(7)
         }
 
+        // 쿠키에서 토큰 추출
+        val tokenFromCookie: String? = request.cookies?.find { it.name == "token" }?.value
+        if (tokenFromCookie != null) {
+            return tokenFromCookie
+        }
+        
         return null
     }
 }

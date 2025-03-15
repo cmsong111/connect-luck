@@ -1,9 +1,9 @@
 package ac.kr.deu.connect.luck.common;
 
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruck;
-import ac.kr.deu.connect.luck.food_truck.entity.FoodTruckReview;
-import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckRepository;
-import ac.kr.deu.connect.luck.food_truck.repository.FoodTruckReviewRepository;
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruck;
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckReview;
+import ac.kr.deu.connect.luck.foodtruck.repository.FoodTruckRepository;
+import ac.kr.deu.connect.luck.foodtruck.repository.FoodTruckReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

@@ -2,8 +2,7 @@ package ac.kr.deu.connect.luck.event.application;
 
 import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser;
 import ac.kr.deu.connect.luck.event.service.EventService;
-import ac.kr.deu.connect.luck.food_truck.service.FoodTruckService;
-import ac.kr.deu.connect.luck.user.entity.User;
+import ac.kr.deu.connect.luck.foodtruck.service.FoodTruckService;
 import ac.kr.deu.connect.luck.user.service.UserService;
 import java.security.Principal;
 import java.util.List;
