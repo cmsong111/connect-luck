@@ -3,6 +3,7 @@ package ac.kr.deu.connect.luck.auth.filter
 import ac.kr.deu.connect.luck.auth.JwtTokenProvider
 import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
 import ac.kr.deu.connect.luck.common.utlis.TokenResolver
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -23,12 +24,16 @@ class JwtTokenFilter(
             val authenticatedUser: AuthenticatedUser = try {
                 tokenProvider.decode(token)
             } catch (e: Exception) {
-                println(e.message)
+                logger.error(e.message)
                 return
             }
             val authentication = UsernamePasswordAuthenticationToken(authenticatedUser, token, authenticatedUser.roles)
             SecurityContextHolder.getContext().authentication = authentication
         }
         filterChain.doFilter(request, response)
+    }
+
+    companion object {
+        val logger = KotlinLogging.logger {}
     }
 }

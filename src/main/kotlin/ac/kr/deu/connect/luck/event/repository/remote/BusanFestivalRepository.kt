@@ -7,6 +7,7 @@ import ac.kr.deu.connect.luck.event.repository.EventRemoteRepository
 import ac.kr.deu.connect.luck.event.repository.EventSource
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
@@ -42,8 +43,7 @@ class BusanFestivalRepository(
 
         // result를 Map으로 변환하여 EventSource로 변환
         val rootNode: JsonNode = objectMapper.readTree(result)
-
-        println("Busan Festival Data Size: ${rootNode["getFestivalKr"]["totalCount"]}")
+        logger.info { "Busan Festival Data Size: ${rootNode["getFestivalKr"]["totalCount"]}" }
 
         return rootNode["getFestivalKr"]["item"].map {
             EventSource(
@@ -57,5 +57,9 @@ class BusanFestivalRepository(
                 trafficInfo = it["TRFC_INFO"].asText(),
             )
         }
+    }
+
+    companion object {
+        val logger = KotlinLogging.logger {}
     }
 }

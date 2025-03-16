@@ -1,6 +1,7 @@
 package ac.kr.deu.connect.luck.common.storage.imgbb
 
 import ac.kr.deu.connect.luck.common.storage.StorageService
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.util.Base64
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Profile
@@ -46,6 +47,10 @@ class ImgBBClient(
     }
 
     init {
-        println("ImgBBClient::init")
+        logger.info { "ImgBBClient::init" }
+    }
+
+    companion object {
+        val logger = KotlinLogging.logger {}
     }
 }

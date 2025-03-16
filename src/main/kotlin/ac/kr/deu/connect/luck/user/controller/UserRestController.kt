@@ -50,7 +50,6 @@ class UserRestController(
     fun getUser(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser
     ): ResponseEntity<UserDetailResponse> {
-        println("authenticatedUser.email = ${authenticatedUser.email}")
         return ResponseEntity.ok(userService.getUserByEmail(authenticatedUser.email))
     }
 

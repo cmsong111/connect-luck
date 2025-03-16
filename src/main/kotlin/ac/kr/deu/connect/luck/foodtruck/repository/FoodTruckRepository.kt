@@ -13,10 +13,10 @@ interface FoodTruckRepository : JpaRepository<FoodTruck, Long> {
 
     @Query(
         """
-        select foodTurck from FoodTruck foodTurck
-        where (:name is null or foodTurck.name like %:name%) and
-              (:type is null or foodTurck.type = :type) and
-              (:managerId is null or foodTurck.managerId = :managerId)
+        select foodTruck from FoodTruck foodTruck
+        WHERE (:name IS NULL OR foodTruck.name LIKE CONCAT('%', :name, '%')) and
+              (:type is null or foodTruck.type = :type) and
+              (:managerId is null or foodTruck.managerId = :managerId)
     """
     )
     fun findFoodTrucks(

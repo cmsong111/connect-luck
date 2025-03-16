@@ -5,8 +5,8 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.hibernate.orm") version "6.6.8.Final"
-    id("org.graalvm.buildtools.native") version "0.10.5"
+//    id("org.hibernate.orm") version "6.6.8.Final"
+//    id("org.graalvm.buildtools.native") version "0.10.5"
     kotlin("plugin.jpa") version "1.9.25"
     id("com.gorylenko.gradle-git-properties") version "2.5.0"
 }
@@ -35,6 +35,8 @@ dependencies {
     implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.5")
+
 
     // Markdown
     implementation("org.commonmark:commonmark:0.21.0")
@@ -66,11 +68,11 @@ kotlin {
     }
 }
 
-hibernate {
-    enhancement {
-        enableAssociationManagement = true
-    }
-}
+//hibernate {
+//    enhancement {
+//        enableAssociationManagement = true
+//    }
+//}
 
 allOpen {
     annotation("jakarta.persistence.Entity")
