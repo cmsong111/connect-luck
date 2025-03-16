@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.auth
 
-import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser
+import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
 import ac.kr.deu.connect.luck.user.entity.UserRole
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -43,7 +43,7 @@ class JwtTokenProvider(
             .id(user.jti)
             .subject(user.userId.toString())
             .claim("email", user.email)
-            .claim("roles", user.roles.joinToString(",") { it.name })
+            .claim("roles", user.roles.joinToString(",") { it.authority })
             .issuer(user.issuer)
             .issuedAt(Date.from(user.issuedAt))
             .expiration(Date.from(user.expiry))
@@ -67,7 +67,7 @@ class JwtTokenProvider(
             jti = claims.id,
             userId = claims.subject.toLong(),
             email = claims["email"] as String,
-            roles = (claims["roles"] as String).split(",").map { UserRole.valueOf(it) }.toSet(),
+            roles = (claims["roles"] as String).split(",").map { UserRole.valueOf(it.substring("ROLE_".length)) }.toSet(),
             issuer = claims.issuer,
             issuedAt = claims.issuedAt.toInstant(),
             expiry = claims.expiration.toInstant(),

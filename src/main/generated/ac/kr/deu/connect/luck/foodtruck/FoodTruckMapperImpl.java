@@ -1,8 +1,8 @@
 package ac.kr.deu.connect.luck.foodtruck;
 
-import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckMenuRequest;
-import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckRequestV2;
-import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckReviewRequest;
+import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckMenuForm;
+import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckCreateForm;
+import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckReviewCreateForm;
 import ac.kr.deu.connect.luck.foodtruck.controller.response.FoodTruckDetailResponse;
 import ac.kr.deu.connect.luck.foodtruck.controller.response.FoodTruckHeader;
 import ac.kr.deu.connect.luck.foodtruck.controller.response.FoodTruckMenuResponse;

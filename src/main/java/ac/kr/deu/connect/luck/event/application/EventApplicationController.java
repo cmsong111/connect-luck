@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.event.application;
 
-import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser;
+import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser;
 import ac.kr.deu.connect.luck.event.service.EventService;
 import ac.kr.deu.connect.luck.foodtruck.service.FoodTruckService;
 import ac.kr.deu.connect.luck.user.service.UserService;
@@ -34,7 +34,7 @@ public class EventApplicationController {
             @AuthenticationPrincipal AuthenticatedUser authenticatedUser
     ) {
         model.addAttribute("event", eventService.getEvent(id));
-        model.addAttribute("user", userService.findByEmail(authenticatedUser.getEmail()));
+        model.addAttribute("user", userService.getUserByEmail(authenticatedUser.getEmail()));
         return "event/event-apply";
     }
 
@@ -46,7 +46,7 @@ public class EventApplicationController {
     ) {
         List<EventApplication> applications = eventApplicationService.getEventApplications(id);
 
-        model.addAttribute("user", userService.findByEmail(authenticatedUser.getEmail()));
+        model.addAttribute("user", userService.getUserByEmail(authenticatedUser.getEmail()));
         model.addAttribute("applications", applications);
         model.addAttribute("foodTrucks", applications.stream()
                 .map(app -> foodTruckService.getFoodTruck(app.getFoodTruckId()))

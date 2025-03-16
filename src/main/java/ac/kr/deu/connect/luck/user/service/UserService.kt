@@ -4,9 +4,11 @@ import ac.kr.deu.connect.luck.auth.exception.UserNotFoundException
 import ac.kr.deu.connect.luck.common.storage.StorageService
 import ac.kr.deu.connect.luck.user.controller.request.UserUpdateForm
 import ac.kr.deu.connect.luck.user.controller.response.UserDetailResponse
+import ac.kr.deu.connect.luck.user.entity.User
 import ac.kr.deu.connect.luck.user.entity.UserRole
 import ac.kr.deu.connect.luck.user.exception.PasswordIncorrectException
 import ac.kr.deu.connect.luck.user.repository.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -47,11 +49,19 @@ class UserService(
      * 이메일로 사용자 조회
      */
     @Transactional(readOnly = true)
-    fun findByEmail(email: String): UserDetailResponse {
+    fun getUserByEmail(email: String): UserDetailResponse {
         return UserDetailResponse.from(
             user = userRepository.findByEmail(email)
                 ?: throw UserNotFoundException()
         )
+    }
+
+    /**
+     * 사용자 식별자로 사용자 조회
+     */
+    @Transactional(readOnly = true)
+    fun getUserById(id: Long): User {
+        return userRepository.findByIdOrNull(id) ?: throw UserNotFoundException()
     }
 
     /**

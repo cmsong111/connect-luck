@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.user.controller
 
-import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser
+import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
 import ac.kr.deu.connect.luck.user.controller.request.UserUpdateForm
 import ac.kr.deu.connect.luck.user.entity.UserRole
 import ac.kr.deu.connect.luck.user.service.UserService
@@ -25,7 +25,7 @@ class UserController(
     ): String {
         model.addAttribute(
             "userInfo",
-            userService.findByEmail(authenticatedUser.email)
+            userService.getUserByEmail(authenticatedUser.email)
         )
         return "user/profile"
     }
@@ -53,8 +53,8 @@ class UserController(
         model.addAttribute(
             "userUpdateForm",
             UserUpdateForm(
-                name = userService.findByEmail(authenticatedUser.email).name,
-                userService.findByEmail(authenticatedUser.email).phone
+                name = userService.getUserByEmail(authenticatedUser.email).name,
+                userService.getUserByEmail(authenticatedUser.email).phone
             )
         )
         return "user/profile_edit"

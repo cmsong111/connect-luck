@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "01-Auth", description = "인증 관련 API - <b>Auth API 호출 시 Authorization header 부분이 비어 있어야 합니다.</b>")
+import static ac.kr.deu.connect.luck.configuration.SpringDocConfig.AUTH;
+
+@Tag(name = AUTH, description = "인증 관련 API - <b>Auth API 호출 시 Authorization header 부분이 비어 있어야 합니다.</b>")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor

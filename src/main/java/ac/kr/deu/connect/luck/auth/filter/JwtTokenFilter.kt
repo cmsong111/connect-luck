@@ -1,7 +1,7 @@
 package ac.kr.deu.connect.luck.auth.filter
 
 import ac.kr.deu.connect.luck.auth.JwtTokenProvider
-import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser
+import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
 import ac.kr.deu.connect.luck.common.utlis.TokenResolver
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

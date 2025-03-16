@@ -77,5 +77,10 @@ class SpringDocConfig(
 
     companion object {
         const val BEARER_AUTH = "Bearer Auth"
+
+        const val AUTH = "Auth API"
+        const val FOOD_TRUCK = "Food Truck API"
+        const val FOOD_TRUCK_REVIEW = "Food Truck Review API"
+        const val USER = "User API"
     }
 }

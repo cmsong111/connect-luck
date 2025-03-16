@@ -1,7 +1,8 @@
 package ac.kr.deu.connect.luck.user.controller
 
-import ac.kr.deu.connect.luck.common.entity.AuthenticatedUser
+import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
 import ac.kr.deu.connect.luck.configuration.SpringDocConfig.Companion.BEARER_AUTH
+import ac.kr.deu.connect.luck.configuration.SpringDocConfig.Companion.USER
 import ac.kr.deu.connect.luck.user.controller.request.UserUpdateForm
 import ac.kr.deu.connect.luck.user.controller.response.UserDetailResponse
 import ac.kr.deu.connect.luck.user.entity.UserRole
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/user")
 @SecurityRequirement(name = BEARER_AUTH)
-@Tag(name = "02-User", description = "사용자 관련 API")
+@Tag(name = USER, description = "사용자 관련 API")
 class UserRestController(
     private val userService: UserService
 ) {
@@ -44,7 +45,7 @@ class UserRestController(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser
     ): ResponseEntity<UserDetailResponse> {
         println("authenticatedUser.email = ${authenticatedUser.email}")
-        return ResponseEntity.ok(userService.findByEmail(authenticatedUser.email))
+        return ResponseEntity.ok(userService.getUserByEmail(authenticatedUser.email))
     }
 
     @PatchMapping
