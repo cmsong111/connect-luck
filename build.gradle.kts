@@ -21,12 +21,6 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
-
 repositories {
     mavenCentral()
 }
@@ -78,7 +72,6 @@ hibernate {
     }
 }
 
-
 allOpen {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.MappedSuperclass")
@@ -88,6 +81,7 @@ allOpen {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
 
 tasks.withType<BootBuildImage> {
     createdDate = "now"
