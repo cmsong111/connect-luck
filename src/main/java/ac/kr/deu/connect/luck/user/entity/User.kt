@@ -58,9 +58,11 @@ class User(
         name: String? = null,
         phone: String? = null,
         profileImage: String? = null,
+        roles: Set<UserRole> = setOf(),
     ) {
         name?.let { this.name = it }
         phone?.let { this.phone = it }
         profileImage?.let { this.profileImage = it }
+        roles.let { this.roles.addAll(it) }
     }
 }

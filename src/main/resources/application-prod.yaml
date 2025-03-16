@@ -24,19 +24,3 @@ server:
       charset: UTF-8
       force-response: true
   forward-headers-strategy: framework
-
-jwt:
-  secret: ${JWT_SECRET:this-is-a-secret-key-and-it-should-be-kept-secure}
-  issuer: ${JWT_ISSUER:connect-luck}
-  expiry: ${JWT_EXPIRATION:3600000}
-
-
-springdoc:
-  swagger-ui:
-    tags-sorter: alpha
-
-imgbb:
-  key: ${IMGBB_API_KEY}
-
-api-key:
-  kakao: ${KAKAO_API_KEY:kakao-api-key}

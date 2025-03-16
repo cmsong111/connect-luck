@@ -101,8 +101,24 @@ class FoodTruckRestController(
     }
 
     @Operation(
-        summary = "푸드트럭 정보를 업데이트 합니다.",
-        description = "푸드트럭 정보를 업데이트 합니다. 해당 푸드트럭 관리자만 가능합니다.<br>값을 변경하지 않더라도 값을 꼭 넣어야 합니다. (이미지는 예외)",
+        summary = "통합 푸트트럭 정보 수정 (푸드트럭 관리자용)",
+        description = """<h1>푸드트럭 정보를 수정합니다.</h1>
+            <h2>푸트트럭 영업 정보 수정</h2>
+            <ul>
+                <li>latitude : 위도</li>
+                <li>longitude : 경도</li>
+                <li>status : 영업 상태 (Status.WORKING, Status.CLOSED)</li>
+            </ul>
+            <h2>푸트트럭 정보 수정</h2>
+            <ul>
+                <li>name : 상호명</li>
+                <li>description : 설명</li>
+                <li>foodType : 음식 종류</li>
+                <li>phone : 전화번호</li>
+                <li>address : 주소</li>
+                <li>images : 이미지</li>
+            </ul>
+        """
     )
     @SecurityRequirement(name = BEARER_AUTH)
     @PatchMapping(value = ["/{foodTruckId}"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])

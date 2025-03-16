@@ -79,8 +79,11 @@ class SpringDocConfig(
         const val BEARER_AUTH = "Bearer Auth"
 
         const val AUTH = "Auth API"
+        const val USER = "User API"
         const val FOOD_TRUCK = "Food Truck API"
         const val FOOD_TRUCK_REVIEW = "Food Truck Review API"
-        const val USER = "User API"
+        const val EVENT = "Event API"
+        const val EVENT_APPLICATION = "Event Application API"
+        const val BANNER = "Banner API"
     }
 }

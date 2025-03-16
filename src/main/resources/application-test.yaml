@@ -16,12 +16,3 @@ spring:
     multipart:
       max-file-size: 32MB
       max-request-size: 32MB
-
-jwt:
-  secret: ${JWT_SECRET:this-is-a-secret-key-and-it-should-be-kept-secure}
-  issuer: ${JWT_ISSUER:connect-luck}
-  expiry: ${JWT_EXPIRATION:3600000}
-
-
-api-key:
-  kakao: ${KAKAO_API_KEY:kakao-api-key}
