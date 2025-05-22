@@ -1,6 +1,7 @@
 package ac.kr.deu.connect.luck.foodtruck.service
 
 import ac.kr.deu.connect.luck.common.exception.NotFoundException
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruck
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import ac.kr.deu.connect.luck.foodtruck.repository.FoodTruckRepository
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckData
@@ -48,6 +49,6 @@ class FoodTruckService(
     fun getFoodTruck(id: Long): FoodTruckData {
         return foodTruckRepository.findByIdOrNull(id)?.let {
             FoodTruckData.from(it)
-        } ?: throw NotFoundException("FoodTruck not found", "푸드트럭을 찾을 수 없습니다.")
+        } ?: throw NotFoundException(FoodTruck::class.java, mapOf("id" to id))
     }
 }

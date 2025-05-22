@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/food-truck/{foodTruckId}/reviews")
+@RequestMapping("/api/v1/food-trucks/{foodTruckId}/reviews")
 @Tag(name = FOOD_TRUCK_REVIEW, description = "Food Truck Review API")
 class FoodTruckReviewRestController(
     private val foodTruckReviewService: FoodTruckReviewService,

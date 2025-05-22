@@ -2,9 +2,8 @@ package ac.kr.deu.connect.luck.auth.service
 
 import ac.kr.deu.connect.luck.auth.JwtTokenProvider
 import ac.kr.deu.connect.luck.auth.controller.request.SignupRequest
-import ac.kr.deu.connect.luck.auth.exception.EmailAlreadyExistsException
-import ac.kr.deu.connect.luck.auth.exception.EmailOrPasswordIncorrectException
-import ac.kr.deu.connect.luck.auth.exception.UserNotFoundException
+import ac.kr.deu.connect.luck.common.exception.BadRequestException
+import ac.kr.deu.connect.luck.common.exception.ConflictException
 import ac.kr.deu.connect.luck.user.entity.User
 import ac.kr.deu.connect.luck.user.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -26,7 +25,7 @@ class AuthService(
     @Transactional
     fun signup(signupRequest: SignupRequest): String {
         if (userRepository.existsByEmail(signupRequest.email)) {
-            throw EmailAlreadyExistsException()
+            throw ConflictException("Email already exists")
         }
 
         val user = userRepository.save(
@@ -54,10 +53,10 @@ class AuthService(
     @Transactional(readOnly = true)
     fun login(email: String, password: String): String {
         val user = userRepository.findByEmail(email)
-            ?: throw EmailOrPasswordIncorrectException()
+            ?: throw BadRequestException("이메일 혹은 비밀번호가 잘못되었습니다.")
 
         if (!passwordEncoder.matches(password, user.password)) {
-            throw EmailOrPasswordIncorrectException()
+            throw BadRequestException("이메일 혹은 비밀번호가 잘못되었습니다.")
         }
 
         return jwtTokenProvider.createToken(
@@ -85,7 +84,7 @@ class AuthService(
     @Transactional(readOnly = true)
     fun findEmailByPhone(phone: String): String {
         val user = userRepository.findByPhone(phone)
-            ?: throw UserNotFoundException("User not found")
+            ?: throw BadRequestException("전화번호로 사용자를 찾을 수 없습니다.")
         return user.email
     }
 }

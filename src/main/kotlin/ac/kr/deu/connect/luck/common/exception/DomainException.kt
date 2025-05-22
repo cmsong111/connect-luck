@@ -1,32 +1,32 @@
 package ac.kr.deu.connect.luck.common.exception
 
-abstract class DomainException(
+sealed class CustomException(
     val code: String,
     override val message: String,
+    val properties: Map<String, Any?> = mapOf(),
 ) : RuntimeException(message)
 
-
-open class BadRequestException(
-    code: String,
+class BadRequestException(
     message: String,
-) : DomainException(code, message)
+    properties: Map<String, Any?> = mapOf(),
+) : CustomException("BAD_REQUEST", message, properties)
 
-open class UnauthorizedException(
-    code: String,
+class UnauthorizedException(
     message: String,
-) : DomainException(code, message)
+    properties: Map<String, Any?> = mapOf(),
+) : CustomException("UNAUTHORIZED", message, properties)
 
-open class ForbiddenException(
-    code: String,
+class ForbiddenException(
     message: String,
-) : DomainException(code, message)
+    properties: Map<String, Any?> = mapOf(),
+) : CustomException("FORBIDDEN", message, properties)
 
-open class NotFoundException(
-    code: String,
-    message: String,
-) : DomainException(code, message)
+class NotFoundException(
+    clazz: Class<*>,
+    properties: Map<String, Any?> = mapOf(),
+) : CustomException("${clazz.simpleName.uppercase()}_NOT_FOUND", "${clazz.simpleName} not found", properties)
 
-open class ConflictException(
-    code: String,
+class ConflictException(
     message: String,
-) : DomainException(code, message)
+    properties: Map<String, Any?> = mapOf(),
+) : CustomException("CONFLICT", message, properties)

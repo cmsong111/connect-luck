@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = FOOD_TRUCK, description = "Food Truck API")
 @RestController
-@RequestMapping("/api/v1/food-truck")
+@RequestMapping("/api/v1/food-trucks")
 class FoodTruckRestController(
     private val foodTruckService: FoodTruckService,
     private val foodTruckAdminService: FoodTruckAdminService,
@@ -94,7 +94,7 @@ class FoodTruckRestController(
             foodTruckCreateForm = foodTruckCreateForm
         )
         return ResponseEntity.created(
-            URI.create("/api/v1/food-truck/${result.id}")
+            URI.create("/api/v1/food-trucks/${result.id}")
         ).body(result)
     }
 

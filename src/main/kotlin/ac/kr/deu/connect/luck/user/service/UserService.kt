@@ -1,12 +1,12 @@
 package ac.kr.deu.connect.luck.user.service
 
-import ac.kr.deu.connect.luck.auth.exception.UserNotFoundException
+import ac.kr.deu.connect.luck.common.exception.BadRequestException
+import ac.kr.deu.connect.luck.common.exception.NotFoundException
 import ac.kr.deu.connect.luck.common.storage.StorageService
 import ac.kr.deu.connect.luck.user.controller.request.UserUpdateForm
 import ac.kr.deu.connect.luck.user.controller.response.UserDetailResponse
 import ac.kr.deu.connect.luck.user.entity.User
 import ac.kr.deu.connect.luck.user.entity.UserRole
-import ac.kr.deu.connect.luck.user.exception.PasswordIncorrectException
 import ac.kr.deu.connect.luck.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -27,21 +27,19 @@ class UserService(
     fun changePassword(
         email: String,
         currentPassword: String,
-        newPassword: String,
-        newPasswordConfirm: String,
+        newPassword: String
     ) {
         val user = userRepository.findByEmail(email)
-            ?: throw UserNotFoundException()
+            ?: throw NotFoundException(User::class.java, mapOf("email" to email))
 
         if (!passwordEncoder.matches(currentPassword, user.password)) {
-            throw PasswordIncorrectException()
+            throw BadRequestException("현재 비밀번호가 잘못되었습니다.")
         }
+        user.updatePassword(
+            password = newPassword,
+            passwordEncoder = passwordEncoder,
+        )
 
-        if (newPassword != newPasswordConfirm) {
-            throw PasswordIncorrectException()
-        }
-
-        user.password = passwordEncoder.encode(newPassword)
         userRepository.save(user)
     }
 
@@ -52,7 +50,7 @@ class UserService(
     fun getUserByEmail(email: String): UserDetailResponse {
         return UserDetailResponse.from(
             user = userRepository.findByEmail(email)
-                ?: throw UserNotFoundException()
+                ?: throw NotFoundException(User::class.java, mapOf("email" to email))
         )
     }
 
@@ -61,7 +59,8 @@ class UserService(
      */
     @Transactional(readOnly = true)
     fun getUserById(id: Long): User {
-        return userRepository.findByIdOrNull(id) ?: throw UserNotFoundException()
+        return userRepository.findByIdOrNull(id)
+            ?: throw NotFoundException(User::class.java, mapOf("id" to id))
     }
 
     /**
@@ -70,7 +69,9 @@ class UserService(
     @Transactional
     fun withdraw(email: String) {
         val user = userRepository.findByEmail(email)
-            ?: throw UserNotFoundException()
+            ?: throw NotFoundException(User::class.java, mapOf("email" to email))
+
+        user.updateEmailToDeletedEmail()
 
         userRepository.delete(user)
     }
@@ -81,7 +82,7 @@ class UserService(
     @Transactional
     fun addRole(email: String, role: UserRole): UserDetailResponse {
         val user = userRepository.findByEmail(email)
-            ?: throw UserNotFoundException()
+            ?: throw NotFoundException(User::class.java, mapOf("email" to email))
 
         user.roles.add(role)
 
@@ -97,7 +98,7 @@ class UserService(
         userUpdateForm: UserUpdateForm,
     ): UserDetailResponse {
         val user: User = userRepository.findByEmail(email)
-            ?: throw UserNotFoundException()
+            ?: throw NotFoundException(User::class.java, mapOf("email" to email))
 
         user.update(
             name = userUpdateForm.name,
@@ -117,7 +118,7 @@ class UserService(
         image: MultipartFile,
     ): UserDetailResponse {
         val user = userRepository.findByEmail(email)
-            ?: throw UserNotFoundException()
+            ?: throw NotFoundException(User::class.java, mapOf("email" to email))
 
         user.update(
             profileImage = storageService.save(image)
