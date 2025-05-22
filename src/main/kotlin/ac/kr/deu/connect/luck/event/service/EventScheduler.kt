@@ -46,6 +46,10 @@ class EventScheduler(
         }
     }
 
+    init{
+        syncEventsFromRemote()
+    }
+
     companion object {
         val logger = KotlinLogging.logger {}
     }

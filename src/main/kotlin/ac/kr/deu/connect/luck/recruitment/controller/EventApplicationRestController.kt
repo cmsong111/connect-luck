@@ -1,6 +1,5 @@
-package ac.kr.deu.connect.luck.event.application.controller
+package ac.kr.deu.connect.luck.recruitment.controller
 
-import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
 import ac.kr.deu.connect.luck.configuration.SpringDocConfig.Companion.BEARER_AUTH
 import ac.kr.deu.connect.luck.configuration.SpringDocConfig.Companion.EVENT_APPLICATION
 import ac.kr.deu.connect.luck.configuration.SpringDocConfig.Companion.FOOD_TRUCK
@@ -8,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -24,7 +24,7 @@ class EventApplicationRestController {
     @Operation(summary = "행사에 신청한 푸드트럭 목록 조회(행사 주최자용)")
     fun getEventApplications(
         @PathVariable eventId: Long,
-        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ) {
         TODO("Not yet implemented")
     }
@@ -33,7 +33,7 @@ class EventApplicationRestController {
     @Operation(summary = "행사에 푸드트럭 신청 (푸드트럭 매니저용)")
     fun applyEvent(
         @PathVariable eventId: Long,
-        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ) {
         TODO("Not yet implemented")
     }
@@ -43,7 +43,7 @@ class EventApplicationRestController {
     fun updateApplicationStatus(
         @PathVariable eventId: Long,
         @PathVariable foodTruckId: Long,
-        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ) {
         TODO("Not yet implemented")
     }
@@ -53,7 +53,7 @@ class EventApplicationRestController {
     fun cancelApplication(
         @PathVariable eventId: Long,
         @PathVariable foodTruckId: Long,
-        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ) {
         TODO("Not yet implemented")
     }
@@ -70,7 +70,7 @@ class EventApplicationFoodTruckRestController(
     @SecurityRequirement(name = BEARER_AUTH)
     fun getFoodTruckApplications(
         @PathVariable foodTruckId: Long,
-        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ) {
         TODO("Not yet implemented")
     }

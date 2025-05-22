@@ -14,8 +14,7 @@ data class FoodTruckWorking(
     /** 공간 데이터 타입 사용 */
     var latitude: Double = 0.0,
     var longitude: Double = 0.0,
-
-    ) {
+) {
     /**
      * 영업 상태
      * @property WORKING 영업중

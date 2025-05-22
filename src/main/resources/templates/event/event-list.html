@@ -17,12 +17,11 @@
             <!-- 이벤트 카드 반복 -->
             <div class="col-md-4 mb-4" th:data-status="${event.status}" th:each="event : ${events}">
                 <div class="card">
-                    <img alt="Event Image" class="card-img-top" th:src="${event.imageUrl}">
+                    <img alt="Event Image" class="card-img-top" th:src="${event.thumbnail}" th:alt="${event.title}"/>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${event.title}"></h5>
-                        <p class="card-text" th:text="'시작일: ' + ${#temporals.format(event.startAt, 'yyyy년 MM월 dd일')}"></p>
-                        <p class="card-text" th:text="'장소: ' + ${event.streetAddress}"></p>
-                        <p class="card-text" th:text="'담당자: '+${event.managerName}"></p>
+                        <p class="card-text" th:text="'시작일: ' + ${#temporals.format(event.startDate, 'yyyy년 MM월 dd일')}"></p>
+                        <p class="card-text" th:text="'장소: ' + ${event.detailAddress}"></p>
                         <p class="card-text">
                             이벤트 상태:
                             <span th:switch="${event.status}">
@@ -34,8 +33,7 @@
                             </span>
                         </p>
 
-                        <a class="btn btn-primary btn-sm" th:href="@{'/event/' + ${event.id}}">자세히 보기</a>
-                        <a class="btn btn-primary btn-sm" th:href="@{'/contact/' + ${event.managerName}}">문의하기</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{'/events/' + ${event.id}}">자세히 보기</a>
                         <!-- 신청하기 버튼 활성화 조건 -->
                         <a class="btn btn-primary btn-sm" th:href="@{'/apply/' + ${event.id}}"
                            th:if="${event.status == 'OPEN_FOR_APPLICATION'}">신청하기</a>

@@ -1,7 +1,7 @@
 package ac.kr.deu.connect.luck.foodtruck.repository
 
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruck
-import ac.kr.deu.connect.luck.foodtruck.entity.FoodType
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -14,14 +14,12 @@ interface FoodTruckRepository : JpaRepository<FoodTruck, Long> {
     @Query(
         """
         select foodTruck from FoodTruck foodTruck
-        WHERE (:name IS NULL OR foodTruck.name LIKE CONCAT('%', :name, '%')) and
-              (:type is null or foodTruck.type = :type) and
+        WHERE (:category is null or foodTruck.category = :category) and
               (:managerId is null or foodTruck.managerId = :managerId)
     """
     )
     fun findFoodTrucks(
-        name: String? = null,
-        type: FoodType? = null,
+        category: FoodTruckCategory? = null,
         managerId: Long? = null,
         pageable: Pageable,
     ): Page<FoodTruck>

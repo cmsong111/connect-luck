@@ -6,40 +6,40 @@
         <div class="card mt-4">
             <div class="card-body">
                 <h2>내 정보</h2>
-                <p th:text="'이름: ' + ${userInfo.user.name}"></p>
-                <p th:text="'이메일: ' + ${userInfo.user.email}"></p>
-                <p th:text="'역할: ' + ${userInfo.user.getRoles()}"></p>
-                <p th:text="'연락처: ' + ${userInfo.user.phone}"></p>
-                <p th:text="'가입일: ' + ${userInfo.user.createdAt}"></p>
-                <p th:text="'수정일: ' + ${userInfo.user.updatedAt}"></p>
-                <div th:if="${not #lists.isEmpty(userInfo.reviews)}">
-                    <h2>내가 작성한 리뷰</h2>
-                    <div class="review-card" th:each="review : ${userInfo.reviews}">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <img alt="Review Image" class="img-fluid" th:src="${review.imageUrl}">
-                                </div>
-                                <div class="col-md-9">
-                                    <p th:text="'내용: ' + ${review.content}"></p>
-                                    <div th:if="${review.reply} != null">
-                                        <p th:text="'답글: ' + ${review.reply}"></p>
-                                    </div>
-                                    <p th:text="'평점: ' + ${review.rating}"></p>
-                                </div>
-                                <div class="col-md-12">
-                                    <a class="btn btn-primary"
-                                       th:href="@{'/food-truck/' + ${review.id} + '/review/' + ${review.id} + '/edit'}">수정</a>
-                                    <a class="btn btn-danger"
-                                       th:href="@{'/food-truck/' + ${review.id} + '/review/' + ${review.id} + '/delete'}">삭제</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div th:unless="${not #lists.isEmpty(userInfo.reviews)}">
-                    <p>작성한 리뷰가 없습니다.</p>
-                </div>
+                <p th:text="'이름: ' + ${userInfo.name}"></p>
+                <p th:text="'이메일: ' + ${userInfo.email}"></p>
+                <p th:text="'역할: ' + ${userInfo.getRoles()}"></p>
+                <p th:text="'연락처: ' + ${userInfo.phone}"></p>
+                <p th:text="'가입일: ' + ${userInfo.createdAt}"></p>
+<!--                <p th:text="'수정일: ' + ${userInfo.updatedAt}"></p>-->
+<!--                <div th:if="${not #lists.isEmpty(userInfo.reviews)}">-->
+<!--                    <h2>내가 작성한 리뷰</h2>-->
+<!--                    <div class="review-card" th:each="review : ${userInfo.reviews}">-->
+<!--                        <div class="card">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-3">-->
+<!--                                    <img alt="Review Image" class="img-fluid" th:src="${review.imageUrl}">-->
+<!--                                </div>-->
+<!--                                <div class="col-md-9">-->
+<!--                                    <p th:text="'내용: ' + ${review.content}"></p>-->
+<!--                                    <div th:if="${review.reply} != null">-->
+<!--                                        <p th:text="'답글: ' + ${review.reply}"></p>-->
+<!--                                    </div>-->
+<!--                                    <p th:text="'평점: ' + ${review.rating}"></p>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-12">-->
+<!--                                    <a class="btn btn-primary"-->
+<!--                                       th:href="@{'/food-truck/' + ${review.id} + '/review/' + ${review.id} + '/edit'}">수정</a>-->
+<!--                                    <a class="btn btn-danger"-->
+<!--                                       th:href="@{'/food-truck/' + ${review.id} + '/review/' + ${review.id} + '/delete'}">삭제</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div th:unless="${not #lists.isEmpty(userInfo.reviews)}">-->
+<!--                    <p>작성한 리뷰가 없습니다.</p>-->
+<!--                </div>-->
             </div>
 
             <div class="card-footer">

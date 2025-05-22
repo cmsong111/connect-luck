@@ -96,13 +96,13 @@ class UserService(
         email: String,
         userUpdateForm: UserUpdateForm,
     ): UserDetailResponse {
-        val user :User= userRepository.findByEmail(email)
+        val user: User = userRepository.findByEmail(email)
             ?: throw UserNotFoundException()
 
         user.update(
             name = userUpdateForm.name,
             phone = userUpdateForm.phone,
-            roles = userUpdateForm.roles
+            roles = userUpdateForm.roles.toSet(),
         )
 
         return UserDetailResponse.from(user = user)

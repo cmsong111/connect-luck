@@ -1,13 +1,14 @@
 package ac.kr.deu.connect.luck.foodtruck.service
 
 import ac.kr.deu.connect.luck.common.exception.NotFoundException
-import ac.kr.deu.connect.luck.foodtruck.entity.FoodType
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import ac.kr.deu.connect.luck.foodtruck.repository.FoodTruckRepository
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckData
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckSummaryData
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.data.util.TypeUtils.type
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -24,14 +25,12 @@ class FoodTruckService(
      */
     @Transactional(readOnly = true)
     fun getFoodTrucks(
-        name: String? = null,
-        type: FoodType? = null,
+        category: FoodTruckCategory? = null,
         managerId: Long? = null,
         pageable: Pageable
     ): Page<FoodTruckSummaryData> {
         return foodTruckRepository.findFoodTrucks(
-            name = name,
-            type = type,
+            category = category,
             managerId = managerId,
             pageable = pageable
         ).map {

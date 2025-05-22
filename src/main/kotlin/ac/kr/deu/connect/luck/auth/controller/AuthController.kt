@@ -3,12 +3,12 @@ package ac.kr.deu.connect.luck.auth.controller
 import ac.kr.deu.connect.luck.auth.controller.request.LoginRequest
 import ac.kr.deu.connect.luck.auth.controller.request.SignupRequest
 import ac.kr.deu.connect.luck.auth.service.AuthService
+import ac.kr.deu.connect.luck.auth.TokenResolver.ACCESS_TOKEN_COOKIE
+import ac.kr.deu.connect.luck.auth.TokenResolver.AUTHORIZATION_HEADER
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -37,7 +37,7 @@ class AuthController(
         )
 
         // 쿠키에 토큰 저장
-        val cookie = Cookie("token", token)
+        val cookie = Cookie(ACCESS_TOKEN_COOKIE, token)
         cookie.path = "/"
         response.addCookie(cookie)
 
@@ -69,7 +69,7 @@ class AuthController(
         // 회원가입 후 자동 로그인
         // 쿠키 저장 시 토큰을 저장
         httpServletResponse.addCookie(
-            Cookie("token", authService.signup(signUpRequest)).apply {
+            Cookie(AUTHORIZATION_HEADER, authService.signup(signUpRequest)).apply {
                 maxAge = 60 * 30 // 30분
                 path = "/"
             }
@@ -78,14 +78,12 @@ class AuthController(
     }
 
     @GetMapping("/logout")
-    @PreAuthorize("isAuthenticated()")
     fun logout(
-        @CookieValue(value = "Authorization", defaultValue = "", required = false) jwtCookie: Cookie,
         httpServletResponse: HttpServletResponse
     ): String {
         // 쿠키 삭제
         httpServletResponse.addCookie(
-            Cookie("token", "").apply {
+            Cookie(ACCESS_TOKEN_COOKIE, "").apply {
                 maxAge = 0
                 path = "/"
             }

@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.foodtruck.controller.request
 
-import ac.kr.deu.connect.luck.foodtruck.entity.FoodType
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.web.multipart.MultipartFile
 
@@ -15,5 +15,5 @@ data class FoodTruckUpdateForm(
     @field:Schema(description = "이미지들")
     val images: List<MultipartFile>? = null,
     @field:Schema(description = "음식 종류", example = "KOREAN")
-    val foodType: FoodType? = null,
+    val foodTruckCategory: FoodTruckCategory? = null,
 )

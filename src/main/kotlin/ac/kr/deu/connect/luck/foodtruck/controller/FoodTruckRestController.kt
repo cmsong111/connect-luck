@@ -6,7 +6,7 @@ import ac.kr.deu.connect.luck.configuration.SpringDocConfig.Companion.FOOD_TRUCK
 import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckCreateForm
 import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckMenuForm
 import ac.kr.deu.connect.luck.foodtruck.controller.request.FoodTruckUpdateForm
-import ac.kr.deu.connect.luck.foodtruck.entity.FoodType
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import ac.kr.deu.connect.luck.foodtruck.service.FoodTruckAdminService
 import ac.kr.deu.connect.luck.foodtruck.service.FoodTruckService
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckData
@@ -44,15 +44,13 @@ class FoodTruckRestController(
     @GetMapping
     @Operation(summary = "푸드 트럭 전체 조회", description = "푸드트럭을 검색합니다.")
     fun getFoodTrucks(
-        @RequestParam(required = false) @Parameter(description = "상호명") name: String?,
-        @RequestParam(required = false) @Parameter(description = "음식 종류") foodType: FoodType?,
+        @RequestParam(required = false) @Parameter(description = "음식 종류") category: FoodTruckCategory?,
         @PageableDefault(size = 10, page = 0) @ParameterObject pageable: Pageable,
     ): ResponseEntity<PagedModel<FoodTruckSummaryData>> {
         return ResponseEntity.ok(
             PagedModel(
                 foodTruckService.getFoodTrucks(
-                    name = name,
-                    type = foodType,
+                    category = category,
                     pageable = pageable
                 )
             )

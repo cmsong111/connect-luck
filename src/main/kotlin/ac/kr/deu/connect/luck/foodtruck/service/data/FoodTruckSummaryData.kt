@@ -1,14 +1,16 @@
 package ac.kr.deu.connect.luck.foodtruck.service.data
 
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruck
-import ac.kr.deu.connect.luck.foodtruck.entity.FoodType
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 
 data class FoodTruckSummaryData(
     val id: Long = 0L,
     var name: String,
-    var description: String? = null,
+    var description: String?,
     var thumbnail: String,
-    var type: FoodType = FoodType.ETC,
+    var type: FoodTruckCategory,
+    var averageRating: Double,
+    var reviewCount: Int,
     var managerId: Long,
 ) {
     companion object {
@@ -17,8 +19,10 @@ data class FoodTruckSummaryData(
                 id = foodTruck.id,
                 name = foodTruck.name,
                 description = foodTruck.description,
-                thumbnail = foodTruck.thumbnail,
-                type = foodTruck.type,
+                thumbnail = foodTruck.thumbnailUrl,
+                type = foodTruck.category,
+                averageRating = foodTruck.averageRating,
+                reviewCount = foodTruck.reviewCount,
                 managerId = foodTruck.managerId,
             )
         }

@@ -1,4 +1,4 @@
-package ac.kr.deu.connect.luck.event.application.controller.request;
+package ac.kr.deu.connect.luck.recruitment.controller.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -16,7 +16,7 @@ class UserSummaryResponse(
                 userId = user.id,
                 email = user.email,
                 name = user.name,
-                profileImage = user.profileImage,
+                profileImage = user.profileImageUrl,
                 createdAt = user.createdAt,
             )
         }

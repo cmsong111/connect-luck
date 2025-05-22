@@ -1,6 +1,6 @@
 package ac.kr.deu.connect.luck.foodtruck.controller.response
 
-import ac.kr.deu.connect.luck.foodtruck.entity.FoodType
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckSummaryData
 import ac.kr.deu.connect.luck.user.controller.response.UserSummaryResponse
 import io.swagger.v3.oas.annotations.media.Schema
@@ -16,7 +16,7 @@ data class FoodTruckSummaryResponse(
     @Schema(description = "식당 썸네일", example = "thumbnail.jpg")
     var thumbnail: String,
     @Schema(description = "식당 타입", example = "MEXICAN")
-    var type: FoodType = FoodType.ETC,
+    var type: FoodTruckCategory = FoodTruckCategory.ETC,
     @Schema(description = "매니저 정보")
     var manager: UserSummaryResponse,
 ) {

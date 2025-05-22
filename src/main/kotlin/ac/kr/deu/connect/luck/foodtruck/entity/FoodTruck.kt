@@ -1,5 +1,6 @@
 package ac.kr.deu.connect.luck.foodtruck.entity
 
+import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
@@ -20,15 +21,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 @EntityListeners(AuditingEntityListener::class)
 @SoftDelete(columnName = "is_deleted")
 class FoodTruck(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
-
+    @Column(nullable = false)
     var name: String,
+    @Column
     var description: String? = null,
-    var thumbnail: String,
+    @Column(columnDefinition = "TEXT")
+    var thumbnailUrl: String,
     @Enumerated(EnumType.STRING)
-    var type: FoodType = FoodType.ETC,
+    var category: FoodTruckCategory = FoodTruckCategory.ETC,
     var managerId: Long,
 
     @OrderColumn(name = "image_order")
@@ -37,9 +39,16 @@ class FoodTruck(
 
     @OrderColumn(name = "menu_order")
     @ElementCollection(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "TEXT")
     var menus: MutableList<FoodTruckMenu> = mutableListOf(),
 
     var working: FoodTruckWorking? = null,
+
+    // 점수 필드
+    @Column(nullable = false)
+    var averageRating: Double = 0.0,
+    @Column(nullable = false)
+    var reviewCount: Int = 0,
 
     @CreatedDate
     val createdAt: Instant = Instant.now(),
@@ -51,15 +60,15 @@ class FoodTruck(
             name: String,
             description: String,
             thumbnail: String,
-            type: FoodType,
+            type: FoodTruckCategory,
             managerId: Long,
             images: List<String>,
         ): FoodTruck {
             return FoodTruck(
                 name = name,
                 description = description,
-                thumbnail = thumbnail,
-                type = type,
+                thumbnailUrl = thumbnail,
+                category = type,
                 managerId = managerId,
                 images = images.toMutableList(),
             )
@@ -70,13 +79,13 @@ class FoodTruck(
         name: String? = null,
         description: String? = null,
         thumbnail: String? = null,
-        type: FoodType? = null,
+        type: FoodTruckCategory? = null,
         images: List<String>? = null,
     ) {
         name?.let { this.name = it }
         description?.let { this.description = it }
-        thumbnail?.let { this.thumbnail = it }
-        type?.let { this.type = it }
+        thumbnail?.let { this.thumbnailUrl = it }
+        type?.let { this.category = it }
         images?.let { this.images = it.toMutableList() }
     }
 }

@@ -32,7 +32,7 @@ class FoodTruckAdminService(
             description = foodTruckCreateForm.description,
             thumbnail = storageService.save(foodTruckCreateForm.thumbnail),
             images = foodTruckCreateForm.images?.map { storageService.save(it) }?.toList() ?: emptyList(),
-            type = foodTruckCreateForm.foodType,
+            type = foodTruckCreateForm.foodTruckCategory,
             managerId = managerId
         )
 
@@ -61,7 +61,7 @@ class FoodTruckAdminService(
                 description = foodTruckUpdateData.description,
                 thumbnail = foodTruckUpdateData.thumbnail?.let { storageService.save(it) },
                 images = foodTruckUpdateData.images?.map { storageService.save(it) },
-                type = foodTruckUpdateData.foodType
+                type = foodTruckUpdateData.foodTruckCategory
             )
         }
 
@@ -71,7 +71,7 @@ class FoodTruckAdminService(
                     name = menu.name,
                     price = menu.price,
                     description = menu.description,
-                    image = menu.image?.let { file -> storageService.save(file) }
+                    imageUrl = menu.image?.let { file -> storageService.save(file) }
                 )
             }
 
@@ -99,7 +99,7 @@ class FoodTruckAdminService(
                 name = it.name,
                 price = it.price,
                 description = it.description,
-                image = it.image?.let { storageService.save(it) }
+                imageUrl = it.image?.let { storageService.save(it) }
             )
         }
 

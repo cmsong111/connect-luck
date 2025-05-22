@@ -7,13 +7,13 @@
         <h2 th:text="${event.title}"></h2>
 
         <!-- 이벤트 대표 이미지 -->
-        <div th:if="${event.imageUrl}">
-            <img alt="Event Image" style="width:100%; margin-bottom:20px;" th:src="${event.imageUrl}">
+        <div th:if="${event.thumbnail}">
+            <img alt="Event Image" style="width:100%; margin-bottom:20px;" th:src="${event.thumbnail}">
         </div>
 
 
         <!-- 이벤트 담당자 이름 -->
-        <p><strong>담당자:</strong> <span th:text="${event.managerName}"></span></p>
+<!--        <p><strong>담당자:</strong> <span th:text="${event.managerName}"></span></p>-->
 
         <!-- 이벤트 상태 -->
         <p class="card-text">
@@ -37,14 +37,14 @@
         <!-- 이벤트 주소 -->
         <div>
             <p><strong>이벤트 주소:</strong>
-                <span th:text="${event.zipCode} + ', ' + ${event.streetAddress} + ', ' + ${event.detailAddress}"></span>
+                <span th:text="${event.zipCode} + ', ' + ${event.address} + ', ' + ${event.detailAddress}"></span>
             </p>
         </div>
 
         <!-- 이벤트 시작/종료 일시 -->
         <div>
-            <p><strong>시작 일시:</strong> <span th:text="${event.startAt}"></span></p>
-            <p><strong>종료 일시:</strong> <span th:text="${event.endAt}"></span></p>
+            <p><strong>시작 일시:</strong> <span th:text="${event.startDate}"></span></p>
+            <p><strong>종료 일시:</strong> <span th:text="${event.endDate}"></span></p>
         </div>
 
         <button class="btn btn-secondary" onclick="location.href='/event'" type="button">목록으로</button>

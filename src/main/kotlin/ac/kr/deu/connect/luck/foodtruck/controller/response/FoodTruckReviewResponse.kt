@@ -1,7 +1,6 @@
 package ac.kr.deu.connect.luck.foodtruck.controller.response
 
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckReview
-import ac.kr.deu.connect.luck.user.controller.response.UserSummaryResponse
 import ac.kr.deu.connect.luck.user.entity.User
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.Instant
@@ -10,8 +9,10 @@ import java.time.Instant
 data class FoodTruckReviewResponse(
     @Schema(description = "리뷰 ID", example = "1")
     val id: Long = 0L,
-    @Schema(description = "리뷰 작성자 정보")
-    val author: UserSummaryResponse,
+    @Schema(description = "리뷰 작성자")
+    val authorName: String,
+    @Schema(description = "리뷰 작성자 프로필 이미지", example = "profile.jpg")
+    val authorProfileImage: String? = null,
     @Schema(description = "리뷰 내용", example = "맛있어요!")
     var content: String,
     @Schema(description = "평점", example = "5")
@@ -30,7 +31,8 @@ data class FoodTruckReviewResponse(
         ): FoodTruckReviewResponse {
             return FoodTruckReviewResponse(
                 id = review.id,
-                author = UserSummaryResponse.from(author),
+                authorName = author.name,
+                authorProfileImage = author.profileImageUrl,
                 content = review.content,
                 rating = review.rating,
                 images = review.images ?: emptyList(),

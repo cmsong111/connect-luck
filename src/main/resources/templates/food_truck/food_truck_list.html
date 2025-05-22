@@ -8,26 +8,33 @@
         }
     </style>
     <div class="container mt-5">
-        <h1 class="text-center">푸드트럭 등록 업체</h1>
+        <h1 class="text-center mb-4">푸드트럭 등록 업체</h1>
         <div class="row">
-            <!-- Food Truck 카드를 표시하는 반복문 -->
-            <div class="col-md-4 mb-4" th:each="foodTruck : ${foodTrucks}">
-                <div class="card">
-                    <!-- Food Truck 이미지 -->
-                    <img alt="Food Truck Image" class="card-img-top" th:src="${foodTruck.imageUrl}">
-                    <div class="card-body">
-                        <!-- Food Truck 이름 -->
+            <div class="col-md-4 mb-4" th:each="foodTruck : ${foodTruckList}">
+                <div class="card h-100 shadow-sm">
+                    <!-- 이미지 -->
+                    <img class="card-img-top" th:src="${foodTruck.thumbnail}" alt="Food Truck Thumbnail" style="height: 200px; object-fit: cover;">
+
+                    <div class="card-body d-flex flex-column">
+                        <!-- 이름 -->
                         <h5 class="card-title" th:text="${foodTruck.name}"></h5>
-                        <!-- Food Truck 설명 -->
-                        <p class="card-text" th:text="${foodTruck.description}"></p>
-                        <!-- Food Truck 카테고리 -->
-                        <p class="card-text" th:text="${foodTruck.foodType.name()}"></p>
-                        <!-- Food Truck 소유자 -->
-                        <p class="card-text" th:text="${foodTruck.managerName()}"></p>
-                        <!-- '신청하기' 버튼 -->
-                        <a class="btn btn-primary" th:href="'/food-truck/'+ ${foodTruck.id() + '/review'}">리뷰 작성</a>
-                        <!-- '연락하기' 버튼 -->
-                        <a class="btn btn-primary" th:href="'/food-truck/'+ ${foodTruck.id()}">자세히 보기</a>
+
+                        <!-- 설명 -->
+                        <p class="card-text text-muted" th:text="${foodTruck.description}"></p>
+
+                        <!-- 카테고리 -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-info me-1" th:text="${foodTruck.type.displayName}"></span>
+                        </div>
+
+                        <!-- 버튼 -->
+                        <div class="mt-auto d-flex justify-content-between">
+                            <small class="text-muted">
+                                ★ <span th:text="${#numbers.formatDecimal(foodTruck.averageRating, 1, 1)}"></span>
+                                (<span th:text="${foodTruck.reviewCount}"></span>건)
+                            </small>
+                            <a class="btn btn-primary btn-sm" th:href="'/food-trucks/' + ${foodTruck.id}">자세히 보기</a>
+                        </div>
                     </div>
                 </div>
             </div>

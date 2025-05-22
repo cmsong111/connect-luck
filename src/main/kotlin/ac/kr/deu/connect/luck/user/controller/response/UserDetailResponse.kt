@@ -8,7 +8,7 @@ data class UserDetailResponse(
     val userId: Long,
     val email: String,
     val name: String,
-    val phone: String,
+    val phone: String? = null,
     val profileImage: String?,
     val roles: Set<UserRole>,
     val createdAt: Instant,
@@ -22,7 +22,7 @@ data class UserDetailResponse(
                 email = user.email,
                 name = user.name,
                 phone = user.phone,
-                profileImage = user.profileImage,
+                profileImage = user.profileImageUrl,
                 roles = user.roles,
                 createdAt = user.createdAt,
             )

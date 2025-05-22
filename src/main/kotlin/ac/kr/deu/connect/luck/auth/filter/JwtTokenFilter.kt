@@ -2,7 +2,7 @@ package ac.kr.deu.connect.luck.auth.filter
 
 import ac.kr.deu.connect.luck.auth.JwtTokenProvider
 import ac.kr.deu.connect.luck.common.controller.data.AuthenticatedUser
-import ac.kr.deu.connect.luck.common.utlis.TokenResolver
+import ac.kr.deu.connect.luck.auth.TokenResolver
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -14,7 +14,6 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtTokenFilter(
     private val tokenProvider: JwtTokenProvider,
 ) : OncePerRequestFilter() {
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -24,7 +23,7 @@ class JwtTokenFilter(
             val authenticatedUser: AuthenticatedUser = try {
                 tokenProvider.decode(token)
             } catch (e: Exception) {
-                logger.error(e.message)
+                log.error(e) { "Failed to decode JWT token" }
                 return
             }
             val authentication = UsernamePasswordAuthenticationToken(authenticatedUser, token, authenticatedUser.roles)
@@ -34,6 +33,6 @@ class JwtTokenFilter(
     }
 
     companion object {
-        val logger = KotlinLogging.logger {}
+        val log = KotlinLogging.logger {}
     }
 }
