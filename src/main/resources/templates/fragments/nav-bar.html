@@ -2,71 +2,76 @@
 <html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="navBarFragment">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">
-            <img alt="" class="d-inline-block align-top" height="30" th:src="@{/logo-no-background.png}">
-        </a>
-        <!--모바일 화면 대응-->
-        <button aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-                data-target="#navbarTogglerDemo02"
-                data-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img alt="로고" height="30" th:src="@{/logo-no-background.png}">
+            </a>
+            <!-- 모바일 화면 대응 -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <!--좌측 메뉴-->
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about-us">About us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/events">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/food-trucks">Food Truck</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/now">현재 운영중인 트럭</a>
-                </li>
-            </ul>
-            <!--우측 메뉴-->
-            <!--비 로그인 상태일 때-->
-            <ul class="navbar-nav ml-auto" sec:authorize="isAnonymous()">
-                <li class="nav-item">
-                    <a class="nav-link" href="/auth/login">로그인</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/auth/agreement">회원가입</a>
-                </li>
-            </ul>
-            <!--로그인 상태일 때-->
-            <ul class="navbar-nav ml-auto" sec:authorize="isAuthenticated()">
-                <!--이벤트 관리자일 때-->
-                <li class="nav-item" sec:authorize="hasRole('ROLE_EVENT_MANAGER')">
-                    <a class="nav-link" href="/event/my">내 이벤트</a>
-                </li>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <!-- 좌측 메뉴 -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about-us">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/food-trucks">Food Truck</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/recruitments">모집 공고</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/now">현재 운영중인 트럭</a>
+                    </li>
+                </ul>
 
-                <!--푸드트럭 관리자 때-->
-                <li class="nav-item" sec:authorize="hasRole('ROLE_FOOD_TRUCK_MANAGER')">
-                    <a class="nav-link" href="/food-truck/my">내 푸드트럭</a>
-                </li>
+                <!-- 우측 메뉴 -->
+                <!-- 비 로그인 상태일 때 -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" sec:authorize="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/login">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/agreement">회원가입</a>
+                    </li>
+                </ul>
 
-                <!-- 웹 관리자 때-->
-                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link" href="/swagger-ui/index.html">API Docs</a>
-                </li>
+                <!-- 로그인 상태일 때 -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                    <!-- 이벤트 관리자일 때 -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_EVENT_MANAGER')">
+                        <a class="nav-link" href="/event/my">내 이벤트</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/user">마이페이지</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/auth/logout">로그아웃</a>
-                </li>
-            </ul>
+                    <!-- 푸드트럭 관리자일 때 -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_FOOD_TRUCK_MANAGER')">
+                        <a class="nav-link" href="/food-truck/my">내 푸드트럭</a>
+                    </li>
+
+                    <!-- 웹 관리자일 때 -->
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" href="/swagger-ui/index.html">API Docs</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">마이페이지</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/logout">로그아웃</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </th:block>
 </html>
-

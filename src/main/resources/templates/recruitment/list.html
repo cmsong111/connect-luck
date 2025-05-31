@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <div class="container my-5">
+        <h1 class="text-center mb-4">현재 모집 중인 공고</h1>
+
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="recruitment : ${recruitmentList.content}">
+                <div class="card h-100">
+                    <img th:src="${recruitment.thumbnailUrl}" class="card-img-top" alt="썸네일">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" th:text="${recruitment.title}">공고 제목</h5>
+                        <p class="card-text">
+                            <strong>모집 트럭:</strong> <span th:text="${recruitment.recruitmentCount}">10</span><br>
+                            <strong>모집 기간:</strong>
+                            <span th:text="${#temporals.format(recruitment.applicationStartDate, 'yyyy-MM-dd')}">시작일</span> ~
+                            <span th:text="${#temporals.format(recruitment.applicationEndDate, 'yyyy-MM-dd')}">종료일</span><br>
+                            <strong>장소:</strong> <span th:text="${recruitment.placeName}">장소 이름</span>
+                        </p>
+                        <a th:href="@{/recruitments/{id}(id=${recruitment.id})}" class="btn btn-primary mt-auto">상세 보기</a>
+                    </div>
+                    <div class="card-footer text-muted text-right">
+                        <small th:text="${#temporals.format(recruitment.updatedAt, 'yyyy-MM-dd HH:mm')}">업데이트 일자</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <nav th:if="${recruitmentList.totalPages > 1}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${recruitmentList.first} ? 'disabled'">
+                    <a class="page-link" th:href="@{/recruitments(page=${recruitmentList.number - 1}, size=${recruitmentList.size})}">이전</a>
+                </li>
+                <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, recruitmentList.totalPages - 1)}"
+                    th:classappend="${pageNum == recruitmentList.number} ? 'active'">
+                    <a class="page-link" th:href="@{/recruitments(page=${pageNum}, size=${recruitmentList.size})}"
+                       th:text="${pageNum + 1}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${recruitmentList.last} ? 'disabled'">
+                    <a class="page-link" th:href="@{/recruitments(page=${recruitmentList.number + 1}, size=${recruitmentList.size})}">다음</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+</html>

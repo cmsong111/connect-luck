@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface FoodTruckApplicationRepository : JpaRepository<FoodTruckApplication, Long> {
 
+    fun findByRecruitmentId(recruitmentId: Long): List<FoodTruckApplication>
+
+    fun countByRecruitmentId(recruitmentId: Long): Long
+
 }

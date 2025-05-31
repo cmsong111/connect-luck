@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="layout/default_layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
+<th:block layout:fragment="content">
+    <div class="container my-5">
+        <h1 class="mb-4" th:text="${recruitment.title}">모집 제목</h1>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img th:src="${recruitment.thumbnailUrl}" class="d-block w-100 rounded" alt="썸네일">
+                        </div>
+                        <div th:each="image : ${recruitment.images}" class="carousel-item">
+                            <img th:src="${image}" class="d-block w-100 rounded" alt="이미지">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+
+
+                <hr class="my-4">
+
+                <p th:utext="${recruitment.description}">행사 설명</p>
+
+                <hr class="my-4">
+
+                <h3>장소 정보</h3>
+                <p><strong>장소명:</strong> <span th:text="${recruitment.placeName}"></span></p>
+                <p><strong>주소:</strong> <span th:text="${recruitment.address}"></span> (<span th:text="${recruitment.zipCode}"></span>)</p>
+                <p><strong>상세 주소:</strong> <span th:text="${recruitment.detailAddress}"></span></p>
+
+
+                <div id="map" style="width:100%;height:400px;"></div>
+                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5ac72813f135366b5e6f7d1adc93a150"></script>
+                <script th:inline="javascript">
+                    var latitude = [[${recruitment.latitude}]];
+                    var longitude = [[${recruitment.longitude}]];
+                    var placeName = /*[[${recruitment.placeName}]]*/ '';
+                    var address = /*[[${recruitment.address}]]*/ '';
+
+                    var container = document.getElementById('map');
+                    var options = {
+                        center: new kakao.maps.LatLng(latitude, longitude),
+                        level: 3
+                    };
+
+                    var map = new kakao.maps.Map(container, options);
+
+                    // 마커를 생성합니다
+                    var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+                    var marker = new kakao.maps.Marker({
+                        position: markerPosition
+                    });
+
+                    // 마커를 지도에 표시합니다
+                    marker.setMap(map);
+
+                    // 인포윈도우에 표시할 내용입니다
+                    var iwContent = `
+                            <div style="padding:5px;">
+                                <strong>${placeName}</strong><br>
+                                ${address}
+                            </div>
+                        `;
+
+                    var infowindow = new kakao.maps.InfoWindow({
+                        position: markerPosition,
+                        content: iwContent
+                    });
+
+                    // 마커 위에 인포윈도우를 표시합니다
+                    infowindow.open(map, marker);
+                </script>
+                <hr class="my-4">
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        <strong>모집 정보</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>모집 상태:</strong>
+                        <span th:switch="${recruitment.status}">
+                            <span th:case='RECRUITING' class="badge bg-success" th:text="${recruitment.status}"></span>
+                            <span th:case="CLOSED" class="badge bg-danger" th:text="${recruitment.status}"></span>
+                            <span th:case="CANCELED" class="badge bg-secondary" th:text="${recruitment.status}"></span>
+                            <span th:case="FINISHED" class="badge bg-primary" th:text="${recruitment.status}"></span>
+                            <span th:case="*" class="badge bg-dark" th:text="${recruitment.status}"></span> <!-- 기본값 -->
+                        </span>
+                    </li>
+                    <li class="list-group-item"><strong>작성자 ID:</strong> <span th:text="${recruitment.authorId}">1</span></li>
+                    <li class="list-group-item"><strong>모집 인원:</strong> <span th:text="${recruitment.recruitmentCount}">10</span>명</li>
+                    <li class="list-group-item">
+                        <strong>자리세:</strong>
+                        <span th:text="${#numbers.formatDecimal(recruitment.fee, 0, 'COMMA', 0, 'POINT')}">0</span>원
+                        (<span th:text="${recruitment.feeDuration}">EVENT</span>)
+                    </li>
+                    <li class="list-group-item"><strong>모집 기간:</strong> <span
+                            th:text="${#temporals.format(recruitment.applicationStartDate, 'yyyy-MM-dd')}"></span> ~ <span
+                            th:text="${#temporals.format(recruitment.applicationEndDate, 'yyyy-MM-dd')}"></span></li>
+                    <li class="list-group-item"><strong>영업 기간:</strong> <span
+                            th:text="${#temporals.format(recruitment.operationStartDate, 'yyyy-MM-dd')}"></span> ~ <span
+                            th:text="${#temporals.format(recruitment.operationEndDate, 'yyyy-MM-dd')}"></span></li>
+                </ul>
+
+                <hr class="my-4">
+
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        <strong>문의처</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>연착처:</strong>
+                        <span th:text="${recruitment.contact}">연락처 정보</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>전화번호:</strong>
+                        <span th:text="${recruitment.contactNumber}">010-1234-5678</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>이메일:</strong>
+                        <span th:text="${recruitment.contactEmail}">></span>
+                    </li>
+                </ul>
+
+                <!-- 행사 관리자 메뉴-->
+                <div sec:authorize="hasRole('ROLE_EVENT_MANAGER')">
+                    <hr class="my-4">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            <strong>행사 관리자 메뉴</strong>
+                        </a>
+                        <a th:href="@{/recruitments/{id}/edit(id=${recruitment.id})}" class="list-group-item list-group-item-action">
+                            공고 수정
+                        </a>
+                        <a th:href="@{/recruitments/{id}/applications(id=${recruitment.id})}"
+                           class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                            <div class="me-auto">
+                                신청자 목록
+                            </div>
+                            <span th:text="${applicationCount}" class="badge text-bg-primary rounded-pill">0</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 푸드 트럭 관리자 메뉴 -->
+                <div sec:authorize="hasRole('ROLE_FOOD_TRUCK_MANAGER')">
+                    <hr class="my-4">
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <strong>푸드 트럭 관리자 메뉴</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 로그인하지 않은 사용자 -->
+                <div sec:authorize="isAnonymous()">
+                    <hr class="my-4">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>로그인 후 신청 가능합니다.</strong>
+                        </li>
+                        <li class="list-group-item">
+                            <a th:href="@{/auth/login}" class="btn btn-primary w-100">로그인</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

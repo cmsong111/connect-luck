@@ -3,6 +3,8 @@ package ac.kr.deu.connect.luck.recruitment.entity
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -48,13 +50,15 @@ class FoodTruckRecruitment(
     var placeName: String,
 
     /** 모집 상태 */
-    var recruitmentStatus: RecruitmentStatus = RecruitmentStatus.RECRUITING,
+    @Enumerated(EnumType.STRING)
+    var status: RecruitmentStatus = RecruitmentStatus.RECRUITING,
 
     /** 모집 인원 수 */
     var recruitmentCount: Int,
 
     /** 자리세 */
     var fee: BigDecimal = BigDecimal.ZERO,
+    @Enumerated(EnumType.STRING)
     var feeDuration: FeeDuration = FeeDuration.EVENT,
 
     /** 모집 일정 */

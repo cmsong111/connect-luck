@@ -39,7 +39,7 @@ dependencies {
 
 
     // Markdown
-    implementation("org.commonmark:commonmark:0.21.0")
+    implementation("org.commonmark:commonmark:0.24.0")
 
     // Kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

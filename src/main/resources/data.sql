@@ -4,7 +4,7 @@ VALUES ('test1@test.com', '$2a$10$fT7uETD.llppvJvlUFVKfevBuejvnEt6QLTgxJlxkbcozw
         '최고 관리자', '010-1111-1111', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('test2@test.com', '$2a$10$fT7uETD.llppvJvlUFVKfevBuejvnEt6QLTgxJlxkbcozw0IrD8Sm', 'https://i.pravatar.cc/250?img=2',
         '푸드트럭 관리자', '010-2222-2222', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('test3@test.com', '$2a$10$fT7uETD.llppvJvlUFVKfevBuejvnEt6QLTgxJlxkbcozw0IrD8Sm', 'https://i.pravatar.cc/250?img=3',
+       ('test3@test.com', '$2a$10$CLFXXQkxjSQoba/nMZTfvusHEWLgYz054he51gkFTYy4F7ogP1sAi', 'https://i.pravatar.cc/250?img=3',
         '행사 관리자', '010-3333-3333', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('test4@test.com', '$2a$10$fT7uETD.llppvJvlUFVKfevBuejvnEt6QLTgxJlxkbcozw0IrD8Sm', 'https://i.pravatar.cc/250?img=4',
         'Mock User 1', '010-4444-4444', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -542,3 +542,90 @@ values (1, 1, 1, '맛있어요', '맛있어요', false, CURRENT_TIMESTAMP, CURRE
        (1, 4, 4, '맛있어요', '맛있어요', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (1, 5, 5, '맛있어요', '맛있어요', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        (1, 6, 5, '맛있어요', '맛있어요', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO food_truck_recruitment (fee, fee_duration, is_deleted, latitude, longitude, recruitment_count, status,
+                                    application_end_date, application_start_date, author_id, created_at,
+                                    operation_end_date, operation_start_date, updated_at, address,
+                                    contact, contact_email, contact_number, description, detail_address,
+                                    opertaion_description, place_name, thumbnail_url, title, zip_code)
+VALUES (15000, 'EVENT', false, 37.4563, 126.7052, 15, 'RECRUITING', '2024-07-11', '2024-06-26', 7, CURRENT_TIMESTAMP, '2024-07-16', '2024-07-12',
+        CURRENT_TIMESTAMP, '인천광역시 부평구 부평대로', '부평대로 페스티벌 행사 담당', 'contact6@example.com', '010-4567-8935', '## 인천 부평대로 푸드트럭 페스티벌 참여자 모집 안내
+
+안녕하세요!
+다가오는 2025년 여름, **인천 부평대로 푸드트럭 페스티벌**에 참여하실 푸드트럭 운영자분들을 모집합니다.
+
+이번 행사는 부평구청과 인천광역시가 함께 주관하는 대규모 거리 축제로, 다양한 푸드트럭과 지역 예술 공연이 함께 어우러져 가족 단위 방문객과 청년층이 많이 찾는 인기 있는 행사입니다.
+
+운영 기간 동안, 참여하시는 푸드트럭에는 전기 및 수도 시설, 테이블 및 의자 대여 서비스, 그리고 현장 운영 지원 인력이 제공되며, 별도의 전기 사용 요금과 **자리세(운영료)**만 납부하시면 됩니다.
+
+---
+
+### 모집 분야
+
+- **푸드 분야**: 디저트류, 커피/음료, 버거류, 분식류 등
+- **체험 분야**: 캐리커쳐, 페이스페인팅, 핸드메이드 체험 부스 등
+- **기타**: 지역 상생에 기여할 수 있는 특별 아이템
+
+---
+
+### 행사장 위치
+
+- 인천 부평구청 앞 도로변
+- 방문객 접근성이 뛰어나 많은 인파가 몰릴 것으로 예상됩니다.
+
+모집 인원은 한정되어 있으니, 빠른 신청 부탁드립니다!
+---
+
+많은 관심과 참여 부탁드립니다! 🙌
+', '인천 부평대로 100번길',
+        '인천 부평대로 행사 설명', '인천 부평대로', 'https://picsum.photos/id/100/1600/900', '인천 부평대로 푸드트럭 페스티벌', '35256'),
+       (5000, 'EVENT', false, 35.1595, 126.8526, 7, 'RECRUITING', '2024-06-20', '2024-06-08', 8, CURRENT_TIMESTAMP, '2024-06-26', '2024-06-21',
+        CURRENT_TIMESTAMP, '광주광역시 동구 중앙로', '010-1324-9674', 'contact7@example.com', '010-1324-9674', '광주 중앙로 푸드트럭 모집', '광주 중앙로 100번길', '광주 중앙로 행사 설명',
+        '광주 중앙로', 'https://picsum.photos/id/263/1600/900', '광주 중앙로 푸드트럭 페스티벌', '68821'),
+       (15000, 'EVENT', false, 36.3504, 127.3845, 17, 'RECRUITING', '2024-06-17', '2024-06-14', 1, CURRENT_TIMESTAMP, '2024-06-22', '2024-06-18',
+        CURRENT_TIMESTAMP, '대전광역시 중구 대종로', '010-5548-3710', 'contact8@example.com', '010-5548-3710', '대전 대종로 푸드트럭 모집', '대전 대종로 100번길', '대전 대종로 행사 설명',
+        '대전 대종로', 'https://picsum.photos/id/264/1600/900', '대전 대종로 푸드트럭 페스티벌', '69253'),
+       (10000, 'EVENT', false, 35.123456, 128.123456, 10, 'RECRUITING', '2024-12-31', '2024-01-01', 1, CURRENT_TIMESTAMP, '2024-12-31', '2024-01-01',
+        CURRENT_TIMESTAMP, '경상남도 창원시 의창구 사림동', '010-1234-5678', 'contact1@example.com', '010-1234-5678', '푸드트럭 참가자를 모집합니다.', '사림동 123번길',
+        '행사 관련 상세 설명입니다.', '창원 사림 공원', 'https://picsum.photos/id/257/1600/900', '창원 푸드트럭 페스티벌', '51234'),
+       (5000, 'EVENT', false, 37.5665, 126.9780, 5, 'RECRUITING', '2024-11-30', '2024-06-01', 2, CURRENT_TIMESTAMP, '2024-12-10', '2024-12-05',
+        CURRENT_TIMESTAMP, '서울특별시 중구 을지로', '010-5678-1234', 'contact2@example.com', '010-5678-1234', '서울 야시장 푸드트럭 모집', '을지로 100길', '서울 야시장 상세 설명',
+        '을지로 야시장', 'https://picsum.photos/id/258/1600/900', '서울 야시장 푸드트럭', '04524'),
+       (20000, 'EVENT', false, 35.1796, 129.0756, 15, 'RECRUITING', '2024-10-31', '2024-07-01', 3, CURRENT_TIMESTAMP, '2024-11-05', '2024-11-01',
+        CURRENT_TIMESTAMP, '부산광역시 해운대구 해운대해변로', '010-9876-5432', 'contact3@example.com', '010-9876-5432', '해운대 푸드트럭 모집 안내', '해운대 200번길',
+        '해운대 축제 관련 설명', '해운대 해수욕장', 'https://picsum.photos/id/259/1600/900', '해운대 푸드트럭 페스티벌', '48094'),
+       (15000, 'EVENT', false, 37.4563, 126.7052, 8, 'RECRUITING', '2024-08-31', '2024-06-10', 4, CURRENT_TIMESTAMP, '2024-09-05', '2024-09-01',
+        CURRENT_TIMESTAMP, '인천광역시 남동구 예술로', '010-4444-3333', 'contact4@example.com', '010-4444-3333', '인천 예술의거리 푸드트럭 모집', '예술로 50번길', '예술의거리 행사 설명',
+        '인천 예술의거리', 'https://picsum.photos/id/260/1600/900', '인천 예술의거리 푸드트럭', '21544'),
+       (8000, 'EVENT', false, 36.3504, 127.3845, 12, 'RECRUITING', '2024-09-15', '2024-06-15', 5, CURRENT_TIMESTAMP, '2024-09-30', '2024-09-20',
+        CURRENT_TIMESTAMP, '대전광역시 유성구 대학로', '010-5555-6666', 'contact5@example.com', '010-5555-6666', '대전 대학로 푸드트럭 모집', '대학로 20번길', '대전 대학로 행사 설명',
+        '대전 대학로', 'https://picsum.photos/id/261/1600/900', '대전 대학로 푸드트럭', '34134');
+
+insert into food_truck_recruitment_images(food_truck_recruitment_id, image_order, image_url)
+values (1, 0, 'https://picsum.photos/id/100/1600/900'),
+       (1, 1, 'https://picsum.photos/id/101/1600/900'),
+       (1, 2, 'https://picsum.photos/id/102/1600/900'),
+       (1, 3, 'https://picsum.photos/id/103/1600/900'),
+       (1, 4, 'https://picsum.photos/id/104/1600/900'),
+       (2, 0, 'https://picsum.photos/id/105/1600/900'),
+       (2, 1, 'https://picsum.photos/id/106/1600/900'),
+       (2, 2, 'https://picsum.photos/id/107/1600/900'),
+       (2, 3, 'https://picsum.photos/id/108/1600/900'),
+       (2, 4, 'https://picsum.photos/id/109/1600/900'),
+       (3, 0, 'https://picsum.photos/id/110/1600/900'),
+       (3, 1, 'https://picsum.photos/id/111/1600/900'),
+       (3, 2, 'https://picsum.photos/id/112/1600/900'),
+       (3, 3, 'https://picsum.photos/id/113/1600/900'),
+       (3, 4, 'https://picsum.photos/id/114/1600/900');
+
+insert into food_truck_application(recruitment_id, food_truck_id, status, author_id, created_at, updated_at, content)
+values (1, 1, 'PENDING', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '열심히 하겠습니다. 최선을 다하겠습니다.'),
+       (1, 2, 'APPROVED', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '경험 많은 팀입니다. 성공적으로 마무리하겠습니다.'),
+       (1, 3, 'REJECTED', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '열정적으로 참여하고 싶습니다!'),
+       (1, 4, 'CANCELED', 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '일정 문제로 지원을 취소합니다.'),
+       (1, 5, 'PENDING', 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '좋은 기회 주셔서 감사합니다.'),
+       (1, 6, 'APPROVED', 6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '이미 검증된 푸드트럭입니다. 맛으로 보답하겠습니다.'),
+       (1, 7, 'REJECTED', 7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '지원서 작성 중 오류가 있었는데도 제출되었습니다.'),
+       (1, 8, 'CANCELED', 8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '개인 사정으로 참여가 어렵습니다.'),
+       (1, 9, 'PENDING', 9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '맛있고 건강한 음식으로 찾아뵙겠습니다.'),
+       (1, 10, 'APPROVED', 10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '지역 사회에 기여하고 싶습니다.');
