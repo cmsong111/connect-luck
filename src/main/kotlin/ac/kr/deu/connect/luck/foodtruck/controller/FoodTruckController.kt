@@ -3,9 +3,11 @@ package ac.kr.deu.connect.luck.foodtruck.controller
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
 import ac.kr.deu.connect.luck.foodtruck.service.FoodTruckReviewService
 import ac.kr.deu.connect.luck.foodtruck.service.FoodTruckService
+
 import org.springdoc.core.annotations.ParameterObject
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -44,13 +46,20 @@ class FoodTruckController(
     ): String {
         model.addAttribute(
             "foodTruck",
-            foodTruckService.getFoodTruck(foodTruckId)
+            foodTruckService.getFoodTruck(foodTruckId).apply {
+                // 개행문자 to HTML 태그로 변환
+                this.description = description?.replace("\n", "<br>")
+            }
         )
         model.addAttribute(
             "reviews",
             foodTruckReviewService.getReviewsByFoodTruckId(
                 foodTruckId,
-                PageRequest.of(0, 10),
+                PageRequest.of(
+                    0,
+                    10,
+                    Sort.by(Sort.Direction.DESC, "createdAt"),
+                )
             )
         )
         return "food_truck/food_truck_detail"

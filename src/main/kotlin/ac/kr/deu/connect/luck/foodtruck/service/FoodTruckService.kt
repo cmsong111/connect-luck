@@ -3,7 +3,9 @@ package ac.kr.deu.connect.luck.foodtruck.service
 import ac.kr.deu.connect.luck.common.exception.NotFoundException
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruck
 import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckCategory
+import ac.kr.deu.connect.luck.foodtruck.entity.FoodTruckReview
 import ac.kr.deu.connect.luck.foodtruck.repository.FoodTruckRepository
+import ac.kr.deu.connect.luck.foodtruck.repository.FoodTruckReviewRepository
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckData
 import ac.kr.deu.connect.luck.foodtruck.service.data.FoodTruckSummaryData
 import org.springframework.data.domain.Page
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class FoodTruckService(
     private val foodTruckRepository: FoodTruckRepository,
+    private val foodTruckReviewRepository: FoodTruckReviewRepository,
 ) {
     /**
      * 푸드트럭 목록을 조회합니다.

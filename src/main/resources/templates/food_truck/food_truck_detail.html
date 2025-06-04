@@ -1,68 +1,166 @@
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="layout/default_layout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 <th:block layout:fragment="content">
-
     <div class="container mt-5">
-        <h1 class="text-center mb-5">푸드트럭 상세 정보</h1>
+        <h1 th:text="${foodTruck.name}" class="text-center mb-5">
+            푸드트럭 이름
+        </h1>
+
         <div class="row">
-            <div class="col-md-6">
-                <img alt="Food Truck Image" class="card-img-top mb-3" th:src="${foodTruck.thumbnail}">
-            </div>
-            <div class="col-md-6">
-                <h5 class="card-title mb-3" th:text="${foodTruck.name}"></h5>
-                <p class="card-text mb-3" th:text="${foodTruck.description}"></p>
-                <p class="card-text mb-3" th:text="${foodTruck.type.getDisplayName()}"></p>
-                <p class="card-text mb-3" th:text="${foodTruck.managerId}"></p>
-                <button class="btn btn-primary">문의 하기</button>
-            </div>
-        </div>
+            <!-- 본문 영역 -->
+            <div class="col-md-8">
+                <div class="border p-4 mb-4 rounded-4 shadow-sm"
+                     th:utext="${foodTruck.description}">
+                </div>
 
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <h2 class="card-title text-center mb-3">메뉴</h2>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>사진</th>
-                        <th>이름</th>
-                        <th>가격</th>
-                        <th>설명</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="menu : ${foodTruck.menus}">
-                        <td><img alt="Menu Image" style="width: 100px; height: 100px;" th:src="${menu.imageUrl}"></td>
-                        <td th:text="${menu.name}"></td>
-                        <td th:text="${menu.price}"></td>
-                        <td th:text="${menu.description}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <!-- 캐러셀 이미지 슬라이드 -->
+                <div th:if="${!foodTruck.images.isEmpty()}" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <!-- 인디케이터 -->
+                    <div class="carousel-indicators">
+                        <button th:each="img, stat : ${foodTruck.images}"
+                                type="button"
+                                data-bs-target="#carouselExampleIndicators"
+                                th:attr="data-bs-slide-to=${stat.index}, aria-label='Slide ' + ${stat.index + 1}"
+                                th:classappend="${stat.index == 0} ? 'active' : ''">
+                        </button>
+                    </div>
 
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <h2 class="card-title text-center mb-3">후기</h2>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>작성자</th>
-                        <th>내용</th>
-                        <th>평점</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="review : ${reviews}">
-                        <td th:text="${review.authorId}"></td>
-                        <td th:text="${review.content}"></td>
-                        <td th:text="${review.rating}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <!-- 캐러셀 이미지 -->
+                    <div class="carousel-inner ratio ratio-16x9 rounded">
+                        <div th:each="img, stat : ${foodTruck.images}" class="carousel-item" th:classappend="${stat.index == 0} ? 'active'">
+                            <img th:src="${img}" class="d-block w-100" alt="푸드트럭 이미지">
+                        </div>
+                    </div>
+
+                    <!-- 컨트롤 버튼 -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <!-- 메뉴 영역 -->
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2 class="card-title text-center mb-3">메뉴</h2>
+
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div class="col" th:each="menu : ${foodTruck.menus}">
+                                <div class="card h-100">
+                                    <img th:src="${menu.imageUrl}" class="card-img-top" alt="Menu Image" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${menu.name}">메뉴 이름</h5>
+                                        <p class="card-text" th:text="${menu.description}">메뉴 설명</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted" th:text="${menu.price}">가격</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 마지막 영업 장소 -->
+                <div class="row mt-5" th:if="${foodTruck.working != null}">
+                    <div class="col-md-12">
+                        <h2 class="card-title text-center mb-3">실시간 영업 위치</h2>
+                        <!-- 영업 상태 뱃지 -->
+                        <div class="mb-3">
+                            <span th:if="${foodTruck.working.status.name == 'OPEN'}" class="badge bg-primary">
+                                영업 중
+                            </span>
+                            <span th:if="${foodTruck.working.status.name == 'CLOSED'}" class="badge bg-secondary">
+                                영업 종료
+                            </span>
+                        </div>
+                        <!-- 지도 영역 -->
+                        <div id="map" style="width:100%;height:400px;" class="rounded"></div>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5ac72813f135366b5e6f7d1adc93a150"></script>
+                        <script th:inline="javascript">
+                            var latitude = [[${foodTruck.working.latitude}]];
+                            var longitude = [[${foodTruck.working.longitude}]];
+
+                            var container = document.getElementById('map');
+                            var options = {
+                                center: new kakao.maps.LatLng(latitude, longitude),
+                                level: 3
+                            };
+
+                            var map = new kakao.maps.Map(container, options);
+
+                            // 마커를 생성합니다
+                            var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+                            var marker = new kakao.maps.Marker({
+                                position: markerPosition
+                            });
+
+                            // 마커를 지도에 표시합니다
+                            marker.setMap(map);
+
+                            // 인포윈도우에 표시할 내용입니다
+                            var iwContent = `
+                            <div style="padding:5px;">
+                                <strong>마지막 영업 위치</strong><br>
+                                ${address}
+                            </div>
+                        `;
+
+                            var infowindow = new kakao.maps.InfoWindow({
+                                position: markerPosition,
+                                content: iwContent
+                            });
+
+                            // 마커 위에 인포윈도우를 표시합니다
+                            infowindow.open(map, marker);
+                        </script>
+                        <hr class="my-4">
+                    </div>
+                </div>
+
+                <!-- 리뷰 영역 -->
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2 class="card-title text-center mb-3">최근 리뷰</h2>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>작성자</th>
+                                <th>내용</th>
+                                <th>평점</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="review : ${reviews}">
+                                <td th:text="${review.authorId}"></td>
+                                <td th:text="${review.content}"></td>
+                                <td th:text="${review.rating}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- 더보기 버튼 -->
+                        <button class="btn btn-secondary">더보기</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 통계 영역 (사이드바) -->
+            <div class="col-md-4">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-header">
+                        푸드트럭 통계
+                    </div>
+                    <div class="card-body">
+                        <p><strong>카테고리:</strong> <span th:text="${foodTruck.category.displayName}"></span></p>
+                        <p><strong>평점:</strong> <span th:text="${foodTruck.averageRating}"></span>건</p>
+                        <p><strong>리뷰 수:</strong> <span th:text="${foodTruck.reviewCount}"></span>건</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </th:block>
 </html>
